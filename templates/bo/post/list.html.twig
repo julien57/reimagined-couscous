@@ -1,0 +1,52 @@
+{% extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Actualités</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="posts" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for page in pages %}
+                    <tr>
+                        <td>{{ page.name }}</td>
+                        <td>
+                            {% if page.active %}
+                                <span class="right badge badge-success">En ligne</span>
+                            {% else %}
+                                <span class="right badge badge-danger">Hors-ligne</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-block bg-gradient-info btn-sm" href="{{ path('bo_page_by_type', {'slug':page.slug, 'type':2}) }}">Voir l'actualité</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+$(function () {
+    $('#posts').DataTable({
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+        },
+        "order": []
+    })
+});
+</script>
+{% endblock %}

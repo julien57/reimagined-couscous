@@ -1,0 +1,19 @@
+<div id="language_form" class="col">
+    <h3>Nouvelle Langue</h3>
+
+    {{ form_start(language_form, {'attr':{ 'id' :'language-form',  'class' : 'flex-col'} }) }}
+
+    <div class="col name" >
+        <label>Name</label>
+        {{ form_widget(language_form.name) }}
+    </div>
+
+    <div class="col code" >
+        <label>Code</label>
+        {{ form_widget(language_form.code) }}
+    </div>
+
+    <button data-context="language" class=" submit btn-primary submit_form">Enregistrer</button>
+
+    {{ form_end(language_form) }}
+</div>

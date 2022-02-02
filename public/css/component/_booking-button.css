@@ -1,0 +1,14 @@
+#fixed_booking{
+    position:fixed;
+    top:50%;
+    right:-94px;
+    width:216px;
+    height:25px;
+    z-index:8;
+    margin-top:-12px;
+    transform: rotate(-90deg);
+    transition: height 1s;
+    font-family: 'nunito';
+    font-size:9px;
+    letter-spacing: 6px;
+}

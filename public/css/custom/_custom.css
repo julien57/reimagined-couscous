@@ -1,0 +1,86 @@
+
+/**
+checkbox
+ */
+.custom_check {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height:100%;
+    width:100%;
+}
+
+/* Hide the browser's default checkbox */
+.custom_check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    right: 84px;
+    height: 15px;
+    width: 15px;
+    background-color: white;
+    border:1Px solid black;
+    border-radius:50%;
+}
+
+/* On mouse-over, add a grey background color */
+.custom_check:hover input ~ .checkmark {
+    background-color: black;
+}
+
+/* When the checkbox is checked, add a blue background */
+.custom_check input:checked ~ .checkmark {
+    background-color: black;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.custom_check input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.custom_check .checkmark:after {
+    content:'';
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+
+}
+
+.datepicker{
+    border: none;
+    cursor:pointer;
+    background: url("/img/icon/icon_arrow_down.svg") no-repeat top right;
+    background-size: contain;
+
+}
+
+.ui-datepicker{
+    z-index:31 !important;
+}

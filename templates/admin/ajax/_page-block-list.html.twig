@@ -1,0 +1,8 @@
+<select class="select_page_for_block" name="block_list_0">
+    <option value="0">Blocs</option>
+    {% for block in blocks_page_list %}
+         {% if  block.json is defined and block.json is not empty %}
+            <option value="{{  block.id  }}">{{ block.json.title }}</option>
+        {% endif %}
+    {% endfor %}
+</select>

@@ -1,0 +1,11 @@
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+/public/uploads/
+/vendor/
+/var/
+npm-debug.log
+yarn-error.log
+.idea
+###< symfony/webpack-encore-bundle ###

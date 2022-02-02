@@ -1,0 +1,20 @@
+<div class="input flex-row">
+    <label>{{ data.name }}</label>
+
+    {% if json is not empty %}
+
+        {% set checked = '' %}
+        {% set value = 0 %}
+
+        {%  if  json[data.htmlName] is defined and json[data.htmlName] == 1 %}
+            {% set checked = 'checked' %}
+            {% set value = 1 %}
+            <input {{  checked  }} class="" type="checkbox" name="{{ data.htmlName }}" >
+        {% else %}
+            <input  class="" type="checkbox" name="{{ data.htmlName }}" >
+        {%  endif  %}
+
+    {% else %}
+        <input value="" class="" type="checkbox" name="{{ data.htmlName }}" >
+    {% endif %}
+</div>

@@ -1,0 +1,15 @@
+<form>
+
+    {% for item in items %}
+
+         {% if item.item.htmlType is defined  %}
+             {%  set include = 'admin/input/'~item.item.htmlType~'.html.twig' %}
+             {% include include with {data : item.item } %}
+         {%  else  %}
+             {%  set include = 'admin/input/'~item.type~'.html.twig' %}
+             {% include include %}
+         {% endif %}
+
+    {%  endfor %}
+</form>
+

@@ -1,0 +1,53 @@
+<div id="gift_reservation" class="flex-col section" style="">
+    {% if data.title is defined %}
+        <h3>{{ data.title|raw }}</h3>
+    {% endif %}
+    {% if data.description is defined and data.description is not empty %}
+        <h5>{{ data.description.0|raw }}</h5>
+    {% endif %}
+
+    <div class="flex-col form">
+        <div class="flex-col form">
+            <!--<form class="flex-row flex-wrap dayroom" id="offer_form">-->
+            <form class="flex-row flex-wrap" >
+
+                <!-- 1 -->
+                <div class="flex-col half" >
+                    {{ form_widget(form.firstname) }}
+                </div>
+                <div class="flex-col half" >
+                    {{ form_widget(form.lastname) }}
+                </div>
+
+                <!-- 2 -->
+                <div class="flex-col half ">
+                    {{ form_widget(form.phone) }}
+                </div>
+
+                <div class="flex-col half" >
+                    {{ form_widget(form.email) }}
+                </div>
+
+                <!-- 3 -->
+                <div class="flex-col half ">
+                    {{ form_widget(form.atDate) }}
+                </div>
+
+                <div class="flex-col half" >
+                    {{ form_widget(form.room) }}
+                </div>
+
+
+                <!-- message-->
+                <div class="flex-col large">
+                    {{ form_widget(form.message) }}
+                </div>
+
+                <div id="messageOffer" style="color:green"></div>
+
+                <button data-context="gift"  data-contaxt="gift" class="submit_form link-orange orange" type="submit">{{ 'btn.send'|trans }}</button>
+
+            </form>
+        </div>
+    </div>
+</div>

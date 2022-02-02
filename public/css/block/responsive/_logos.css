@@ -1,0 +1,36 @@
+@media screen and (max-width : 1200px ) {
+    #logos-service {
+        width: 100vw !important;
+        min-height: 200px;
+    }
+
+    #logos-service .wrapp-logos {
+        width: 100% !important;
+    }
+
+    .logo-service {
+       height: unset;
+        flex-wrap: wrap;
+        width:45%;
+        margin : 5px;
+    }
+
+    .logo-service .img {
+        background-position: center;
+        background-size: cover;
+        width: 150px;
+        height: 150px;
+    }
+
+    .wrapp-logos {
+        height: 100%;
+    }
+
+    .logo-description{
+        height:80px;
+    }
+
+    .logo-description h5{
+        height:100%;
+    }
+}

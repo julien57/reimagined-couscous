@@ -1,0 +1,59 @@
+<div class="block-page-admin flex-col relative w-100 mt-2 position-relative">
+
+    <h3 class="relative flex-row">
+        {{ block.name|upper }}
+    </h3>
+    {% if json is not defined  %}
+        {% set json = '' %}
+    {% endif %}
+    {%  set block_id = block.id %}
+
+    <form action="/admin/page/block/add" method="post" class="flex-col a-items-start _form-bl-item" enctype="multipart/form-data">
+
+        {% for item in items %}
+            {% if item.block.id !=  block_id %}
+                {%  set block_id= item.block.id %}
+            {% endif  %}
+            {%  set include = '/admin/input/'~item.item.htmlType~'.html.twig' %}
+            {% include include with {'data' : item.item , json: json} %}
+        {%  endfor %}
+
+        <input class="block_id" type="hidden" name="block" value="{{ block_id  }}"/>
+        <input class="block_page_id" type="hidden" name="block_page_id" value="{{ block_page_id  }}"/>
+        <input type="hidden" value ="{{ app.session.get('_locale_edit') }}" name="lang_block">
+        <div class="row">
+            <div id="message{{ block_page_id }}"></div>
+        </div>
+        <button  class="submit btn btn-primary add_block"  type="submit">Enregistrer</button>
+    </form>
+    <div class="flex-row wrap_action_block position-absolute" style="top:3px;right:30px;">
+        <a data-block="{{ block_id }}" class="rem_block" href="" style="color:#fff;">X</a>
+        <!--<a data-block="{{ block_id }}" class="block_select more_block" href="">+</a>-->
+    </div>
+
+    {% if block.subBlock == true and list_block is not empty %}
+
+        <div class="subBlock col">
+            <h2>Sous blocs</h2>
+            <div class="flex-row">
+                <select class="sub_block_list form-control" name="list_block_id">
+                    {% for bl in list_block %}
+
+                        {% set selected = 'selected' %}
+                        {% if loop.index > 1 %}
+                            {% set selected = '' %}
+                        {% endif %}
+
+                        <option value="{{ bl.id  }}" >{{ bl.name }}</option>
+                    {% endfor %}
+                </select>
+                <a  class="new_sub_block flex-col" data-bp="{{ block_page_id }}"  data-block="{{ block_id }}" href=""> +</a>
+            </div>
+
+            {% for block_children in block_page.pageBlock %}
+                {% include 'admin/ajax/_sub-block.html.twig' with { block_children : block_children } %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</div>

@@ -1,0 +1,15 @@
+{%  extends 'bo/test.html.twig' %}
+
+{% block content %}
+     <div id="daily_message" class="row">
+
+         {% if block is not empty  %}
+          {% for bloc in block  %}
+               {% set items = bloc.blockItem %}
+             {% include 'bo/blocks/_block.html.twig' with { block :bloc , items: items } %}
+         {%  endfor %}
+         {% endif  %}
+     </div>
+
+{% endblock %}
+

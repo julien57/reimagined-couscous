@@ -1,0 +1,19 @@
+#language_form{
+
+}
+#language_form form > div{
+    margin:unset!important;
+    margin-top:10px !important; ;
+    width:300px;
+}
+
+#language_form form > button{
+    color: #fff;
+    background-color: #A8002C !important;
+    border-color: #fff;
+    box-shadow: none;
+    margin-top:10px;
+    border:none;
+    padding : 10px;
+    width : 150px;
+}

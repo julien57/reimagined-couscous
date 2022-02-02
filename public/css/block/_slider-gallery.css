@@ -1,0 +1,51 @@
+.slider-gallery{
+   /* min-height: 922px;*/
+    height: auto;
+   /* margin-top:200px;*/
+    min-height:unset;
+    margin-top:80px;
+}
+
+.slider-gallery .rounded_leaf{
+    top:-50px;
+    right:-150px;
+    border-radius: 50%;
+    margin-top: 100px;
+}
+
+.slider-gallery .bg-block-gold{
+   bottom :50px;
+    width:924px;
+    height:580px;
+}
+
+.car_slider_gallery{
+    /*height : 30px;*/
+    margin-top:30px;
+    width : 100%;
+    justify-content: flex-end;
+}
+.car_slider_gallery_2 {
+    margin-top:40px;
+    width : 100%;
+    justify-content: flex-end;
+    padding-right:60px;
+}
+
+.car_slider_gallery > a.arrow-left, .car_slider_gallery_2 > a.arrow-left {
+    margin-right : 20px;
+}
+
+._wrapp-imgs-slider .bg-block-gold{
+
+    bottom :-60px;
+}
+
+.slider-gallery.even  .bg-block-gold{
+    right:unset;
+    left:-50px;
+}
+
+.slider-gallery.even .car_slider_gallery, .slider-gallery.even .car_slider_gallery_2{
+  justify-content: flex-start;
+}

@@ -1,0 +1,35 @@
+
+ {% set event = {
+0:'Aucun',
+'event3':'Événement professionnel',
+'event2': 'Anniversaire',
+'event1': 'Mariage',
+'event4':'Autre'
+} %}
+
+<h2>You have a new contact request :</h2>
+
+<p>Name : {{ contact.name }}</p>
+<p>Lastname : {{ contact.lastName }} </p>
+<p>Company : {{ contact.company}} </p>
+<p>Phone number : {{ contact.phone}}</p>
+<p>Email : {{ contact.email}}</p>
+<p>Country : {{ contact.country}}</p>
+<p>Type of event : <br/>
+<b>{{ event[contact.eventType] }}</b>
+</p>
+<p>Date : {{ contact.eventDate|date('Y/m/d') }}</p>
+<p>Number of people : {{ contact.peopleNumber}}</p>
+<p>Stay in hotel  :
+ {% if contact.bookingRoom ==1  %} Yes {% else %} No {% endif %}
+</p>
+<p>
+    Something else ? :
+    <br/>
+    <br/>
+
+    {{ contact.message}}
+
+</p>
+
+ 

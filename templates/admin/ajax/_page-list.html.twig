@@ -1,0 +1,10 @@
+<select class="select_page">
+    <option  value="O">-</option>
+    {% for page in pages  %}
+        {% set selected ='' %}
+        {% if loop.index == 1 %}
+            {% set selected ='selected' %}
+        {% endif %}
+        <option {{  selected }} value="{{ page.id }}">{{ page.name }}</option>
+    {% endfor %}
+</select>

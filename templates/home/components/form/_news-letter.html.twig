@@ -1,0 +1,12 @@
+<div class="flex-col news-letter-form">
+    <h3>{{ title }}</h3>
+
+        {{ form_start(newsletter_form, {'attr':{ 'id' :'news-letter-form',  'class' : 'flex-col'} }) }}
+        <div class="flex-col email" >
+            {{ form_widget(newsletter_form.email) }}
+        </div>
+        <button data-context="newsletter" class="submit_form link-orange orange">{{ 'btn.subscribe'|trans }}</button>
+
+        {{ form_end(newsletter_form) }}
+
+</div>

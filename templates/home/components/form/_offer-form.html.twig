@@ -1,0 +1,52 @@
+<div class="flex-col form"  >
+    {{ form_start(form, {'attr': {'class': 'flex-row flex-wrap'}}) }}
+
+        <!-- 1 -->
+        <div class="flex-col half" >
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="flex-col half" >
+            {{ form_widget(form.lastName) }}
+        </div>
+
+        <!-- 2 -->
+        <div class="flex-col half ">
+            {{ form_widget(form.phone) }}
+        </div>
+
+        <div class="flex-col half" >
+            {{ form_widget(form.email) }}
+        </div>
+
+        <!-- 3 -->
+        <div class="flex-col large" >
+            {{ form_widget(form.adress) }}
+        </div>
+
+        <div class="flex-col large country">
+            {{ form_widget(form.country) }}
+        </div>
+
+        {% if app.request.get('name') == 'birthday' %}
+                <!-- 4 -->
+                <div class="flex-col half">
+                        {{ form_widget(form.personName) }}
+                </div>
+
+                <!-- booking -->
+                <div class="flex-col half">
+                        {{ form_widget(form.amount) }}
+                </div>
+        {% endif %}
+
+        <!-- message-->
+        <div class="flex-col large">
+            {{ form_widget(form.message) }}
+        </div>
+
+        <div id="messageOffer" style="color:green"></div>
+
+        <button data-contaxt="gift" class="submit_form link-orange orange" type="submit" data-context="{{ slug }}">{{ 'btn.send'|trans }}</button>
+
+    {{ form_end(form) }}
+</div>

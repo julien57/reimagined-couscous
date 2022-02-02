@@ -1,0 +1,61 @@
+<div class="flex-col form"  >
+    <form class="flex-row flex-wrap">
+
+        <!-- 1 -->
+        <div class="flex-col half" >
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="flex-col half" >
+            {{ form_widget(form.lastName) }}
+        </div>
+
+        <!-- 2 -->
+
+        <div class="flex-col half ">
+            {{ form_widget(form.company) }}
+        </div>
+
+        <div class="flex-col half ">
+            {{ form_widget(form.phone) }}
+        </div>
+
+        <!-- 3 -->
+        <div class="flex-col large" >
+            {{ form_widget(form.email) }}
+        </div>
+
+        <div class="flex-col large country">
+            {{ form_widget(form.country) }}
+        </div>
+
+        <div class="flex-col large empty"></div>
+
+        <!-- 4 -->
+        <div class="flex-col half" >
+            {{ form_widget(form.eventType) }}
+        </div>
+
+        <div class="flex-row quater" >
+            {{ form_widget(form.eventDate) }}
+        </div>
+        <div class="flex-row quater" >
+            {{ form_widget(form.peopleNumber) }}
+        </div>
+
+        <!-- booking -->
+        <div class="flex-col large">
+            
+            {{ form_row(form.bookingRoom) }}
+        </div>
+
+        <!-- message-->
+        <div class="flex-col large">
+            {{ form_widget(form.message) }}
+        </div>
+
+        <div id="messageOffer" style="color:green"></div>
+
+        <button data-context="contact" class="submit_form link-orange orange" type="submit">{{ 'btn.send'|trans }}</button>
+
+    </form>
+</div>

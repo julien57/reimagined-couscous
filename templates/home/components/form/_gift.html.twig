@@ -1,0 +1,59 @@
+<div class="flex-col form"  >
+    <form class="flex-row flex-wrap" id="offer_form" method="post">
+
+        <!-- 1 -->
+        <div class="flex-col half" >
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="flex-col half" >
+            {{ form_widget(form.lastName) }}
+        </div>
+
+        <!-- 2 -->
+        <div class="flex-col half ">
+            {{ form_widget(form.phone) }}
+        </div>
+
+        <div class="flex-col half" >
+            {{ form_widget(form.email) }}
+        </div>
+
+        <!-- 3 -->
+        <div class="flex-col large">
+            {{ form_widget(form.adress) }}
+        </div>
+
+        {% if slug == 'gift-vouchers' %}
+            <div class="flex-col  half">
+                {{ form_widget(form.zipcode) }}
+            </div>
+            <div class="flex-col half">
+                {{ form_widget(form.city) }}
+            </div>
+        {% endif %}
+
+        <div class="flex-col large country">
+            {{ form_widget(form.country) }}
+        </div>
+
+        <!-- 4 -->
+        <div class="flex-col half" >
+            {{ form_widget(form.personName) }}
+        </div>
+
+        <!-- booking -->
+        <div class="flex-col half">
+            {{ form_widget(form.amount) }}
+        </div>
+
+        <!-- message-->
+        <div class="flex-col large">
+            {{ form_widget(form.message) }}
+        </div>
+
+        <div id="messageOffer" style="color:green"></div>
+
+        <button data-contaxt="gift" class="submit_form link-orange orange" type="submit">{{ 'btn.send'|trans }}</button>
+
+    </form>
+</div>

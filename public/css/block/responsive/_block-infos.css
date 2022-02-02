@@ -1,0 +1,35 @@
+@media screen and (max-width: 768px) {
+    #main .large-section .block-infos .block-info-details {
+        align-items: center;
+        justify-content: flex-end;
+        line-height: 8vw;
+        height: 58vw;
+    }
+
+    #main .large-section .block-infos .block-info-details .block-info-details-title {
+        border-bottom: 1px solid black;
+        padding-bottom: 10px;
+        width: 100%;
+        padding-top: 30px;
+    }
+    #main .large-section .block-infos .block-info-details .block-info-details-title .flex-row, #main .block_page .block-infos .block-info-details .flex-row {
+        width: 38%;
+    }
+
+    #main .block_page .block-infos .block-info-details .flex-row {
+        flex-direction: column;
+    }
+
+    #main .large-section .block-infos .block-info-details .flex-row .per_day {
+        display: flex;
+        flex-direction: column;
+    }
+    .block-infos .block-info-details {
+        border-bottom: none;
+    }
+
+    #main .large-section .block-infos .block-info-details .flex-row .per_day .phonenumber {
+        width: 200px;
+    }
+
+}

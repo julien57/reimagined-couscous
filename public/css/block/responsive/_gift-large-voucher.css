@@ -1,0 +1,13 @@
+@media screen and (max-width: 768px) {
+    #large_gift .comp-text-img .bg-block .bg-block1, #large_gift .comp-text-img .bg-block .bg-block2 {
+        width: 81vw;
+        height: 40vw;
+        left: 50%;
+        margin-left: -40vw;
+    }
+
+    .large-section .section.large {
+        height: 100vw !important;
+    }
+
+}

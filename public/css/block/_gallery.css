@@ -1,0 +1,55 @@
+.gallery{
+    margin:100px 0;
+}
+
+.gallery .section.header{
+    min-height : 50px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.gallery .section.header h3{
+    padding:20px 0;
+    align-items: flex-start;
+    text-align: left;
+    width:421px;
+    font-size: 32px;
+}
+
+.gallery .section.header p{
+    align-items: flex-start;
+    text-align: left;
+    width:auto;
+}
+
+.gallery .wrapp_gal_img{
+    background: url(/img/alvisse_home_motif06.jpg) repeat bottom center;
+    background-size: contain;
+    min-height: unset;
+    margin-top: 80px;
+}
+
+.detail{
+    justify-content: space-between;
+    margin-right:15px;
+    height: 485px;
+}
+
+.gallery .bg-img{
+    background-position: top left ;
+    width:336px;
+    height : 396px;
+    background-size:cover;
+
+}
+.gallery .bg-img h4{
+    position:absolute;
+    bottom:-40px;
+    z-index:1;
+    background-color: white ;
+    text-align:center;
+    width:293px;
+    font-family: 'ratiomodern';
+    height: 88px;
+    font-size: 26px;
+}

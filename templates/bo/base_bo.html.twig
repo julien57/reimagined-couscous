@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alvisse | Dashboard</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="{{ asset('/bo/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{ asset('/bo/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{{ asset('/bo/plugins/jqvmap/jqvmap.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('/bo/dist/css/adminlte.min.css') }}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ asset('/bo/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{ asset('/bo/plugins/daterangepicker/daterangepicker.css') }}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ asset('/bo/plugins/summernote/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+    <link rel="stylesheet" href="{{ asset('/css/bo/style.css') }}">
+    <!-- flag-icon-css -->
+    <link rel="stylesheet" href="{{ asset('bo/plugins/flag-icon-css/css/flag-icon.min.css') }}">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+
+<div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+
+        <img class="animation__shake" src="{{ asset('img/icon/deco_leaf.svg') }}" alt="parc alvisse" height="60" width="60">
+    </div>
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ path('app_page', {'slug':'home' }) }}" class="nav-link">Accueil site</a>
+            </li>
+        </ul>
+
+        {% if app.session.get('_locale') == 'en' %}
+            {% set currentLocale = 'us' %}
+        {% else %}
+            {% set currentLocale = app.session.get('_locale') %}
+        {% endif %}
+
+        {% if currentLocale is null %}
+            {% set currentLocale = app.request.locale %}
+        {% endif %}
+
+        <!--
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="flag-icon flag-icon-{{ currentLocale }}"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right p-0">
+                    {% set langs = twig_service.getLanguages() %}
+                    {% for lang in langs  %}
+                        <a href="{{ path('bo_lang_switch', {'id': lang.id}) }}"
+                           class="dropdown-item {{ currentLocale == lang.code ? 'active' : '' }}">
+                            <i class="flag-icon flag-icon-{{ lang.code }} mr-2"></i> {{ lang.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </li>
+        </ul>
+        -->
+    </nav>
+    <!-- /.navbar -->
+
+    {% include "/bo/_aside-bar-bo.html.twig" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        {% include "/bo/_content.html.twig" %}
+        <div class="row">
+            <section class="container">
+                {% block content %}{% endblock %}
+            </section>
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{{ asset('/bo/plugins/jquery/jquery.min.js') }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ asset('/bo/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('/bo/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<!-- ChartJS -->
+ <script src="{{ asset('/bo/plugins/chart.js/Chart.min.js') }}"></script>
+<!-- Sparkline -->
+<script src="{{ asset('/bo/plugins/sparklines/sparkline.js') }}"></script>
+<!-- JQVMap -->
+<script src="{{ asset('/bo/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
+<script src="{{ asset('/bo/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{ asset('/bo/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+<!-- daterangepicker -->
+<script src="{{ asset('/bo/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('/bo/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{ asset('/bo/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+<!-- overlayScrollbars -->
+<script src="{{ asset('/bo/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+
+<!-- Summernote -->
+<script src="{{ asset('/bo/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<!-- AdminLTE App -->
+ <script src="{{ asset('/bo/dist/js/adminlte.js') }}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('/bo/dist/js/demo.js') }}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{ asset('/bo/dist/js/pages/dashboard.js') }}"></script>
+
+
+<script src="{{ asset('/js/bo/1_function.js') }}"></script>
+<script src="{{ asset('/js/bo/page.js') }}"></script>
+<script src="{{ asset('/js/bo/_page.js') }}"></script>
+<script src="{{ asset('/js/bo/_block.js') }}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+{% block javascript %}{% endblock %}
+
+<script>
+    /*
+    function loadMultipleFile(event, input) {
+        let containerPreview = input.nextElementSibling;
+        containerPreview.innerHTML = '';
+
+        for (let file of event.target.files) {
+            containerPreview.insertAdjacentHTML('beforeend', `
+                <div class="col-md-3">
+                    <div style="background : url(${URL.createObjectURL(file)}) top left no-repeat;
+                        background-size:cover;height:150px;margin-bottom:10px;"
+                        class="imgpreview relative d-flex justify-content-center align-items-center">
+                        Preview
+                    </div>
+                </div>
+            `);
+        }
+    };
+
+     */
+
+    function loadOneFile(event, input) {
+        let containerPreview = input.nextElementSibling.nextElementSibling;
+
+        if (containerPreview) {
+
+            for (let newImg of event.target.files) {
+                containerPreview.insertAdjacentHTML(`beforeend`,`<div class="col-md-3">
+                            <div style="background : url(${URL.createObjectURL(newImg)})no-repeat center; background-size:contain;height:150px;margin-bottom:10px;" class="imgpreview relative">
+                            </div>
+                        </div>`);
+            }
+
+        }
+    };
+</script>
+
+<script>
+    $( function() {
+        $("#block_page" ).sortable(
+            {
+                update: function( event, ui ) {
+                    orderBlock();
+                }
+            }
+        );
+
+        $("#lang_datas").DataTable();
+
+        // TODO If is CKEditor textarea : no sort
+        if (!document.querySelector('.wys')) {
+            $("#block_page" ).sortable({
+                update: function( event, ui ) {
+                    orderBlock();
+                }
+            });
+        }
+
+        let textEditors = document.getElementsByClassName('wys');
+
+        $(".wys").each(function () {
+
+            if ($(this).attr('id')) {
+                let id = $(this).attr('id');
+                CKEDITOR.replace(id);
+            }
+
+            let textareaPost = this.getAttribute('name');
+            if (textareaPost === 'content_post[]' || textareaPost === 'breakfast_hours[]' || textareaPost === 'content[]') {
+                CKEDITOR.replace(textareaPost);
+            }
+        });
+        $(".wys.wysiwyg").each(function () {
+                CKEDITOR.replace(this);
+        });
+
+
+        /*
+        for (let editor of textEditors) {
+            const textareaName = editor.getAttribute('name');
+            CKEDITOR.replace(editor);
+        }
+*/
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+    });
+</script>
+<script type="text/javascript">
+    {% for message in app.flashes('success') %}
+        toastr.success('{{ message }}')
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+        toastr.error('{{ message }}')
+    {% endfor %}
+</script>
+
+<!-- Menu Page Bo Drag & Drop -->
+<script src="https://unpkg.com/sortablejs-make/Sortable.min.js"></script>
+{% if app.request.get('_route') == 'bo_edit_menu' %}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+    <script src="{{ asset('/js/bo/menu.js') }}"></script>
+{% endif %}
+
+<script>
+    if (document.getElementById('pages_block')) {
+        const pageBlock = document.getElementById('pages_block');
+        var sortable = new Sortable(pageBlock, {
+
+            onSort: function (evt) {
+                var data =[];
+
+                $('#pages_block').children('.block_page').each(function( index ) {
+                    var page_block_id = $(this).find('[name="block_page_id"]').val();
+                    data[index] = page_block_id;
+                });
+
+                var datas = {'json':data};
+
+                $.ajax({
+                    url:        '/admin/ajax/order/blocks/',
+                    type:       'POST',
+                    dataType:   'JSON',
+                    data : datas,
+                    async:      true,
+                    success: function(data, status) {
+                        console.log(data);
+                    },
+
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            },
+        });
+    }
+</script>
+
+</body>
+</html>

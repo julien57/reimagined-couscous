@@ -1,0 +1,31 @@
+.big-circle{
+    width:295px;
+    height:295px;
+    border-radius:50%;
+    background-color: #D4AF37;
+    position:absolute;
+    top : 36%;
+    left:5%;
+    margin-top: -280px;
+    z-index : 9;
+}
+.big-circle h3{
+    color:white;
+    font-family: "ratiomodern", sans-serif;
+    font-size:32px;
+    padding:10px;
+    text-align: center;
+}
+
+.big-circle .range-circle,
+.big-circle .text-circle{
+    font-family: 'nunito', sans-serif;
+    font-size:14px;
+    color:white;
+    padding:10px;
+    margin: 0 50px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+

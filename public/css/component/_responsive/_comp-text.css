@@ -1,0 +1,10 @@
+@media screen and (max-width : 1200px ) {
+    .comp-text {
+        width: 80% !important;
+    }
+
+    .comp-text p {
+        width: 100%;
+        padding: 5px;
+    }
+}

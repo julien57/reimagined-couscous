@@ -1,0 +1,64 @@
+.layout-fixed .main-sidebar {
+    flex-direction: column;
+    display: flex;
+}
+
+.main-sidebar{
+    background-color: white;
+
+}
+
+nav .nav-sidebar >li.nav-item > a.nav-link{
+    background-color: #D4AF37 !important;
+    color:white !important;
+}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link {
+    color:black!important;
+}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:hover {
+    color:grey!important;
+}
+.main-sidebar a.nav-link.active {
+    background-color:rgba(218, 165, 32, 0.2) !important;
+}
+.main-sidebar .brand-link{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+}
+.main-sidebar .brand-link > img.brand-image{
+    height: 70px;
+    line-height: .8;
+    margin: unset;
+    max-height: unset;
+
+}
+
+.btn-primary.add_block {
+    color: #fff;
+    background-color: #A8002C !important;
+    border-color: #fff;;
+    box-shadow: none;
+}
+
+.subBlock{
+    display:none;
+}
+
+#pages_block .subBlock h3{
+    background-color: lightgrey !important;
+}
+
+.subBlock .block-page-admin .form{
+    display:none;
+}
+
+.subBlock select{
+    width :90%;
+}
+
+.list-group-item+.list-group-item {
+    margin-top:3px;
+}

@@ -1,0 +1,11 @@
+<div class="input flex-col form-group">
+    <label>{{ data.name }}</label>
+    {% if json[data.htmlName] is defined %}
+        <input value="{{ json[data.htmlName] }}" class="form-control" type="{{ data.htmlType }}" name="{{ data.htmlName }}" >
+    {% else %}
+        <input  class="form-control" type="{{ data.htmlType }}" name="{{ data.htmlName }}" >
+    {% endif %}
+</div>
+
+
+

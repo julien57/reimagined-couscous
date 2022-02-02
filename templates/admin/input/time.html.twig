@@ -1,0 +1,11 @@
+<div class="input flex-col form-group">
+    <label>{{ data.name }}</label>
+    {% if json is not empty %}
+        <input value="{{ json[data.htmlName] }}" class="form-control timepicker" type="{{ data.htmlType }}" name="{{ data.htmlName }}" >
+    {% else %}
+        <input  class="form-control timepicker" type="{{ data.htmlType }}" name="{{ data.htmlName }}" >
+    {% endif %}
+</div>
+
+
+

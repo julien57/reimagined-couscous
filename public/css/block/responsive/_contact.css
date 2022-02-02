@@ -1,0 +1,30 @@
+@media screen and  (max-width: 1024px) {
+    #contact {
+        background: none;
+        height: 500px;
+        left: 50%;
+        margin-left: -249px;
+        justify-content: flex-start;
+    }
+
+    #contact .contact-infos {
+        z-index: 1;
+        margin-top: -50vw;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #contact-form .form .half, #contact-form .form .quater {
+        flex-direction: row !important;
+        width: 100% !important;
+    }
+
+    #contact {
+        left: 50%;
+        margin-left: -80vw;
+    }
+
+    #contact-form #contact_bookingRoom {
+        justify-content: flex-end;
+    }
+}

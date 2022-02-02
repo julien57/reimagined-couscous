@@ -1,0 +1,21 @@
+@media screen and (max-width: 1200px) {
+    #breakfast {
+        height: 500px ;
+        background: none ;
+        /*width: 100% !important;*/
+    }
+
+    .bg-middle-breakfast {
+        width: 100% !important;
+    }
+    .breakfast-infos {
+        top: -30px;
+        width: 70% !important;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    #breakfast .breakfast-infos h1 {
+        font-size: 20vw;
+    }
+}

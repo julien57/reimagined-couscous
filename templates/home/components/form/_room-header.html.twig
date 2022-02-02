@@ -1,0 +1,55 @@
+<form class="flex-row room room-mobile form-booking form-align" id="form-booking" style="position:relative;">
+    <div class="flex-row relative">
+
+        <div class="flex-col icon unfixed">
+            <div class="calendar"></div>
+        </div>
+
+        <div class="flex-col input-check period relative">
+            <div class="flex-col icon fixed hidden">
+                <div class="calendar"></div>
+            </div>
+            <h4>{{ 'search.arrival'|trans }}</h4>
+            <div class="flex-row">
+                <div class="flex-row input-date relative" >
+                    <input required class="datepicker arrival" type="text" name="arrival" autocomplete="off" placeholder="{{ 'search.choice_date'|trans }}" id="departureField" value/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex-col input-check period " >
+            <h4>{{ 'search.departure'|trans }}</h4>
+            <div class="flex-row">
+                <div class="flex-row input-date relative" >
+                    <input required class="datepicker departure" type="text" name="departure" autocomplete="off" placeholder="{{ 'search.choice_date'|trans }}" id="arrivalField" value/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-row">
+        <div class="flex-col icon unfixed">
+            <div class="adult"></div>
+        </div>
+        <div class="flex-col input-check adults relative" >
+            <div class="flex-col icon fixed hidden">
+                <div class="adult"></div>
+            </div>
+            <h4>{{ 'search.adults'|trans }}</h4>
+            <div class="flex-row nbr_adults">
+                <a id="_less" href="" >−</a><span class="nbr-adult" data-adult="1">1</span><a id="_more" href="">+</a>
+            </div>
+        </div>
+        <div class="flex-row promo-code" style="">
+            <div class="flex-row input-date" >
+                <input type="text" name="promoCode" class="input-promo" placeholder="Code promo" style=""/>
+            </div>
+        </div>
+        <input type="hidden" name="adult" id="room_adult" class="_adult" value="1" >
+        <div class="flex-col input-check" >
+            <button data-context="room" class="submit_api link-orange flex-col orange">{{ 'search.book'|trans }}</button>
+            <button type="button" id="btnPromoCode" style="background:none;border:none;color:#D4AF37;cursor:pointer;padding-top:5px;padding-bottom:0;">{{ 'search.code_promo'|trans }}</button>
+        </div>
+    </div>
+</form>

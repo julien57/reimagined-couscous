@@ -1,0 +1,106 @@
+#room-restau-fixed{
+    position:fixed;
+    top:50%;
+    right:-400px;
+    width:375px;
+    height:600px;
+    z-index:9;
+    margin-top:-300px;
+    background-color: white;
+    align-items: flex-end;
+
+}
+
+#room-restau-fixed .unfixed{
+    display:none;
+}
+
+#room-restau-fixed .icon.fixed{
+    display:flex;
+}
+
+#room-restau-fixed > header{
+    position:absolute;
+    top:275px;
+    left:-275px;
+    width:600px;
+    height:50px;
+    transform: rotate(-90deg);
+    background-color: #D4AF37;
+}
+
+#room-restau-fixed > header a{
+    text-transform: uppercase;
+    width:50%;
+    height:100%;
+    color:white;
+    text-decoration: none;
+    background-color:#A8002C;
+    font-family: 'nunito';
+}
+
+#room-restau-fixed > header a.selected{
+
+    background-color:#D4AF37;
+}
+
+
+#room-restau-fixed #form-booking, #room-restau-fixed #form-booking-restaurant {
+    flex-direction: column!important;
+    height : 100%;
+    width:calc(100% - 50px);
+    align-items: flex-end;
+}
+
+#room-restau-fixed #form-booking > div, #room-restau-fixed #form-booking-restaurant > div {
+    flex-direction: column;
+    width : 100%;
+    height: 100%;
+
+}
+
+#room-restau-fixed  #form-booking > div > div, #room-restau-fixed  #form-booking-restaurant > div > div{
+    width:100%;
+    height:30%;
+}
+
+#room-restau-fixed  #form-booking > div .period{
+   width:100%;
+}
+#room-restau-fixed  #form-booking h4 {
+    width: 150px;
+    padding-bottom: 10Px;
+    font-family: 'odile';
+    font-size: 20px;
+}
+
+#room-restau-fixed  #form-booking  .nbr_adults{
+  width:150px;
+    justify-content: flex-start;
+}
+
+#room-restau-fixed .nbr_adults > *{
+   width:20px;
+    text-decoration: none;
+}
+
+#room-restau-fixed  #form-booking > div .icon, #room-restau-fixed  #form-booking-restaurant > div .icon   {
+    width:40px;
+    height:40px;
+    position : absolute;
+    top:20px;
+    left:30px;
+}
+.close_booking{
+    position: absolute;
+    top:20px;
+    right:20px;
+    cursor:pointer;
+    width:20px;
+    height: 20px;
+    z-index:40;
+}
+.close_booking:hover{
+    cursor:pointer;
+    color:red;
+}

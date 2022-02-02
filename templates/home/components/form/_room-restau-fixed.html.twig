@@ -1,0 +1,16 @@
+<div id="room-restau-fixed" class="flex-col relative">
+    <a class="close_booking">
+        <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+    </a>
+    <header class="flex-row link-to-fixed">
+        <a data-context="restaurant" class="flex-row _context  restaurant fixed" href="">{{ 'search.restaurant'|trans }}</a>
+        <a data-context="restaurant-mobile" class="flex-row _context  restaurant-mobile fixed" href="">{{ 'restaurant'|trans }}</a>
+        <a data-context="room" class="flex-row  fixed  _context selected room" href="">{{ 'search.reservation_room'|trans }}</a>
+        <a data-context="room-mobile" class="flex-row  fixed  _context selected room-mobile" href="">{{ 'search.room'|trans }}</a>
+    </header>
+    <!--  room -->
+    {% include '/home/component/form/_room-header.html.twig' %}
+
+    <!-- restaurant -->
+     {% include '/home/component/form/_restaurant-header.html.twig' %}
+</div>

@@ -1,0 +1,65 @@
+.block-infos{
+    min-height: 84px;
+}
+
+.block-infos > div{
+    width:100%;
+    justify-content: center;
+    height : 83px;
+    margin:0;
+}
+
+.block-infos > div h5{
+    width:100%;
+    justify-content: center;
+    padding-left :20px;
+    font-size : 30px;
+    font-family: "ratiomodern", sans-serif;
+    color : #D4AF37;
+}
+
+
+
+.block-infos > div h5 span{
+    color : #D4AF37;
+}
+
+.block-infos > div h5 .bloc-infps-span-title{
+    color: black;
+}
+
+.block-infos > div > span{
+
+}
+
+.block-infos .block-info-details{
+   justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid black;
+    padding-bottom : 10px;
+    flex-wrap: wrap;
+}
+.block-info-details > div{
+    width : 913px;
+    justify-content: flex-end;
+    color : #D4AF37;
+}
+.block-info-details > div span{
+    font-family: "nunito", sans-serif;
+    padding-right: 20px;
+    color : #D4AF37;
+    font-size : 16px;
+    text-transform: uppercase;
+}
+
+.block-info-details > div span.per_day{
+    color : black;
+}
+.block-info-details-title {
+    font-family: 'nunito';
+    font-size: 16px;
+}
+
+#main .large-section .block-infos .block-info-details .flex-row .per_day .company, .phonenumber, .address, .address1, .address2 {
+    color: #000 !important;
+}

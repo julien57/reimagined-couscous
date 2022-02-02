@@ -1,0 +1,11 @@
+.tilte_welcome{
+    text-align: center;
+}
+
+.tilte_welcome span{
+    font-family: 'nunito', sans-serif;
+    font-size:16px;
+    width:100%;
+    padding : 5px 0;
+
+}

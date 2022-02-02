@@ -1,0 +1,27 @@
+.big-block{
+    background-color: #EFEAD0;
+    justify-content: space-between;
+    width:100%;
+}
+.big-block .wrapp-logos{
+    height:auto;
+    margin:0;
+    width:100%;
+    padding:10px 0;
+}
+.big-block .wrapp-logos .logo-service{
+    margin:20px;
+    min-width:216px;
+    width:auto;
+}
+
+.big-block .wrapp-logos .logo-service{
+
+}
+.big-block .wrapp-logos .logo-service .logo-description h5{
+    max-width:150px;
+}
+
+.big-block .wrapp-logos .logo-service .logo-description p{
+    max-width:366px;
+}

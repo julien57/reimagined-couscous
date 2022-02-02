@@ -1,0 +1,50 @@
+.large-section .section.large{
+    width : 100%;
+   /* height:100%;*/
+    align-items:center;
+    justify-content: center;
+    background: url('../../img/alvisse_home_motif01.jpg') repeat top left ;
+    background-size: 50%;
+    min-height: unset;
+    padding:unset;
+    min-height:1000px;
+
+}
+
+.large-section .section.large .bg-block{
+    width: 100%;
+    height: 100%;
+    max-width:1200px;
+}
+.large-section .section.large .bg-block1,.large-section .section.large .bg-block2{
+    width : 852px;
+    height: 426px;
+
+}
+
+.large-section .section.large .bg-block1{
+    right:0%;
+    top:17%;
+    transform:rotate(10deg);
+}
+
+.large-section .section.large .bg-block2{
+    top:unset;
+    left:0%;
+    bottom:17%;
+    transform:rotate(-3deg);
+}
+
+.large-section .section.large .large{
+    width : 100%;
+    height:100%;
+}
+
+.comp-text-img-gift .bg-block .big-circle{
+   top:46%;
+    left:4%;
+}
+
+#large_gift .comp-text-img-gift{
+    justify-content: center;
+}

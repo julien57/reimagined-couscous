@@ -1,0 +1,23 @@
+{% extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Ajout d'un administrateur</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        {{ include('bo/user/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

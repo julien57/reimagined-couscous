@@ -1,0 +1,131 @@
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-9">
+                    <h1 class="m-0">
+                        {% if app.request.attributes.get('_route_params') is defined and app.request.attributes.get('_route_params').slug is defined %}
+                            {% if default_page is defined %}
+                                {{ default_page.name }}
+                            {% endif %}
+
+                            {% if default_page is defined %}
+                                <span style="font-size:1.4rem;">{{ default_page.active ? '(En ligne)' : '(Hors-ligne)' }}</span>
+                            {% endif %}
+                            |
+
+                            {% set locale = app.session.get('_locale_edit') ?? app.session.get('_locale') %}
+
+                            <i class="flag-icon flag-icon-{{ locale }} mr-2"></i>
+
+                            <small style="font-size:45%;">
+                                | URL de la page :
+                                {% if locale == 'us' %}
+                                    {% set locale = 'en' %}
+                                {% endif %}
+                                <strong>
+                                    <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' ~ app.request.attributes.get('_route_params').slug }}">
+                                        {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' ~ app.request.attributes.get('_route_params').slug }}
+                                    </a>
+                                </strong>
+                            </small>
+                        {% endif %}
+                    </h1>
+                    {% if default_page is defined and page != 'site' %}
+                        <div class="row">
+                            <a href="{{ path('bo_deactive_page', {'id': default_page.id}) }}"
+                               class="btn btn-block btn-warning btn-sm col-md-3 mt-3 mr-3"
+                               onclick="return confirm('Etes-vous sûr de vouloir mettre cette page hors-ligne ?')">
+                                {{ default_page.active ? 'Désactiver' : 'Activer' }} la page <i class="fas fa-pencil-ruler ml-2"></i>
+                            </a>
+                            <a href="{{ path('bo_remove_page', {'id': default_page.id}) }}"
+                               class="btn btn-block btn-danger btn-sm col-md-3 mt-3"
+                               onclick="return confirm('Etes-vous sûr de vouloir supprimer cette page ?')">Supprimer la page <i class="fas fa-trash ml-2"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+         {# <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>150</h3>
+
+                            <p>New Orders</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                            <p>Bounce Rate</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>44</h3>
+
+                            <p>User Registrations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>65</h3>
+
+                            <p>Unique Visitors</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->#}
+        {% if locale is defined %}
+            <script>
+                const localForMessage = "{{ locale }}";
+            </script>
+        {% endif %}
+    </section>
+    <!-- /.content -->

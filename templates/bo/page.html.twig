@@ -1,0 +1,37 @@
+{%  extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+    <!-- Modal duplicate page -->
+    <div class="modal fade" id="modal-secondary" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content bg-secondary">
+                <form method="POST" action="{{ path('bo_duplicate_page', {'id': default_page.id}) }}">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Dupliquer la page <strong>{{ default_page.name }}</strong></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nom de la page</label>
+                            <input type="text" class="form-control" id="page_name" name="page_name" placeholder="Nom de la page">
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-outline-light">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="container">
+        {% include '/bo/blocks/_page.html.twig' %}
+    </div>
+    <input id='page_id' type="hidden" value="{{ default_page.id }}" name="page_id" />
+{% endblock %}

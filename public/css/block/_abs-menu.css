@@ -1,0 +1,66 @@
+#abs-header{
+    height:128px;
+    z-index:60;
+    min-height: unset;
+}
+
+#abs-header .head{
+    height : 64px;
+    width : 100%;
+    background-color: #2B2A28;
+}
+
+#abs-header .head-1{
+    height : 64px;
+    justify-content: flex-end;
+    z-index:5;
+}
+
+#abs-header .head-1 > div{
+    width : 40%;
+    height: 100%;
+}
+
+#abs-header .head-1 > div > a{
+    width : 30%;
+    color: #D4AF37;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing:2px;
+    font-family: 'nunito';
+    padding-top: 4px;
+}
+#head-2{
+    background-color: #1D1C19 !important;
+}
+#abs-header .head-1 > div > ul{
+    width : 30%;
+    color: #D4AF37;
+}
+#abs-header .head-2{
+    height : 64px;
+    background-color: #1D1C19;
+    justify-content: space-between;
+}
+
+ #abs-header .head-2 > div{
+    height:100%;
+    color:white;
+    width :100%;
+    letter-spacing: 3px;
+}
+ #abs-header .head-2 > div > *{
+
+}
+ #abs-header .head-2 > div > .bullet{
+    width : 20%;
+    text-align: center;
+}
+ #abs-header .head-2 > div > .bullet > i{
+    font-size : 12px;
+}
+
+ #abs-header .head-2 > div > ._text{
+    width : 40%;
+    text-align: center;
+}

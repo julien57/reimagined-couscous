@@ -1,0 +1,42 @@
+{% extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Liste des admins</h3>
+        </div>
+        <div class="card-body">
+            <table class="table" id="adminTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        {% if user == app.user %}
+                        <td><i class="far fa-user"></i> {{ user.email }} </td>
+                        {% else %}
+                        <td>{{ user.email }}</td>
+                        {% endif %}
+                        <td>
+                            {% if user != app.user %}
+                            <div class="d-flex justify-content-around">
+                                <a href="{{ path('back_user_delete', {id:user.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cet administrateur ?')">Supprimer</a>
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3">Aucun utilisateur</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

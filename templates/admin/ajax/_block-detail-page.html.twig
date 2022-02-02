@@ -1,0 +1,23 @@
+<div class="flex-row large-section page_title">
+    <h1 class="relative flex-row">{{ default_page.name }}</h1>
+    <a data-page='{{  default_page.id }}' class="remove_page">X</a>
+</div>
+
+<div id="block_page">
+    {% set json  = '' %}
+    {% if blocks_page is not empty  %}
+         {% for k,block in  blocks_page %}
+             {% set block_page_id  = block.id %}
+             {% if block.json is defined %}
+                 {% set json  = block.json %}
+             {% endif  %}
+             {% set items = block.block.blockItem %}
+             {% set block_page = block %}
+
+            {% include 'admin/ajax/_block-page.html.twig' with {block_page : block_page, block :block.block, items: items, block_page_id : block_page_id , json : json} %}
+
+         {%  endfor %}
+    {% endif  %}
+</div>
+
+<input id='page_id' type="hidden" value="{{ default_page.id }}" name="page_id" />

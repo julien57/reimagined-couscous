@@ -1,0 +1,8 @@
+.leaf-block{
+    height : 200px;
+    background: url("../../img/deco_leaf.svg") no-repeat center;
+    background-size: contain ;
+    min-height:unset;
+    padding:0;
+    margin-bottom: 80px;
+}

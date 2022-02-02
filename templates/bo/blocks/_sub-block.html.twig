@@ -1,0 +1,35 @@
+<div class="block-page-admin flex-col relative">
+
+    {% set block = block_children.children %}
+    {% set block_id = block.id %}
+    {% set json = '' %}
+    {%  set items = block.blockItem %}
+    {%  set sub_block_id = block_children.id %}
+
+    {%  if   block_children.json is defined %}
+      {% set json =  block_children.json %}
+    {% endif %}
+
+    <h3 class="relative flex-row">
+        {{ block.name|upper }}
+        <span data-id="{{ block_children.id  }}" data-sub='1' class=rem_sub>X</span>
+    </h3>
+
+    <form action="/bo/page/block/add" method="post" class="flex-col a-items-start _form-bl-item" enctype="multipart/form-data">
+
+        {% for item in items %}
+            {% if item.block.id !=  block_id %}
+                {%  set block_id= item.block.id %}
+            {% endif  %}
+
+            {%  set include = '/admin/input/'~item.item.htmlType~'.html.twig' %}
+            {% include include with {'data' : item.item , json: json} %}
+
+        {%  endfor %}
+
+        <input class="sub_block_id" type="hidden" name="sub_block_id" value="{{ sub_block_id  }}"/>
+
+        <button  class="submit btn btn-block bg-gradient-success add_sub_block col-lg-3 mt-3"  type="submit">Enregistrer</button>
+
+    </form>
+</div>

@@ -1,0 +1,16 @@
+@media screen and (max-width : 1200px ) {
+    #news-letter {
+        width: 100vw !important;
+    }
+    .bg-newsletter{
+        height:auto;
+    }
+    /*newsleter*/
+    .bg-newsletter {
+        width: 100vw;
+    }
+
+    .bg-middle-newsletter {
+        display: none;
+    }
+}

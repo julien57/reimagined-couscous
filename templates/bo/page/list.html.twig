@@ -1,0 +1,75 @@
+{% extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Pages</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="posts" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>URL</th>
+                    <th>Langues</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set locale = app.session.get('_locale_edit') ?? app.session.get('_locale') %}
+                {% if locale == 'us' %}
+                    {% set locale = 'en' %}
+                {% endif %}
+                {% for page in pages %}
+                    {% set langagesAvailable = twig_service.getLanguagesByPage(page) %}
+                    {% if page.name != 'site' and page.name != 'article' and page.type != 'post' %}
+                        <tr>
+                            <td>{{ page.name }}</td>
+                            <td>
+                                <a href="{{ app.request.schemeAndHttpHost ~ '/fr/' ~ page.slug }}" target="_blank">{{ app.request.schemeAndHttpHost ~ '/fr/' ~ page.slug }}</a>
+                            </td>
+                            <td>
+                            {% if constant('App\\Entity\\Content::LANGUAGE_FR') in langagesAvailable %}
+                                <i class="flag-icon flag-icon-fr"></i>
+                            {% endif %}
+                            {% if constant('App\\Entity\\Content::LANGUAGE_EN') in langagesAvailable %}
+                                <i class="flag-icon flag-icon-us"></i>
+                            {% endif %}
+                            {% if constant('App\\Entity\\Content::LANGUAGE_DE') in langagesAvailable %}
+                                <i class="flag-icon flag-icon-de"></i>
+                            {% endif %}
+                            </td>
+                            <td>
+                                {% if page.active %}
+                                    <span class="right badge badge-success">En ligne</span>
+                                {% else %}
+                                    <span class="right badge badge-danger">Hors-ligne</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a class="btn btn-block bg-gradient-info btn-sm" href="{{ path('bo_page_by_type', {slug:page.slug, type: 2 }) }}">Editer</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $(function () {
+    $('#posts').DataTable({
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+        },
+        "order": []
+    })
+});
+</script>
+{% endblock %}

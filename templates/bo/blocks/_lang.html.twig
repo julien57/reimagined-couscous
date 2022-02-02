@@ -1,0 +1,20 @@
+<table id="lang_datas">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Action</th>
+        <th></th>
+    </tr>
+
+    {%  for lang in langs %}
+        <tr>
+            <td>{{ lang.id }}</td>
+            <td>{{ lang.name }}</td>
+            <td>{{ lang.code }}</td>
+            <td> <a href="{{ path('bo_lang_edit', {action : 'edit'}) }}"> Edit </a></td>
+            <td> <a href="{{ path('bo_lang_rem', {action : 'rem'}) }}"> Remove </a></td>
+        </tr>
+    {% endfor %}
+
+</table>

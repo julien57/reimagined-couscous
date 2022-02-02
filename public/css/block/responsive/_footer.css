@@ -1,0 +1,126 @@
+@media screen and (max-width : 1200px ) {
+
+    /*footer*/
+    #footer{
+        width : 100vw;
+    }
+
+    #footer div.footer-top{
+        /*flex-direction: column-reverse !important;*/
+    }
+
+    #footer .section{
+        flex-direction: column !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #footer .section > div{
+        width:100%;
+    }
+    .parc-infos {
+        flex-direction: column;
+        width: 100% !important;
+        justify-content: space-between;
+
+    }
+
+    .parc-infos .parc-info{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .parc-infos .parc-info .parc-info-block{
+        width : 60%;
+        justify-content: center;
+        margin:10px;
+    }
+    #footer .footer-logos{
+        margin:30px 0;
+        flex-wrap: wrap;
+        flex-direction: row !important;
+        max-height: unset !important;
+        height : auto;
+    }
+
+    #footer-logo-parc{
+        height:auto;
+
+    }
+    .footer-logo-parc {
+        width: 100%;
+        background-size: contain;
+        height: 20vw;
+        margin-top: 30px;
+    }
+    #footer .footer-logos > div{
+        width:150px !important;
+        height:150px !important;
+        margin-right: 50px;
+    }
+    div.section > #footer-map{
+        width:100% !important;
+        height: 40vw;
+        margin: 40px 0;
+
+    }
+}
+
+@media screen and (max-width: 1024px) {
+
+    #footer .footer-global {
+        flex-direction: column-reverse;
+    }
+    #footer .footer-global .footer-copyright {
+        flex-direction: row-reverse !important;
+        flex-wrap: wrap-reverse !important;
+        width: 50% !important;
+        line-height: 2.5;
+        font-size: 2vw;
+    }
+    #footer-map-mobile{
+        display: block !important;
+        background-size: contain;
+        height:300px;
+    }
+    #footer-map {
+        display: none;
+    }
+    /*#footer .footer-copyright .copyright {
+        width: 100% !important; 
+    }*/
+   
+}
+@media (min-width:576px) and (max-width:1024px) {
+    #footer .parc-info {
+        padding:25px;
+    }
+    #footer .parc-info > div {
+        width:50%;
+        max-width: 50%;
+        margin:0;
+        padding:0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #footer .footer-global .footer-copyright {
+        width:100%!important;
+        justify-content: center!important;
+    }
+    #footer .footer-global .footer-copyright .copyright {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .footer-copyright > div {
+        margin-right: 8px !important;
+    }
+    #footer .footer-logos > div {
+        height: 80px !important;
+        width: 80px !important;
+    }
+}
+

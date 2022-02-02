@@ -1,0 +1,10 @@
+.comp-text-img-gift .bg-block-gold{
+    display:none;
+}
+
+.comp-text-img-gift .bg-block-gold.display{
+    display:none;
+}
+.large-section .section.large  .bg-block-gold.display{
+    display: none !important;
+}

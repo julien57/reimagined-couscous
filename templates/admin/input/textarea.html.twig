@@ -1,0 +1,21 @@
+<div class="input flex-col form-group">
+    <label>{{ data.name }}</label>
+  
+    {% if json is not null and json[data.htmlName|lower] is defined %}
+        {% set contentData = json[data.htmlName|lower] %}
+    {% else %}
+        {% set contentData = json %}
+    {% endif %}
+
+    {% if contentData is iterable and contentData.0 is defined %}
+        {% set contentData = contentData.0 %}
+    {% endif %}
+
+    {% if json is not empty and contentData is not iterable %}
+        <textarea name="{{ data.htmlName }}[]" {% if json.block_page_id is defined %}id="{{ data.htmlName }}{{ json.block_page_id }}"{% endif%} class="form-control wys" rows="8">
+            {{ contentData }}
+        </textarea>
+    {% else %}
+        <textarea name="{{ data.htmlName }}[]" {% if json.block_page_id is defined %}id="{{ data.htmlName }}{{ json.block_page_id }}"{% endif%} class="form-control wys" rows="8"></textarea>
+    {% endif %}
+</div>

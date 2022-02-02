@@ -1,0 +1,253 @@
+#bo
+bo:
+    path:       /bo/dashboard
+    controller: App\Controller\Bo\IndexController::index
+    methods: GET
+bo_page:
+    path:       /bo/page/{slug}
+    controller: App\Controller\Bo\IndexController::page
+    methods: GET
+bo_page_list:
+    path:       /bo/list/page
+    controller: App\Controller\Bo\IndexController::listPage
+    methods: GET
+bo_remove_page:
+    path:       /bo/remove/page/{id}
+    controller: App\Controller\Bo\IndexController::removePage
+    methods: GET
+bo_deactive_page:
+    path:       /bo/deactive/page/{id}
+    controller: App\Controller\Bo\IndexController::deactivePage
+    methods: GET
+bo_duplicate_page:
+    path:       /bo/duplicate/page/{id}
+    controller: App\Controller\Bo\IndexController::duplicatePage
+    methods: POST
+bo_page_and_block:
+    path:       /bo/page/{slug}/block/{block}
+    controller: App\Controller\Bo\IndexController::page
+    methods: GET
+bo_page_by_type:
+    path:       /bo/page/{slug}/type/{type}
+    controller: App\Controller\Bo\IndexController::page
+    methods: GET
+bo_block_daily_message:
+    path:       /bo/daily/message/
+    controller: App\Controller\Bo\IndexController::dailyMessage
+    methods: GET
+bo_block_subscriber:
+    path:       /bo/subscriber
+    controller: App\Controller\Bo\IndexController::subscriber
+    methods: GET
+bo_edit_menu:
+    path:       /bo/menu/edit
+    controller: App\Controller\Bo\MenuController::editMenu
+    methods: GET
+bo_save_menu:
+    path:       /bo/menu/save
+    controller: App\Controller\Bo\MenuController::saveMenu
+    methods: POST
+bo_create_post:
+    path:       /bo/create/post
+    controller: App\Controller\Bo\PostController::createPost
+    methods: GET
+bo_list_post:
+    path:       /bo/list/post
+    controller: App\Controller\Bo\PostController::list
+    methods: GET
+
+#langue
+bo_lang_new:
+    path:       /bo/language/{action}
+    controller: App\Controller\Bo\IndexController::language
+    methods: GET|POST
+bo_lang_edit:
+    path:       /bo/language/{action}
+    controller: App\Controller\Bo\IndexController::language
+    methods: GET|POST
+bo_lang_rem:
+    path:       /bo/language/{action}
+    controller: App\Controller\Bo\IndexController::language
+    methods: GET
+bo_lang_list:
+    path:       /bo/language
+    controller: App\Controller\Bo\IndexController::language
+    methods: GET
+bo_lang_switch:
+    path:       /bo/switch/language/{id}
+    controller: App\Controller\Bo\LanguageController::languageSwitch
+    methods: GET
+bo_new_lang_block:
+    path:       /bo/language/{langId}/block/new/{id}
+    controller: App\Controller\Bo\IndexController::newLangBlocks
+    methods: GET
+
+bo_user:
+    path:   /bo/user/
+    controller: App\Controller\Bo\UserController::new
+login:
+    path:   /login
+    controller: App\Controller\SecurityController::login
+
+###admin###
+admin:
+    path:       /admin
+    controller: App\Controller\Admin\IndexController::index
+admin_index:
+    path:       /admin/{slug}/{id}
+    controller: App\Controller\Admin\IndexController::index
+
+#page
+admin_page:
+    path:       /admin/page
+    controller: App\Controller\Admin\PageController::index
+    methods: GET
+admin_page_new:
+    path:       /admin/page/add/new
+    controller: App\Controller\Admin\PageController::add
+    methods: GET|POST
+admin_page_id:
+    path:       /admin/page/{id}
+    controller: App\Controller\Admin\PageController::index
+    methods: GET
+admin_page_add_block:
+    path:       /admin/page/block/add
+    controller: App\Controller\Admin\PageController::block
+    methods: GET|POST
+admin_remove_page:
+    path:       /admin/remove/page
+    controller: App\Controller\Admin\PageController::removePage
+    methods: GET
+#page ajax
+admin_page_ajax_get_block:
+    path:       /admin/page/{id}/blocks
+    controller: App\Controller\Admin\PageController::getAjaxDataPage
+    methods: GET
+#page get Entity without template
+get_page_entity:
+    path:       /admin/page/entity/{id}
+    controller: App\Controller\Admin\PageController::getPageEntity
+    methods: POST
+#Change attribute hasNewsletter
+edit_newsletter_page:
+    path:       /admin/page/change-newsletter/{id}
+    controller: App\Controller\Admin\PageController::editNewsletterPage
+    methods: POST
+#remove
+admin_page_ajax_remove_block:
+    path:       /admin/page/{page}/blocks/remove/{block}
+    controller: App\Controller\Admin\PageController::removeBlock
+    methods: POST|GET
+
+#sub_block
+admin_page_ajax_sub_block:
+    path:       /admin/page/sub/blocks/new
+    controller: App\Controller\Admin\BlockController::ajaxAddSubBlock
+    methods: POST|GET
+#sub_block
+admin_page_ajax_sub_block_rem:
+    path:       /admin/page/sub/blocks/remove
+    controller: App\Controller\Admin\BlockController::ajaxRemSubBlock
+    methods: POST|GET
+
+admin_page_ajax_sub_block_data_add:
+    path:       /admin/page/sub/block/add/data
+    controller: App\Controller\Admin\BlockController::ajaxAddDataSubBlock
+    methods: POST|GET
+
+#block
+admin_block:
+    path:       /admin/block
+    controller: App\Controller\Admin\BlockController::index
+
+admin_block_footer:
+    path:       /admin/block/footer
+    controller: App\Controller\Admin\BlockController::footer
+
+admin_block_id:
+    path:       /admin/block/edit/{id}
+    controller: App\Controller\Admin\BlockController::edit
+    methods: GET
+
+admin_block_form:
+    path:       /admin/ajax/form/send
+    controller: App\Controller\Admin\BlockController::ajaxForm
+    methods: POST
+admin_block_remove:
+    path:       /admin/ajax/block/remove/{id}
+    controller: App\Controller\Admin\BlockController::ajaxRemove
+    methods: GET|POST
+
+#item
+admin_item:
+    path:       /admin/item
+    controller: App\Controller\Admin\ItemController::index
+    methods: GET|POST
+
+admin_item_id:
+    path:       /admin/item/{id}
+    controller: App\Controller\Admin\ItemController::index
+    methods: GET|POST
+
+#ajax item
+admin_item_ajax:
+    path:       /admin/ajax/item/new
+    controller: App\Controller\Admin\BlockController::ajaxNewItem
+    methods: GET|POST
+
+admin_item_ajax_remove:
+    path:       /admin/ajax/block/{block}/item/{item}/remove
+    controller: App\Controller\Admin\ItemController::remove
+    methods: GET|POST
+
+admin_item_list_ajax:
+    path:       /admin/ajax/item/list
+    controller: App\Controller\Admin\BlockController::ajaxListItem
+    methods: GET
+
+admin_page_block_get:
+    path:       /admin/ajax/block/get
+    controller: App\Controller\Admin\BlockController::generatBlockForm
+    methods: POST|get
+admin_page_reorder_block:
+    path:       /admin/ajax/order/blocks/
+    controller: App\Controller\Admin\PageController::orderBlock
+    methods: POST|get
+
+
+#sites
+app_page:
+    path:       /{_locale}/{slug}
+    controller: App\Controller\Home\IndexController::page
+    defaults:
+        _locale: fr
+app_page_preview:
+    path:       /{_locale}/preview/page/{slug}
+    controller: App\Controller\Home\IndexController::page
+app_page_id:
+    path:       /{_locale}/page/{slug}/{id}
+    controller: App\Controller\Home\IndexController::page
+front_ajax_valid_offer:
+    path:       /offer/send-form
+    controller: App\Controller\Home\IndexController::validOfferForm
+
+#ajax
+
+ajax_form:
+    path:       /form/ajax/
+    controller: App\Controller\Home\AjaxController::ajax
+    methods: POST
+
+
+
+
+
+
+
+
+
+
+
+
+
+

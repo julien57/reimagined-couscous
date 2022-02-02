@@ -1,0 +1,11 @@
+<div class="input flex-col form-group">
+    <label>{{ data.name }}</label>
+
+    {% if json[data.htmlName] is defined and json is not empty %}
+        <textarea name="{{ data.htmlName }}[]" class="form-control wys wysiwyg" {% if app.request.get('slug') == 'site' %}id="dailyMessage"{% endif %}>{{ json[data.htmlName|lower].0 }}</textarea>
+    {% elseif json.text is defined and json.text is not empty %}
+        <textarea name="{{ data.htmlName }}[]" class="form-control wys wysiwyg" {% if app.request.get('slug') == 'site' %}id="dailyMessage"{% endif %}>{{ json.text.0|raw }}</textarea>
+    {% else %}
+        <textarea name="{{ data.htmlName }}[]" class="form-control wys wysiwyg" {% if app.request.get('slug') == 'site' %}id="dailyMessage"{% endif %}></textarea>
+    {% endif %}
+</div>

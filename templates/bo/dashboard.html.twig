@@ -1,0 +1,84 @@
+{% extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ countPages }}</h3>
+
+                    <p>Nb pages</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ countPosts }}</h3>
+
+                    <p>Nb actualités</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-pager"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Timeline</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+
+            <!-- Timelime example  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- The time line -->
+                    <div class="timeline">
+                        <!-- timeline time label -->
+                        {% set dateLine = '' %}
+                        {% for timeline in timelines %}
+                            {% if dateLine != timeline.updatedAt|date('d/m/Y') or loop.first %}
+                                <div class="time-label">
+                                    <span class="bg-red">{{ timeline.updatedAt|format_datetime('full', 'none', locale=app.session.get('_locale')) }}</span>
+                                </div>
+                            {% endif %}
+                            {% set dateLine = timeline.updatedAt|date('d/m/Y') %}
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <div>
+                                <i class="fas fa-user bg-green"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fas fa-clock"></i> {{ timeline.updatedAt|ago(locale=app.session.get('_locale')) }}</span>
+                                    <h3 class="timeline-header no-border"><a href="#">
+                                            {% if timeline.firstname %}
+                                                {{ timeline.firstname }}
+                                            {% endif %}
+                                        </a> a modifié le block <strong>{% if timeline.data.title is defined %}{{ timeline.data.title }}{% endif %}</strong> de la page <strong>{{ timeline.pageName }}</strong></h3>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!-- END timeline item -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+        <!-- /.timeline -->
+
+    </section>
+{% endblock %}

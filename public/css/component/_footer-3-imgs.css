@@ -1,0 +1,13 @@
+.img-slider-gallery{
+    width:453px;
+    height:453px;
+    background: url("") no-repeat top left;
+    background-size: cover;
+    margin-top : 50px;
+    z-index: 9;
+}
+
+.imgs-gallery-slider{
+    justify-content: space-between;
+    width: 100%;
+}

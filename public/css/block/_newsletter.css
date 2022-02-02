@@ -1,0 +1,50 @@
+/**
+news-letter
+ */
+
+.bg-newsletter{
+    width : 100%;
+    margin-top:100px;
+    min-height: 650px;
+}
+
+.bg-leaf-newsletter{
+    background: url('../../img/deco_leaf.svg') no-repeat top left ;
+    background-size: contain;
+    height: 155px;
+    width : 89px;
+    top: -100px;
+    position:absolute;
+    right : -45px;
+}
+.bg-middle-newsletter{
+    background: url('../../img/alvisse_home_img05.jpg') no-repeat top left ;
+    background-size: contain;
+    /*background-color: white;*/
+    height:498px;
+    width : 498px;
+    position: absolute;
+    left:50%;
+    /*margin-left : -249px;*/
+    top : 50%;
+    margin-top:-249px;
+    border-radius: 50%;
+}
+
+
+
+#news-letter{
+    align-items: flex-start;
+
+    min-height: unset;
+}
+
+.bg-motif-newsletter{
+    background: url('../../img/alvisse_home_motif06.jpg') repeat center ;
+    height : 300px;
+    width:100%;
+    position: absolute;
+    z-index:-1;
+    top:50%;
+    margin-top:-150px;
+}

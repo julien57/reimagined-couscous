@@ -1,0 +1,100 @@
+/*
+    error form
+ */
+form .error{
+    border:1px solid red !important;
+}
+
+._form{
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+._form h3, ._form h5{
+    width : 593px;
+}
+._form h3{
+    font-size:32px;
+    font-family: "ratiomodern", sans-serif;
+
+}
+
+._form h5{
+    font-size:19px;
+    font-family: "odile", sans-serif;
+    padding:50px 0;
+
+}
+
+._form .form form{
+    justify-content: space-between;
+}
+
+._form  .form form > div{
+    width : 100%;
+    height : 38px;
+    margin-top:30px;
+    font-family: 'nunito';
+}
+
+._form  .form form .half{
+    width : 45%;
+}
+
+._form  .form form .quater{
+    width : 20%;
+}
+
+
+._form  .form form > div > *{
+    width : 100%;
+    height: 100%;
+    border:none;
+    border-bottom: 1px solid black;
+    text-transform: uppercase;
+}
+
+._form  .form form > div > select{
+    text-transform: uppercase;
+    font-size:16px;
+    font-family: "nunito", sans-serif;
+    font-weight: 600;
+   /* color : #2B2A28;*/
+}
+
+._form  .form form > div > *:focus{
+    outline:none;
+}
+._form  .form form > div > *::placeholder{
+    text-transform: uppercase;
+    font-size:16px;
+    font-family: "nunito", sans-serif;
+    font-weight: 600;
+   /* color : #2B2A28;*/
+}
+
+.submit{
+    margin-top : 100px;
+}
+
+#form-booking h4, #form-booking-restaurant h4{
+    font-family: 'odile';
+    font-size: 20px;
+}
+
+#form-booking .nbr-adult, #form-booking-restaurant .nbr-adult {
+    font-family: 'nunito';
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#form-booking #_less, #form-booking #_more, #form-booking-restaurant #_less, #form-booking-restaurant #_more {
+    color: #D4AF37;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#news-letter-form #news_letter_email {
+    font-family:"odile", sans-serif;
+    color:#2B2A28;
+}

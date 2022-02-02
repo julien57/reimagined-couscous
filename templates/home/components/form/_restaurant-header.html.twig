@@ -1,0 +1,41 @@
+<form class="restaurant restaurant-mobile hidden flex-row relative form-booking" id="form-booking-restaurant">
+
+    <div class="flex-row">
+        <div class="flex-col icon unfixed">
+            <div class="calendar"></div>
+        </div>
+
+        <div class="flex-col input-check relative" >
+            <div class="flex-col icon fixed hidden">
+                <div class="calendar"></div>
+            </div>
+            <h4>{{ 'search.when'|trans }}</h4>
+            <div class="flex-row input-date relative">
+                <input required class="datepicker" type="text" name="booking_date" autocomplete="off" placeholder="{{ 'search.choice_date'|trans }}" value=""/>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-row">
+
+        <div class="flex-col icon unfixed">
+            <div class="adult"></div>
+        </div>
+
+        <div class="flex-col input-check adults relative" >
+            <div class="flex-col icon fixed hidden">
+                <div class="adult"></div>
+            </div>
+            <h4>{{ 'search.visitors'|trans }}</h4>
+            <div class="flex-row nbr_adults ">
+                <a id="_less" href="" >−</a><span class="nbr-adult" data-adult="1" >1</span><a id="_more"href="">+</a>
+            </div>
+        </div>
+        <input type="hidden" name="adult" id="restaurant_adult" class="_adult" value="1" >
+
+        <div class="flex-col input-check" >
+            <button data-context="restaurant" class=" submit_api link-orange flex-col orange" style="background:#A8002C">{{ 'search.restaurant_book'|trans }}</button>
+        </div>
+
+    </div>
+</form>

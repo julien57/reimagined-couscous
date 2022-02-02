@@ -1,0 +1,94 @@
+#contact{
+    background: url('../../img/leaf_rounded.jpg') top left  ;
+    background-repeat: no-repeat;
+    padding:0px;
+    justify-content: flex-end;
+    align-items: center;
+    /*margin:50px 0;*/
+    margin-top:80px;
+
+}
+
+.bg-middle-contact{
+    width:498px;
+    height:498px;
+    background: url('../../img/img_website/rooms/images/alvisse_rooms_img05.jpg') no-repeat center ;
+    position: absolute;
+    bottom:20px;
+    left : 50%;
+    margin-left:-280px;
+    border-radius: 50%;
+}
+
+.contact-infos{
+
+    justify-content: space-between;
+    width : 469px;
+    min-height : 250px;
+    align-items: flex-start;
+}
+
+.contact-infos h3{
+    padding : 20px 0;
+    font-family: "ratiomodern", sans-serif;
+    font-size:80px;
+}
+
+.contact-infos p{
+    font-size:14px;
+    font-family: "odile", sans-serif;
+    width:334px;
+}
+
+.contact-infos .contact_option{
+    font-family: "nunito", sans-serif;
+    width:382px;
+    padding : 20px 0;
+    font-size:16px;
+}
+
+.contact-infos .contact_option a{
+   text-underline: #1D1C19;
+    font-family: "nunito", sans-serif;
+    font-size:16px;
+    color:black;
+}
+
+#contact-form .form .flex-wrap .large .form-group legend {
+    font-weight: bold;
+}
+
+#contact-form .form form {
+    justify-content: space-between;
+}
+
+#contact-form #contact_bookingRoom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#contact-form #contact_bookingRoom input[type=radio] {
+        border: 1px solid #000;
+        padding: 0.5em;
+        -webkit-appearance: none;
+}
+
+#contact-form #contact_bookingRoom input[type=radio]:checked {
+    background-color: #D4AF37;
+}
+
+#contact-form h5 {
+    width: 100%;
+}
+
+/**
+responsive
+ */
+
+@media screen and  (min-width:1300px) and (max-width:1489px)  {
+
+    .contact-infos {
+        width: auto;
+    }
+
+}

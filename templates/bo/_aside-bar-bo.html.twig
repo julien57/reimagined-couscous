@@ -1,0 +1,185 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+               <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">-->
+            </div>
+            <div class="info">
+                <a href="" class="d-block">{{ app.user.email }}</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item {% if app.request.attributes.get('_route') == 'bo' %}menu-is-opening menu-open{% endif %}">
+                    <a href="{{ path('bo') }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo' %}active{% endif %}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-language mr-2"></i>
+                        <p>
+                            Languages
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ path('bo_lang_new', {action : 'new'}) }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('bo_lang_list') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item {% if app.request.attributes.get('_route') == 'bo_page' %}menu-is-opening menu-open{% endif %}">
+                    <a href="#" class="nav-link ">
+                        <i class="fas fa-sitemap mr-2"></i>
+                        <p>
+                            Site
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item ">
+                            <a href="{{ path('bo_edit_menu') }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_edit_menu' %}active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Menu</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item ">
+                            <a href="{{ path('bo_page', {slug: 'site'}) }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page' %}active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Général</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item {% if app.request.attributes.get('_route') == 'bo_page_list' %}menu-is-opening menu-open{% endif %}">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-pager mr-2"></i>
+                        <p>
+                            Pages
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ path('bo_page_list') }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page_list' %}active{% endif %}">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Liste</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item {% if app.request.attributes.get('_route') == 'bo_list_post' %}menu-is-opening menu-open{% endif %}">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-list mr-2"></i>
+                        <p>
+                            Actualités
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ path('bo_list_post') }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_list_post' %}active{% endif %}">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Liste</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('bo_create_post') }}" class="nav-link">
+                                <i class="fas fa-pencil-alt nav-icon"></i>
+                                <p>Créer une actu</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item ">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-users mr-2"></i>
+                        <p>
+                            Administrateurs
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        {# {% for page in pages  %} #}
+                            <li class="nav-item">
+                                <a href="{{ path('back_user_list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Liste</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('back_user_add') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ajouter un admin</p>
+                                </a>
+                            </li>
+                        {# {% endfor  %} #}
+                    </ul>
+                </li>
+                <!-- slider -->
+                {% if default_page is defined and default_page is not empty %}
+                    <!--
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-sliders-h mr-2"></i>
+                            <p>
+                                SLIDERS
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ path('bo_page_by_type', {slug:default_page.name, type: 3 }) }}" id='slider_new'  class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p> Edit </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    -->
+                {% endif %}
+
+                <li class="nav-item">
+                    <a href="{{ path('app_logout') }}" class="nav-link">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        <p>
+                            Se déconnecter
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+</aside>

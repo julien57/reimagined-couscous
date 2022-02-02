@@ -1,0 +1,82 @@
+.paths{
+    width:300px;
+    height : 600px;
+    overflow: scroll;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border:1px solid lightgrey;
+    background-color: #dfdfdf;
+}
+
+.paths > *{
+    width:100%;
+}
+
+.paths > a{
+   text-decoration: none;
+    color:black;
+    align-items: flex-start;
+    text-align: left;
+    width:auto;
+    padding:10px 0;
+
+}
+.subBlock{
+    display:none;
+}
+.subBlock h3{
+    background-color: transparent;
+    color:black;
+}
+
+.subBlock  > .block-page-admin{
+    background-color: #f1f2f3;
+}
+.subBlock  .block-page-admin h3{
+    background-color: #2B2A28;
+    color:white;
+}
+.subBlock  .block-page-admin > form{
+    display:none;
+}
+
+.new_sub_block{
+    width:40px;
+    height:40px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size:18px;
+    transition: font-size 3ms;
+}
+
+.new_sub_block:hover{
+
+    text-decoration: none;
+    font-size:20px;
+}
+.rem_sub{
+    position: absolute;
+    top:15px;
+    right : 10px;
+    font-size:12px;
+}
+
+.files{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.files > div{
+    margin:10px;
+    position: relative;
+}
+.rem_file{
+    position:absolute;
+    top:5px;
+    right:5px;
+    cursor: pointer;
+}
+.rem_file:hover{
+  color:orange;
+}

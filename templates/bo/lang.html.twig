@@ -1,0 +1,7 @@
+{% extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        {% include '/bo/blocks/'~ block  ~ '.html.twig' %}
+    </div>
+{% endblock %}

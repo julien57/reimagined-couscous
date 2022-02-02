@@ -1,0 +1,70 @@
+{%  extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-9">
+                    <h1 class="m-0">
+                        Gestion du menu
+                    </h1>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+    <div id="shared-lists">
+    <div class="row">
+        <div class="col-md-6 pr-4">
+            <h4>Composition Menu</h4>
+            <div id="nested">
+                <div id="nestedDemo" class="list-group col nested-sortable">
+                    {% set arrayPagesExist = [] %}
+                    {% for page in menus %}
+                        {% set currentPage = twig_service.getPageById(page.id) %}
+                        {% set arrayPagesExist = arrayPagesExist|merge([page.id]) %}
+                        <div class="list-group-item nested-1 font-weight-bold" data-id="{{ currentPage.id }}" style="background:#e6e6e6;">
+                            {{ currentPage.name }}
+                            <div class="list-group nested-sortable">
+                                {% for child in page.children %}
+                                    {% set currrentChild = twig_service.getPageById(child.id) %}
+                                    {% set arrayPagesExist = arrayPagesExist|merge([child.id]) %}
+                                    <div class="list-group-item nested-1" data-id="{{ currrentChild.id }}" draggable="false" style="background:#cccccc">
+                                        {{ currrentChild.name }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 border-left">
+            <h4>Autres pages disponibles</h4>
+            <div id="nested2">
+                <div id="nested2Demo" class="list-group col">
+                    {% for page in pagesEdit %}
+                        {% if page.type != 'post' %}
+                            {% if page.id not in arrayPagesExist %}
+                                {% set currentPage = twig_service.getPageById(page.id) %}
+                                <div class="list-group-item nested-1 font-weight-bold" data-id="{{ currentPage.id }}" style="background:#e6e6e6;">
+                                    {{ currentPage.name }}
+                                    <div class="list-group nested-sortable">
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="messageMenu" class="mt-5"></div>
+    <div class="col-md-4 mt-3">
+        <button type="button" id="saveMenu" class="btn btn-block btn-success btn-sm">Enregistrer le menu</button>
+    </div>
+
+{% endblock %}

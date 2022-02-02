@@ -1,0 +1,53 @@
+/**
+breakfast
+ */
+
+#breakfast{
+    background: url('../../img/leaf_rounded.jpg') top left  ;
+    background-repeat: no-repeat;
+    padding:0px;
+    margin:50px 0;
+}
+
+.bg-middle-breakfast{
+    width:498px;
+    height:498px;
+    position: absolute;
+    bottom:0;
+    left : 35%;
+    margin-left:-249px;
+    border-radius: 50%;
+}
+
+.breakfast-infos{
+    position: absolute;
+    top:0;
+    right : 20%;
+    justify-content: space-between;
+    width : 330px;
+    height : 250px;
+    z-index:1;
+    align-items: flex-start;
+}
+
+.breakfast-infos h3 {
+    font-family: "ratiomodern", sans-serif;
+    font-size:80px;
+}
+
+.breakfast-infos p{
+    font-size:14px;
+    font-family: "nunito", sans-serif;
+}
+.breakfast-infos p:nth-child(2){
+    font-family: "odile", sans-serif;
+    font-size:19px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.nineteen {
+    font-size: 19px !important;
+}
