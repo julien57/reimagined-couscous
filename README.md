@@ -4,7 +4,7 @@
 <h2>Access</h2>
 
 <h3>Admin</h3>
-<p>/bo</p>
+<p>/admin</p>
 <h3>BO</h3>
 <p>/bo/dashboard</p>
 <h3>Home</h3>
