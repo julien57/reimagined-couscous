@@ -42,11 +42,11 @@ class Item
     /**
      * @ORM\OneToMany(targetEntity="BlockItem", mappedBy="item")
      */
-    private $blockItem;
+    private $blockItems;
 
     public function __construct()
     {
-        $this->blockItem = new ArrayCollection();
+        $this->blockItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,15 +105,15 @@ class Item
     /**
      * @return Collection|BlockItem[]
      */
-    public function getBlockItem(): Collection
+    public function getBlockItems(): Collection
     {
-        return $this->blockItem;
+        return $this->blockItems;
     }
 
     public function addBlockItem(BlockItem $blockItem): self
     {
-        if (!$this->blockItem->contains($blockItem)) {
-            $this->blockItem[] = $blockItem;
+        if (!$this->blockItems->contains($blockItem)) {
+            $this->blockItems[] = $blockItem;
             $blockItem->setItem($this);
         }
 
@@ -122,7 +122,7 @@ class Item
 
     public function removeBlockItem(BlockItem $blockItem): self
     {
-        if ($this->blockItem->removeElement($blockItem)) {
+        if ($this->blockItems->removeElement($blockItem)) {
             // set the owning side to null (unless already changed)
             if ($blockItem->getItem() === $this) {
                 $blockItem->setItem(null);

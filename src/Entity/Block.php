@@ -42,17 +42,17 @@ class Block
     /**
      * @ORM\OneToMany(targetEntity="PageBlock", mappedBy="block")
      */
-    private $pageBlock;
+    private $pageBlocks;
 
     /**
      * @ORM\OneToMany(targetEntity="BlockItem", mappedBy="block")
      */
-    private $blockItem;
+    private $blockItems;
 
     /**
      * @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="children")
      */
-    private $children;
+    private $childrens;
 
     /**
      * @ORM\Column(name="subBlock",type="boolean")
@@ -61,9 +61,9 @@ class Block
 
     public function __construct()
     {
-        $this->pageBlock = new ArrayCollection();
-        $this->blockItem = new ArrayCollection();
-        $this->children = new ArrayCollection();
+        $this->pageBlocks = new ArrayCollection();
+        $this->blockItems = new ArrayCollection();
+        $this->childrens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,66 +119,6 @@ class Block
         return $this;
     }
 
-    /**
-     * @return Collection|PageBlock[]
-     */
-    public function getPageBlock(): Collection
-    {
-        return $this->pageBlock;
-    }
-
-    public function addPageBlock(PageBlock $pageBlock): self
-    {
-        if (!$this->pageBlock->contains($pageBlock)) {
-            $this->pageBlock[] = $pageBlock;
-            $pageBlock->setBlock($this);
-        }
-
-        return $this;
-    }
-
-    public function removePageBlock(PageBlock $pageBlock): self
-    {
-        if ($this->pageBlock->removeElement($pageBlock)) {
-            // set the owning side to null (unless already changed)
-            if ($pageBlock->getBlock() === $this) {
-                $pageBlock->setBlock(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|BlockItem[]
-     */
-    public function getBlockItem(): Collection
-    {
-        return $this->blockItem;
-    }
-
-    public function addBlockItem(BlockItem $blockItem): self
-    {
-        if (!$this->blockItem->contains($blockItem)) {
-            $this->blockItem[] = $blockItem;
-            $blockItem->setBlock($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBlockItem(BlockItem $blockItem): self
-    {
-        if ($this->blockItem->removeElement($blockItem)) {
-            // set the owning side to null (unless already changed)
-            if ($blockItem->getBlock() === $this) {
-                $blockItem->setBlock(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getSubBlock(): ?bool
     {
         return $this->subBlock;
@@ -192,29 +132,89 @@ class Block
     }
 
     /**
-     * @return Collection|BlockChildren[]
+     * @return Collection|PageBlock[]
      */
-    public function getChildren(): Collection
+    public function getPageBlocks(): Collection
     {
-        return $this->children;
+        return $this->pageBlocks;
     }
 
-    public function addChild(BlockChildren $child): self
+    public function addPageBlock(PageBlock $pageBlock): self
     {
-        if (!$this->children->contains($child)) {
-            $this->children[] = $child;
-            $child->setChildren($this);
+        if (!$this->pageBlocks->contains($pageBlock)) {
+            $this->pageBlocks[] = $pageBlock;
+            $pageBlock->setBlock($this);
         }
 
         return $this;
     }
 
-    public function removeChild(BlockChildren $child): self
+    public function removePageBlock(PageBlock $pageBlock): self
     {
-        if ($this->children->removeElement($child)) {
+        if ($this->pageBlocks->removeElement($pageBlock)) {
             // set the owning side to null (unless already changed)
-            if ($child->getChildren() === $this) {
-                $child->setChildren(null);
+            if ($pageBlock->getBlock() === $this) {
+                $pageBlock->setBlock(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BlockItem[]
+     */
+    public function getBlockItems(): Collection
+    {
+        return $this->blockItems;
+    }
+
+    public function addBlockItem(BlockItem $blockItem): self
+    {
+        if (!$this->blockItems->contains($blockItem)) {
+            $this->blockItems[] = $blockItem;
+            $blockItem->setBlock($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlockItem(BlockItem $blockItem): self
+    {
+        if ($this->blockItems->removeElement($blockItem)) {
+            // set the owning side to null (unless already changed)
+            if ($blockItem->getBlock() === $this) {
+                $blockItem->setBlock(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BlockChildren[]
+     */
+    public function getChildrens(): Collection
+    {
+        return $this->childrens;
+    }
+
+    public function addChildren(BlockChildren $children): self
+    {
+        if (!$this->childrens->contains($children)) {
+            $this->childrens[] = $children;
+            $children->setChildren($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChildren(BlockChildren $children): self
+    {
+        if ($this->childrens->removeElement($children)) {
+            // set the owning side to null (unless already changed)
+            if ($children->getChildren() === $this) {
+                $children->setChildren(null);
             }
         }
 

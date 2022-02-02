@@ -35,7 +35,7 @@ class Page
     /**
      * @ORM\OneToMany(targetEntity="PageBlock", mappedBy="page", cascade={"remove"})
      */
-    private $pageBlock;
+    private $pageBlocks;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -65,7 +65,7 @@ class Page
     public function __construct()
     {
         $this->hasNewsletter = false;
-        $this->pageBlock = new ArrayCollection();
+        $this->pageBlocks = new ArrayCollection();
         $this->active = false;
     }
 
@@ -82,36 +82,6 @@ class Page
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|PageBlock[]
-     */
-    public function getPageBlock(): Collection
-    {
-        return $this->pageBlock;
-    }
-
-    public function addPageBlock(PageBlock $pageBlock): self
-    {
-        if (!$this->pageBlock->contains($pageBlock)) {
-            $this->pageBlock[] = $pageBlock;
-            $pageBlock->setPage($this);
-        }
-
-        return $this;
-    }
-
-    public function removePageBlock(PageBlock $pageBlock): self
-    {
-        if ($this->pageBlock->removeElement($pageBlock)) {
-            // set the owning side to null (unless already changed)
-            if ($pageBlock->getPage() === $this) {
-                $pageBlock->setPage(null);
-            }
-        }
 
         return $this;
     }
@@ -189,6 +159,36 @@ class Page
     public function setMetaDescription(?string $metaDescription): self
     {
         $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PageBlock[]
+     */
+    public function getPageBlocks(): Collection
+    {
+        return $this->pageBlocks;
+    }
+
+    public function addPageBlock(PageBlock $pageBlock): self
+    {
+        if (!$this->pageBlocks->contains($pageBlock)) {
+            $this->pageBlocks[] = $pageBlock;
+            $pageBlock->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removePageBlock(PageBlock $pageBlock): self
+    {
+        if ($this->pageBlocks->removeElement($pageBlock)) {
+            // set the owning side to null (unless already changed)
+            if ($pageBlock->getPage() === $this) {
+                $pageBlock->setPage(null);
+            }
+        }
 
         return $this;
     }

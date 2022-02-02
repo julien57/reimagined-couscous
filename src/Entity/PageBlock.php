@@ -26,7 +26,7 @@ class PageBlock
     private $block;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Page", inversedBy="pageBlock")
+     * @ORM\ManyToOne(targetEntity="Page", inversedBy="pageBlocks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $page;
@@ -39,7 +39,7 @@ class PageBlock
     /**
      * @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="pageBlock", cascade={"remove"})
      */
-    private $pageBlock;
+    private $blockChildrens;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
@@ -63,9 +63,9 @@ class PageBlock
 
     public function __construct()
     {
-        $this->pageBlock = new ArrayCollection();
         $this->timelines = new ArrayCollection();
         $this->contents = new ArrayCollection();
+        $this->blockChildrens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,36 +117,6 @@ class PageBlock
     public function setPage(?Page $page): self
     {
         $this->page = $page;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|BlockChildren[]
-     */
-    public function getPageBlock(): Collection
-    {
-        return $this->pageBlock;
-    }
-
-    public function addPageBlock(BlockChildren $pageBlock): self
-    {
-        if (!$this->pageBlock->contains($pageBlock)) {
-            $this->pageBlock[] = $pageBlock;
-            $pageBlock->setPageBlock($this);
-        }
-
-        return $this;
-    }
-
-    public function removePageBlock(BlockChildren $pageBlock): self
-    {
-        if ($this->pageBlock->removeElement($pageBlock)) {
-            // set the owning side to null (unless already changed)
-            if ($pageBlock->getPageBlock() === $this) {
-                $pageBlock->setPageBlock(null);
-            }
-        }
 
         return $this;
     }
@@ -222,6 +192,36 @@ class PageBlock
             // set the owning side to null (unless already changed)
             if ($content->getPageBlock() === $this) {
                 $content->setPageBlock(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BlockChildren[]
+     */
+    public function getBlockChildrens(): Collection
+    {
+        return $this->blockChildrens;
+    }
+
+    public function addBlockChildren(BlockChildren $blockChildren): self
+    {
+        if (!$this->blockChildrens->contains($blockChildren)) {
+            $this->blockChildrens[] = $blockChildren;
+            $blockChildren->setPageBlock($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlockChildren(BlockChildren $blockChildren): self
+    {
+        if ($this->blockChildrens->removeElement($blockChildren)) {
+            // set the owning side to null (unless already changed)
+            if ($blockChildren->getPageBlock() === $this) {
+                $blockChildren->setPageBlock(null);
             }
         }
 

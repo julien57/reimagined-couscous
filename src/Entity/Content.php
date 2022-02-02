@@ -27,13 +27,13 @@ class Content
     private $json;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PageBlock", inversedBy="jsonContent")
-     * @ORM\JoinColumn(name="page_block_id", referencedColumnName="id",  nullable = true)
+     * @ORM\ManyToOne(targetEntity="PageBlock", inversedBy="blockChildrens")
+     * @ORM\JoinColumn(name="page_block_id", referencedColumnName="id", nullable=true)
      */
     private $pageBlock;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BlockChildren", inversedBy="jsonContent")
+     * @ORM\ManyToOne(targetEntity="BlockChildren")
      * @ORM\JoinColumn(name="block_children_id", referencedColumnName="id",  nullable = true, onDelete="CASCADE")
      */
     private $blockChildren;
