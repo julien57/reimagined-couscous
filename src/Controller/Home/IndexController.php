@@ -178,31 +178,17 @@ class IndexController extends AbstractController
             unset($datas['blocks']);
             $datas = array_merge($datas, $array);
         } else {
-            if (!in_array($slug, $this->valid_route)) {
-                $slug = '404';
+
+            $pages = $this->getDoctrine()->getRepository(Page::class)->findAll();
+
+            if (!empty($pages)) {
+                throw $this->createNotFoundException('Page Not exist');
             }
 
-            $form = '';
-            $is_numeric = true;
-
-            if ('' != $id) {
-                if (!is_numeric($id)) {
-                    $id = str_replace('-', '_', $id);
-                    $is_numeric = false;
-                }
-            }
-
-            $datas = $this->_page($slug, $id);
-
-            if (!$is_numeric) {
-                $id = '';
-            }
-
-            $datas['slug'] = $slug;
-
-            if (!is_null($id)) {
-                $datas['id'] = $id;
-            }
+            return $this->render('home/welcome_page.html.twig', [
+                'header' => 'header_default',
+                'footer' => 'footer_default',
+            ]);
         }
 
         if (array_key_exists($slug, $this->page_form)) {
