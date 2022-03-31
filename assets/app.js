@@ -6,12 +6,12 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/general.scss';
-import './styles/common.scss';
-import './styles/blocks/header.scss';
-import './styles/components/cursor.scss';
-import './styles/components/loader.scss';
+
+// Example ;
+import './styles/base.scss';
 
 // start the Stimulus application
 import './bootstrap';
-import './js/header.js';
+
+// Example :
+//import './js/header.js';
