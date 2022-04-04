@@ -150,7 +150,7 @@ class IndexController extends AbstractController
 
         //get slide home
         if (3 == $type) {
-            $list_block = $this->getDoctrine()->getRepository(Block::class)->findBy(['id' => 54, 'type' => 5], ['name' => 'ASC']);
+            $list_block = $this->getDoctrine()->getRepository(Block::class)->findOneBy(['id' => 54, 'type' => 5], ['name' => 'ASC']);
         } else {
             $list_block = $this->getDoctrine()->getRepository(Block::class)->findBy(['type' => 5], ['name' => 'ASC']);
         }

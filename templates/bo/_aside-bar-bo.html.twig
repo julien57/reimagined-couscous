@@ -95,7 +95,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('bo_create_page') }}" class="nav-link">
+                            <a href="{{ path('bo_create_page') }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_create_page' %}active{% endif %}">
                                 <i class="fas fa-pencil-alt nav-icon"></i>
                                 <p>Créer une page</p>
                             </a>

@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Block
 {
+    public const BLOCK_TYPE_HEADER = 1;
+    public const BLOCK_TYPE_SLIDER = 3;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

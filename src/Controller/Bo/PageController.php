@@ -10,7 +10,6 @@ use App\Repository\PageRepository;
 use App\Service\LangService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PageController extends AbstractController
@@ -31,13 +30,14 @@ class PageController extends AbstractController
     public function createPage(SessionInterface $session, LangService $langService)
     {
         $new = new Page();
-        $new->setName('Nouvelle Page'.uniqid());
+        $new->setName('Nouvelle Page '.uniqid());
         $new->setType(Page::PAGE_TYPE_PAGE);
 
         $newBlockPage = new PageBlock();
         $newBlockPage->setItemOrder(0);
         $new->addPageBlock($newBlockPage);
         $newBlockPage->setPage($new);
+
 
         $localSession = $session->get('_locale_edit');
         if ('en' === $localSession) {

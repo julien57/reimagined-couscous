@@ -78,7 +78,7 @@ class BlockRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->addSelect('bp')//block page
             ->addSelect('p')//page
-            ->leftJoin('b.pageBlock', 'bp')
+            ->leftJoin('b.pageBlocks', 'bp')
             ->leftJoin('bp.page', 'p')
             ->where('p.name = :name')
             ->andWhere('b.type = :type')
