@@ -23,7 +23,7 @@ class BlockChildren
     private $jsonData;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PageBlock", inversedBy="pageBlock")
+     * @ORM\ManyToOne(targetEntity="PageBlock", inversedBy="blockChildrens")
      * @ORM\JoinColumn(nullable=false)
      */
     private $pageBlock;
