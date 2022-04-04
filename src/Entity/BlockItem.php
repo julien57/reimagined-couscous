@@ -18,13 +18,13 @@ class BlockItem
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Block", inversedBy="blockItem")
+     * @ORM\ManyToOne(targetEntity="Block", inversedBy="blockItems")
      * @ORM\JoinColumn(nullable=false)
      */
     private $block;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="blockItem")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="blockItems")
      * @ORM\JoinColumn(nullable=false)
      */
     private $item;
