@@ -21,7 +21,7 @@ class PageBlock
 
     /**
      * @ORM\ManyToOne(targetEntity="Block", inversedBy="pageBlock")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $block;
 

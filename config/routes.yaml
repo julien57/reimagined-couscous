@@ -51,6 +51,10 @@ bo_create_post:
     path:       /bo/create/post
     controller: App\Controller\Bo\PostController::createPost
     methods: GET
+bo_create_page:
+    path:       /bo/create/page
+    controller: App\Controller\Bo\PageController::createPage
+    methods: GET
 bo_list_post:
     path:       /bo/list/post
     controller: App\Controller\Bo\PostController::list

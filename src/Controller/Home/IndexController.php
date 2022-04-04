@@ -100,7 +100,7 @@ class IndexController extends AbstractController
      *
      * @Route("/{slug}", name="front_index_page", defaults={"slug": "/"})
      */
-    public function page($slug, $id = '', Request $request, MenuRepository $menuRepository, LangService $langService)
+    public function page($slug, Request $request, MenuRepository $menuRepository, LangService $langService)
     {
         $page = $this->getDoctrine()->getRepository(Page::class)->findBy(['slug' => $slug]);
 
