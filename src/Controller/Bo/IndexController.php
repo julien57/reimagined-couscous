@@ -103,12 +103,13 @@ class IndexController extends AbstractController
     public function page(Request $request, $slug, $type = 0, SessionInterface $session, LangService $langService)
     {
         // TOOD FORCE LOCALE
-        $session->set('_locale', 'fr');
+        //$session->set('_locale', 'fr');
         if (!$session->get('_locale_edit')) {
             $session->set('_locale_edit', 'fr');
         }
 
         $id = $request->request->get('id');
+
         //get all langue
         $langs = $this->getDoctrine()->getRepository(Language::class)->findAll();
         //get all pages
@@ -135,14 +136,14 @@ class IndexController extends AbstractController
             $locale = $session->get('_locale_edit');
         }
 
-        $blocks_page = $this->_getDataPage($page, $default_block, $langService->getCodeLanguage($session->get('_locale_edit')));
+        $blocks_page = $this->_getDataPage($page, $default_block, $langService->getCodeLanguage($locale));
 
         $sliders = $this->getDoctrine()->getRepository(Block::class)->findByPageAndType($slug, 3); //type slider = 3
 
         foreach ($blocks_page  as $key => $b_p) {
             $b_p->json = json_decode($b_p->getjsonData(), true);
             if (true === $b_p->getBlock()->getSubBlock()) {
-                foreach ($b_p->getPageBlock() as $pb) {
+                foreach ($b_p->getBlockChildrens() as $pb) {
                     $pb->json = json_decode($pb->getjsonData(), true);
                 }
             }

@@ -50,7 +50,7 @@ class Block
     private $blockItems;
 
     /**
-     * @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="children")
+     * @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="block")
      */
     private $childrens;
 

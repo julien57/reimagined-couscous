@@ -23,19 +23,17 @@ class ContentRepository extends ServiceEntityRepository
     public function getLangExist(?int $langId, int $pageId)
     {
         $qb = $this->createQueryBuilder('c')
-            ->leftJoin('c.pageBlock', 'pageBlock')
-            ->leftJoin('pageBlock.page', 'page')
             ->leftJoin('c.blockChildren', 'blockChildren')
-            ->leftJoin('blockChildren.pageBlock', 'pageBlockChildren')
-            ->leftJoin('pageBlockChildren.page', 'pageChildren')
+            ->leftJoin('c.pageBlock', 'pageblock')
+            ->leftJoin('pageblock.page', 'page')
             ->where('page.id = :pageId')
             ->setParameter('pageId', $pageId)
-            ->orWhere('pageChildren.id = :pageChild')
-            ->setParameter('pageChild', $pageId);
+            ->orWhere('page.id = :pageId')
+            ->setParameter('pageId', $pageId);
 
         if ($langId) {
             $qb
-                ->andWhere('c.language = :lang')
+                ->andWhere('pageblock.language = :lang')
                 ->setParameter('lang', $langId);
         }
 
@@ -64,9 +62,7 @@ class ContentRepository extends ServiceEntityRepository
     public function getContentsByLang(Page $page)
     {
         return $this->createQueryBuilder('c')
-            ->select('c.language')
-            ->leftJoin('c.pageBlock', 'pageBlock')
-            ->leftJoin('pageBlock.page', 'page')
+            ->leftJoin('c.page', 'page')
             ->where('page.id = :pageId')
             ->setParameter('pageId', $page->getId())
             ->groupBy('c.language')

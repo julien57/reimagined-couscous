@@ -2,16 +2,16 @@
     <div class="col-md-10">
         <div class="block-page-admin flex-col relative mt-2" style="border:3px dashed lightgrey;">
 
-            {% set block = block_children.children %}
+            {% set block = block_children.block %}
             {% set block_id = block.id %}
             {% set json = '' %}
-            {% set items = block.blockItem %}
+            {% set items = block.blockItems %}
             {% set sub_block_id = block_children.id %}
 
             {%  if   block_children.json is defined %}
                 {% set json =  block_children.json %}
             {% endif %}
-            
+
             <h3 class="relative flex-row" style="margin-bottom:0;">
                 {{ block.name|upper }}
 

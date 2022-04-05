@@ -48,19 +48,15 @@ class BlockChildrenRepository extends ServiceEntityRepository
     }
     */
 
-    public function getBlockChildren($value): ?BlockChildren
+    public function getBlockChildren(int $blockId): ?BlockChildren
     {
         return $this->createQueryBuilder('bc')
             ->addSelect('bl')//block
             ->addSelect('pb')//page
-            ->addSelect('b_i')//blockitem
-            ->addSelect('i')//item
-            ->leftJoin('bc.children', 'bl')
+            ->leftJoin('bc.block', 'bl')
             ->leftJoin('bc.pageBlock', 'pb')
-            ->leftJoin('bl.blockItem', 'b_i')
-            ->leftJoin('b_i.item', 'i')
-            ->andWhere('bc.id = :val')
-            ->setParameter('val', $value)
+            ->andWhere('bl.id = :val')
+            ->setParameter('val', $blockId)
             ->getQuery()
             ->getOneOrNullResult()
             ;

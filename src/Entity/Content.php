@@ -36,7 +36,7 @@ class Content
     private $pageBlock;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BlockChildren")
+     * @ORM\ManyToOne(targetEntity="BlockChildren", cascade={"remove"})
      */
     private $blockChildren;
 
