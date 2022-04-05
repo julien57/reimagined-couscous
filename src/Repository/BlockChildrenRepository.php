@@ -61,4 +61,18 @@ class BlockChildrenRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+
+    public function getBlocksChildrenByBlockId(int $blockId): ?array
+    {
+        return $this->createQueryBuilder('bc')
+            ->addSelect('bl')//block
+            ->addSelect('pb')//page
+            ->leftJoin('bc.block', 'bl')
+            ->leftJoin('bc.pageBlock', 'pb')
+            ->andWhere('bl.id = :val')
+            ->setParameter('val', $blockId)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

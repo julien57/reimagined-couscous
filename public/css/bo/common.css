@@ -45,10 +45,11 @@ nav .nav-sidebar >li.nav-item > a.nav-link{
 
 .subBlock{
     display:none;
+    padding-bottom:35px;
 }
 
 #pages_block .subBlock h3{
-    background-color: lightgrey !important;
+    background-color: darkgrey !important;
 }
 
 .subBlock .block-page-admin .form{

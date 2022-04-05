@@ -32,7 +32,7 @@ class PageBlock
     private $page;
 
     /**
-     * @ORM\OneToMany(targetEntity="Content", mappedBy="pageBlock")
+     * @ORM\OneToMany(targetEntity="Content", mappedBy="pageBlock", cascade={"remove"})
      */
     private $contents;
 

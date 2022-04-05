@@ -170,19 +170,19 @@ class BlockController extends AbstractController
         $pageBlock = $this->getDoctrine()->getRepository(PageBlock::class)->find($page_block_id);
         $block = $this->getDoctrine()->getRepository(Block::class)->find($blockId);
 
-        $blockChildren = new BlockChildren();
-        $blockChildren->setPageBlock($pageBlock);
-        $blockChildren->setBlock($block);
+        $newBlockChildren = new BlockChildren();
+        $newBlockChildren->setPageBlock($pageBlock);
+        $newBlockChildren->setBlock($block);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($blockChildren);
+        $entityManager->persist($newBlockChildren);
         $entityManager->flush();
 
         //$blockChildren  = $this->getDoctrine()->getRepository(BlockChildren::class)->find( $blockChildren->getId() );
-        $blockChildren = $this->getDoctrine()->getRepository(BlockChildren::class)->getBlockChildren($block->getId());
+        //$blockChildren = $this->getDoctrine()->getRepository(BlockChildren::class)->getBlocksChildrenByBlockId($block->getId());
 
         return $this->render('admin/ajax/_sub-block.html.twig', [
-            'block_children' => $blockChildren,
+            'block_children' => $newBlockChildren,
         ]);
     }
 

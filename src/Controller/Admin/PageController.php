@@ -390,24 +390,28 @@ class PageController extends AbstractController
 
         $lang = $langService->getCodeLanguage($lang);
 
-        $block = $this->getDoctrine()->getRepository(PageBlock::class)->findOneBy(['page' => $page, 'id' => $blockpagge]);
+        $pageBlock = $this->getDoctrine()->getRepository(PageBlock::class)->findOneBy(['page' => $page, 'id' => $blockpagge]);
 
-        $contents = $contentRepository->findBy(['pageBlock' => $block, 'language' => $lang]);
+        $contents = $contentRepository->findBy(['pageBlock' => $pageBlock, 'language' => $lang]);
 
-        foreach ($block->getPageBlock() as $children) {
-            $block->removePageBlock($children);
+        foreach ($pageBlock->getBlockChildrens() as $children) {
+            $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(['blockChildren' => $children]);
+            $entityManager->remove($content);
+            $pageBlock->removeBlockChildren($children);
             $entityManager->remove($children);
         }
 
         $entityManager->flush();
+
         foreach ($contents as $content) {
-            $block->removeContent($content);
+            $pageBlock->removeContent($content);
             $content->setPageBlock(null);
             $entityManager->remove($content);
         }
         $entityManager->flush();
+
         try {
-            $entityManager->remove($block);
+            $entityManager->remove($pageBlock);
             $entityManager->flush();
         } catch (\Exception $e) {
             return new JsonResponse(json_encode(['success' => $e->getMessage()]));

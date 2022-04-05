@@ -244,6 +244,10 @@ $(function(){
     $(document).on('click','.new_sub_block',function( e){
 
         e.preventDefault();
+        var subBlock = $(this).closest('.subBlock');
+        function getSubBlock() {
+            return subBlock;
+        }
 
         var p_b_id = $(this).data('bp');
         //var block =  $('.sub_block_list').val();
@@ -256,12 +260,29 @@ $(function(){
             dataType:  'html',
             data : data,
             async:   true,
-            success: function(data, status) {
-                $('.subBlock').append(data);
+            success: function(data) {
+                var subBlockData = getSubBlock();
+                subBlockData.append(data);
+
+                if (subBlockData.find('.wys.wysiwyg').length > 0) {
+                    var textareas = subBlockData.find('.wys.wysiwyg');
+                    var textarea = textareas.last()
+                    var uniqId = Math.floor(Math.random() * 100);
+                    textarea.attr('data-id', uniqId)
+
+                    // If WYSIWYG add editor at new block
+                    $(".wys.wysiwyg").each(function () {
+                        if ($(this).attr('data-id')) {
+                            CKEDITOR.replace(this);
+                        }
+                    });
+
+                    textarea.removeAttr('data-id');
+                }
             },
 
             error : function(xhr, textStatus, errorThrown) {
-                alert('Ajax request failed.');
+                //alert('Ajax request failed.');
             }
         });
 
