@@ -62,6 +62,11 @@ class Page
      */
     private $metaDescription;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $slugs = [];
+
     public function __construct()
     {
         $this->hasNewsletter = false;
@@ -189,6 +194,18 @@ class Page
                 $pageBlock->setPage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlugs(): ?array
+    {
+        return $this->slugs;
+    }
+
+    public function setSlugs(?array $slugs): self
+    {
+        $this->slugs = $slugs;
 
         return $this;
     }

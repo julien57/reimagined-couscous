@@ -10,6 +10,7 @@ use App\Repository\PageRepository;
 use App\Service\LangService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PageController extends AbstractController
@@ -27,10 +28,15 @@ class PageController extends AbstractController
         $this->em = $em;
     }
 
-    public function createPage(SessionInterface $session, LangService $langService)
+    public function createPage(SessionInterface $session, Request $request)
     {
+        if (!$request->get('page_name')) {
+            $this->addFlash('danger', 'Aucun nom pour la page');
+            return $this->redirectToRoute('bo');
+        }
+
         $new = new Page();
-        $new->setName('Nouvelle Page '.uniqid());
+        $new->setName($request->get('page_name'));
         $new->setType(Page::PAGE_TYPE_PAGE);
 
         $newBlockPage = new PageBlock();

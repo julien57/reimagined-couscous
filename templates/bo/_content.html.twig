@@ -32,6 +32,26 @@
                             </small>
                         {% endif %}
                     </h1>
+                    {% if default_page is defined %}
+                        <div class="row">
+                            {% set defaultSlug = default_page.slug %}
+                            {% if default_page.slugs[locale] is defined and default_page.slugs[locale] is not null %}
+                                {% set defaultSlug = default_page.slugs[locale] %}
+                            {% endif %}
+
+                            <form id="formSaveSlug" class="d-flex align-items-end col-md-12">
+                                    <span class="d-flex align-items-end font-weight-bold mr-3">
+                                        {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}
+                                        <input type="text" name="slug" value="{{ defaultSlug }}" style="height:24px;">
+                                        <input type="hidden" name="pageId" value="{{ default_page.id }}">
+                                    </span>
+                                <button type="submit" class="btn btn-block btn-success btn-xs mr-3" style="width:100px" id="btnSlug"><i class="fas fa-save"></i> Enregistrer</button>
+                                <a href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' ~ defaultSlug ?? default_page.slug }}" class="btn btn-block btn-info btn-xs" id="btnSeePage" style="width:100px" target="_blank">
+                                    <i class="fas fa-eye"></i> Voir
+                                </a>
+                            </form>
+                        </div>
+                    {% endif %}
                     {% if default_page is defined and page != 'site' %}
                         <div class="row">
                             <a href="{{ path('bo_deactive_page', {'id': default_page.id}) }}"

@@ -59,7 +59,7 @@
                                 <h5 class="card-title m-0">Dupliquer la page</h5>
                             </div>
                             <div class="card-body">
-                                <button data-target="#modal-secondary" data-toggle="modal" type="button" class="btn btn-block btn-warning btn-sm">Dupliquer la page</button>
+                                <button  type="button" class="btn btn-block btn-warning btn-sm">Dupliquer la page</button>
                             </div>
                         </div>
                     </div>
@@ -79,6 +79,7 @@
                                         {% endif %}
                                         {% set countContentByLang = twig_service.isLangExitByPage(lang.id, default_page.id) %}
                                         <a href="{{ path('bo_new_lang_block', {'id':default_page.id, 'langId': lang.id }) }}"
+                                           title="{{ lang.name }}"
                                            class="dropdown-item text-center position-relative {{ locale == lang.code ? 'active' : '' }}">
                                             <i class="flag-icon flag-icon-{{ flagLocale }} mr-2"></i>
                                             {% if countContentByLang > 0 %}

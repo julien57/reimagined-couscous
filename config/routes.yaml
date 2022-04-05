@@ -54,11 +54,15 @@ bo_create_post:
 bo_create_page:
     path:       /bo/create/page
     controller: App\Controller\Bo\PageController::createPage
-    methods: GET
+    methods: GET|POST
 bo_list_post:
     path:       /bo/list/post
     controller: App\Controller\Bo\PostController::list
     methods: GET
+bo_save_slug:
+    path: /bo/slug/save
+    controller: App\Controller\Bo\IndexController::saveSlug
+    methods: POST
 
 #langue
 bo_lang_new:

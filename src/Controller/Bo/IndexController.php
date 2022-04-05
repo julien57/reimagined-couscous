@@ -24,6 +24,7 @@ use App\Service\LangService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -232,6 +233,36 @@ class IndexController extends AbstractController
             'slug' => $slugger->slug($new->getName())->lower(),
             'type' => 2,
         ]);
+    }
+
+    public function saveSlug(SessionInterface $session)
+    {
+        $request = Request::createFromGlobals();
+        $locale = $session->get('_locale_edit');
+
+        if (!$request->get('slug') || !$request->get('pageId')) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'Missing parameters'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $pageId = $request->get('pageId');
+        $page = $this->getDoctrine()
+            ->getRepository(Page::class)
+            ->find($pageId);
+
+        $arraySlugs = $page->getSlugs();
+        $arraySlugs[$locale] = $request->get('slug');
+        $page->setSlugs($arraySlugs);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        return $this->json([
+            'status' => 'ok',
+            'slug' => $request->get('slug')
+        ], Response::HTTP_OK);
     }
 
     public function newLangBlocks(

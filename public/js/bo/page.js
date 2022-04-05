@@ -1,6 +1,31 @@
 $(function(){
 
     /**
+     * Save slug page
+     */
+    $(document).on("submit",'#formSaveSlug', function( e ){
+        e.preventDefault();
+        var data = $(this).closest('form').serialize();
+
+        $.ajax({
+            url: '/bo/slug/save',
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            async: true,
+
+            success: function(data, status) {
+                $('#btnSlug i').removeClass('fa-save').addClass('fa-check');
+                $('#btnSeePage').attr('href', `${window.location.origin}/${localForMessage}/${data.slug}`);
+            },
+
+            error : function(xhr, textStatus, errorThrown) {
+                console.error('Ajax request failed.');
+            }
+        });
+    });
+
+    /**
      * add block to page
      */
     $(document).on("click",'#new_block', function( e ){
