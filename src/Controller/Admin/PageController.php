@@ -12,6 +12,7 @@ use App\Entity\PageBlock;
 use App\Entity\Timeline;
 use App\Form\PageType;
 use App\Repository\ContentRepository;
+use App\Repository\LanguageRepository;
 use App\Repository\PageRepository;
 use App\Service\FileUploader;
 use App\Service\LangService;
@@ -110,11 +111,20 @@ class PageController extends AbstractController
             ], Response::HTTP_FOUND);
         }
 
+        $language = null;
+        if ($request->get('locale')) {
+            $language = $this->getDoctrine()->getRepository(LanguageRepository::class)->findOneBy(['code' => $request->get('locale')]);
+        }
+
         if (!empty($_POST['sub_block_id'])) {
             $context_record = $this->getDoctrine()->getRepository(BlockChildren::class)->find($_POST['sub_block_id']);
         } else {
             $block_page_id = $_POST['block_page_id'];
-            $context_record = $this->getDoctrine()->getRepository(PageBlock::class)->find($block_page_id);
+            if ($language) {
+                $context_record = $this->getDoctrine()->getRepository(PageBlock::class)->findOneBy(['id' => $block_page_id, 'language' => $language]);
+            } else {
+                $context_record = $this->getDoctrine()->getRepository(PageBlock::class)->find($block_page_id);
+            }
         }
 
         $array = [];
@@ -229,7 +239,7 @@ class PageController extends AbstractController
             $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(
                 [
                         'pageBlock' => $block_page_id,
-                        'language' => $lang->getId(),
+                        'language' => $lang,
                 ]
             );
 
@@ -380,24 +390,28 @@ class PageController extends AbstractController
 
         $lang = $langService->getCodeLanguage($lang);
 
-        $block = $this->getDoctrine()->getRepository(PageBlock::class)->findOneBy(['page' => $page, 'id' => $blockpagge]);
+        $pageBlock = $this->getDoctrine()->getRepository(PageBlock::class)->findOneBy(['page' => $page, 'id' => $blockpagge]);
 
-        $contents = $contentRepository->findBy(['pageBlock' => $block, 'language' => $lang]);
+        $contents = $contentRepository->findBy(['pageBlock' => $pageBlock, 'language' => $lang]);
 
-        foreach ($block->getPageBlock() as $children) {
-            $block->removePageBlock($children);
+        foreach ($pageBlock->getBlockChildrens() as $children) {
+            $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(['blockChildren' => $children]);
+            $entityManager->remove($content);
+            $pageBlock->removeBlockChildren($children);
             $entityManager->remove($children);
         }
 
         $entityManager->flush();
+
         foreach ($contents as $content) {
-            $block->removeContent($content);
+            $pageBlock->removeContent($content);
             $content->setPageBlock(null);
             $entityManager->remove($content);
         }
         $entityManager->flush();
+
         try {
-            $entityManager->remove($block);
+            $entityManager->remove($pageBlock);
             $entityManager->flush();
         } catch (\Exception $e) {
             return new JsonResponse(json_encode(['success' => $e->getMessage()]));

@@ -26,6 +26,7 @@
             <button type="button" class="btn btn-block btn-info btn-sm btn-block-add">Ajouter un block</button>
         </div>
     </div>
+    <input type="hidden" value="{{ app.session.get('_locale_edit') }}" name="locale" id="locale">
     <hr>
 {% endif %}
 

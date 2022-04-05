@@ -6,12 +6,14 @@ namespace App\Controller\Admin;
 use App\Entity\Block;
 use App\Entity\BlockChildren;
 use App\Entity\BlockItem;
+use App\Entity\Content;
 use App\Entity\Item;
 use App\Entity\Page;
 use App\Entity\PageBlock;
 use App\Form\BlockType;
-use App\Repository\PageBlockRepository;
+use App\Repository\LanguageRepository;
 use App\Service\FileUploader;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -163,35 +165,41 @@ class BlockController extends AbstractController
     public function ajaxAddSubBlock(Request $request): Response
     {
         $page_block_id = (int) $request->request->get('bp');
-        $block = (int) $request->request->get('block');
+        $blockId = (int) $request->request->get('block');
 
         $pageBlock = $this->getDoctrine()->getRepository(PageBlock::class)->find($page_block_id);
-        $block = $this->getDoctrine()->getRepository(Block::class)->find($block);
+        $block = $this->getDoctrine()->getRepository(Block::class)->find($blockId);
 
-        $blockChildren = new BlockChildren();
-        $blockChildren->setPageBlock($pageBlock);
-        $blockChildren->setChildren($block);
+        $newBlockChildren = new BlockChildren();
+        $newBlockChildren->setPageBlock($pageBlock);
+        $newBlockChildren->setBlock($block);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($blockChildren);
+        $entityManager->persist($newBlockChildren);
         $entityManager->flush();
 
         //$blockChildren  = $this->getDoctrine()->getRepository(BlockChildren::class)->find( $blockChildren->getId() );
-        $blockChildren = $this->getDoctrine()->getRepository(BlockChildren::class)->getBlockChildren($blockChildren->getId());
+        //$blockChildren = $this->getDoctrine()->getRepository(BlockChildren::class)->getBlocksChildrenByBlockId($block->getId());
 
         return $this->render('admin/ajax/_sub-block.html.twig', [
-            'block_children' => $blockChildren,
+            'block_children' => $newBlockChildren,
         ]);
     }
 
-    public function ajaxRemSubBlock(Request $request): Response
+    public function ajaxRemSubBlock(Request $request, EntityManagerInterface $em): Response
     {
         $block_id = $request->request->get('id');
-        $subBlock = $this->getDoctrine()->getRepository(BlockChildren::class)->find($block_id);
+        $blockChildren = $this->getDoctrine()->getRepository(BlockChildren::class)->find($block_id);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($subBlock);
-        $entityManager->flush();
+        $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(['blockChildren' => $blockChildren->getId()]);
+
+        if ($content) {
+            $content->setBlockChildren(null);
+            $em->remove($content);
+        }
+
+        $em->remove($blockChildren);
+        $em->flush();
 
         return new JsonResponse(['succes' => 'ok']);
     }
@@ -284,11 +292,12 @@ class BlockController extends AbstractController
     /**
      * @param $id
      */
-    public function generatBlockForm(Request $request, PageBlockRepository $pageBlockRepository): Response
+    public function generatBlockForm(Request $request, LanguageRepository $languageRepository): Response
     {
         //get bock
         $block_id = $request->request->get('block_id');
         $page_id = $request->request->get('page_id');
+        $locale = $request->request->get('locale');
 
         try {
             $items = $this->getDoctrine()->getRepository(BlockItem::class)->findByBlock($block_id);
@@ -299,11 +308,16 @@ class BlockController extends AbstractController
         $block = $this->getDoctrine()->getRepository(Block::class)->find($block_id);
         $page = $this->getDoctrine()->getRepository(Page::class)->find($page_id);
 
+        $language = null;
+        if ($locale) {
+            $language = $languageRepository->findOneBy(['code' => $locale]);
+        }
 
         //ADD NEW BLOCK IN PAGE BLOCK
         $page_block = new PageBlock();
         $page_block->setPage($page);
         $page_block->setBlock($block);
+        $page_block->setLanguage($language);
         $page_block->setItemOrder(random_int(100, 1000));
 
         $entityManager = $this->getDoctrine()->getManager();

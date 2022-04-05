@@ -60,9 +60,9 @@ $(function(){
     $(document).on("click",'.btn-block-add', function( e ){
 
         e.preventDefault();
-
+        // Block ID
         var id = $(this).parent().prev().children().children().val();
-        console.log(id)
+
         var page_id = $('#page_id').val();
 
         if(id === 0 ){
@@ -84,7 +84,7 @@ $(function(){
             url:        '/admin/ajax/block/get',
             type:       'POST',
             dataType:   'html',
-            data: {'block_id': id , 'page_id' :page_id },
+            data: {'block_id': id , 'page_id' :page_id, 'locale': $('#locale').val() },
             async:      true,
             success: function(data, status) {
 

@@ -32,7 +32,7 @@ class PageBlock
     private $page;
 
     /**
-     * @ORM\OneToMany(targetEntity="Content", mappedBy="pageBlock")
+     * @ORM\OneToMany(targetEntity="Content", mappedBy="pageBlock", cascade={"remove"})
      */
     private $contents;
 
@@ -60,6 +60,12 @@ class PageBlock
      * @ORM\OneToMany(targetEntity=Timeline::class, mappedBy="pageBlock", cascade={"remove"})
      */
     private $timelines;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Language::class)
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $language;
 
     public function __construct()
     {
@@ -224,6 +230,18 @@ class PageBlock
                 $blockChildren->setPageBlock(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }
