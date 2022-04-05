@@ -62,7 +62,8 @@ class ContentRepository extends ServiceEntityRepository
     public function getContentsByLang(Page $page)
     {
         return $this->createQueryBuilder('c')
-            ->leftJoin('c.page', 'page')
+            ->leftJoin('c.pageBlock', 'pageBlock')
+            ->leftJoin('pageBlock.page', 'page')
             ->where('page.id = :pageId')
             ->setParameter('pageId', $page->getId())
             ->groupBy('c.language')

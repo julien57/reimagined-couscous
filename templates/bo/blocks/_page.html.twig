@@ -73,10 +73,14 @@
                                 <div class="d-flex justify-content-between">
                                     {% set locale = app.session.get('_locale_edit') ?? app.session.get('_locale') %}
                                     {% for lang in langs %}
+                                        {% set flagLocale = lang.code %}
+                                        {% if lang.code == 'en' %}
+                                            {% set flagLocale = 'us' %}
+                                        {% endif %}
                                         {% set countContentByLang = twig_service.isLangExitByPage(lang.id, default_page.id) %}
                                         <a href="{{ path('bo_new_lang_block', {'id':default_page.id, 'langId': lang.id }) }}"
                                            class="dropdown-item text-center position-relative {{ locale == lang.code ? 'active' : '' }}">
-                                            <i class="flag-icon flag-icon-{{ lang.code }} mr-2"></i>
+                                            <i class="flag-icon flag-icon-{{ flagLocale }} mr-2"></i>
                                             {% if countContentByLang > 0 %}
                                                 <i class="fas fa-edit position-absolute" style="top:0;right:21px;"></i>
                                             {% else %}

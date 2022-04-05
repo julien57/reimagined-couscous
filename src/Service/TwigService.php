@@ -61,9 +61,10 @@ class TwigService
     public function getLanguagesByPage(Page $page)
     {
         $langs = $this->contentRepository->getContentsByLang($page);
+
         $values = [];
         foreach ($langs as $key => $value) {
-            $values[] = $value['language'];
+            $values[] = $value->getLanguage();
         }
 
         return $values;

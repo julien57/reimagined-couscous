@@ -210,9 +210,11 @@ class PageController extends AbstractController
         }
         $localeToSearch = $locale;
 
+        /*
         if ('en' === $localeToSearch) {
             $localeToSearch = 'us';
         }
+        */
 
         if (is_null($localeToSearch)) {
             $localeToSearch = $session->get('_locale_edit');
@@ -261,7 +263,7 @@ class PageController extends AbstractController
             } else {
                 $content->setJson($json);
             }
-
+            
             $content->setLanguage($lang->getId());
 
             $entityManager->persist($content);

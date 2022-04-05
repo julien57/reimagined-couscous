@@ -200,13 +200,13 @@ class IndexController extends AbstractController
         $otherContentsPage = $contentRepository->getLangExist($currentLang->getId(), $page->getId());
         $codeNextLang = $langService->getLocaleByLanguageId($currentLang->getId());
 
-        foreach ($page->getPageBlock() as $blockPage) {
+        foreach ($page->getPageBlocks() as $blockPage) {
             $newBlockPage = clone $blockPage;
             $new->addPageBlock($newBlockPage);
             $newBlockPage->setPage($new);
             $this->em->persist($newBlockPage);
 
-            foreach ($blockPage->getPageBlock() as $childBlock) {
+            foreach ($blockPage->getBlockChildrens() as $childBlock) {
                 $newBlockChild = clone $childBlock;
                 $newBlockPage->addPageBlock($newBlockChild);
                 $newBlockChild->setPageBlock($newBlockPage);
@@ -285,7 +285,7 @@ class IndexController extends AbstractController
 
     public function removePage(Page $page)
     {
-        foreach ($page->getPageBlock() as $pageBlock) {
+        foreach ($page->getPageBlocks() as $pageBlock) {
             $contents = $this->getDoctrine()->getRepository(Content::class)->findBy(['pageBlock' => $pageBlock]);
             foreach ($contents as $content) {
                 $this->em->remove($content);
