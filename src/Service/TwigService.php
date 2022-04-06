@@ -64,7 +64,8 @@ class TwigService
 
         $values = [];
         foreach ($langs as $key => $value) {
-            $values[] = $value->getLanguage();
+            $language = $this->languageRepository->find($value->getLanguage());
+            $values[] = $language->getCode();
         }
 
         return $values;

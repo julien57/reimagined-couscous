@@ -11,7 +11,7 @@
                             {% endif %}
 
                             {% if default_page is defined %}
-                                <span style="font-size:1.4rem;">{{ default_page.active ? '(En ligne)' : '(Hors-ligne)' }}</span>
+                                <span style="font-size:1.4rem;{{ default_page.active ? 'color:green;' : 'color:red;' }}">{{ default_page.active ? '(En ligne)' : '(Hors-ligne)' }}</span>
                             {% endif %}
                             |
 
@@ -56,7 +56,7 @@
                         <div class="row">
                             <a href="{{ path('bo_deactive_page', {'id': default_page.id}) }}"
                                class="btn btn-block btn-warning btn-sm col-md-3 mt-3 mr-3"
-                               onclick="return confirm('Etes-vous sûr de vouloir mettre cette page hors-ligne ?')">
+                               onclick="return confirm('Etes-vous sûr de vouloir mettre cette page {{ default_page.active ? 'hors-' : 'en ' }}ligne ?')">
                                 {{ default_page.active ? 'Désactiver' : 'Activer' }} la page <i class="fas fa-pencil-ruler ml-2"></i>
                             </a>
                             <a href="{{ path('bo_remove_page', {'id': default_page.id}) }}"

@@ -101,9 +101,6 @@ login:
 admin:
     path:       /admin
     controller: App\Controller\Bo\Admin\IndexController::index
-admin_index:
-    path:       /admin/{slug}/{id}
-    controller: App\Controller\Bo\Admin\IndexController::index
 
 #page
 admin_page:
@@ -193,8 +190,16 @@ admin_item:
     methods: GET|POST
 
 admin_item_id:
-    path:       /admin/item/{id}
+    path:       /admin/item
     controller: App\Controller\Bo\Admin\ItemController::index
+    methods: GET|POST
+admin_item_update:
+    path:       /admin/item/{id<\d+>?}
+    controller: App\Controller\Bo\Admin\ItemController::update
+    methods: GET|POST
+admin_item_remove:
+    path:       /admin/item/remove/{id}
+    controller: App\Controller\Bo\Admin\ItemController::remove
     methods: GET|POST
 
 #ajax item

@@ -2,7 +2,6 @@
 
 namespace App\Controller\Bo\Admin;
 
-//use http\Env\Request;
 use App\Entity\Block;
 use App\Entity\BlockChildren;
 use App\Entity\BlockItem;
@@ -23,23 +22,9 @@ class BlockController extends AbstractController
 {
     public function index(Request $request): Response
     {
-        $block_paths = scandir($this->getParameter('block_directory'), 1);
-        array_pop($block_paths);
-        array_pop($block_paths);
-
-        $blocks = $this->getDoctrine()
-            ->getRepository(Block::class)
-            ->findAll();
-
-        $template = 'admin/block/index.html.twig';
-
-        foreach($blocks as $block){
-            $path = $block->getPath();
-            if(in_array($path , $block_paths)){
-                $key = array_search ($path , $block_paths);
-                unset($block_paths[$key]);
-            }
-        }
+        $allBlocks = $this->getBlocksPath();
+        $blockPaths = $allBlocks['block_paths'];
+        $blocks = $allBlocks['blocks'];
 
         $block = new Block();
 
@@ -50,10 +35,10 @@ class BlockController extends AbstractController
             ]
         );
 
-        return $this->render($template, [
+        return $this->render('bo/super_admin/block/index.html.twig', [
             'form' => $form->createView(),
             'blocks' => $blocks,
-            'block_paths' => $block_paths,
+            'block_paths' => $blockPaths,
         ]);
     }
 
@@ -62,7 +47,9 @@ class BlockController extends AbstractController
      */
     public function edit(Request $request, $id = null): Response
     {
-        $template = 'admin/block/edit.html.twig';
+        $allBlocks = $this->getBlocksPath();
+        $blockPaths = $allBlocks['block_paths'];
+        $blocks = $allBlocks['blocks'];
 
         $block = $this->getDoctrine()
             ->getRepository(Block::class)
@@ -88,12 +75,15 @@ class BlockController extends AbstractController
             $array_items[$b_i->getId()] = $b_i->getItem();
         }
 
-        return $this->render($template, [
+        return $this->render('bo/super_admin/block/edit.html.twig', [
             'form' => $form->createView(),
             'array_items' => $array_items,
             'blockItems' => $blockItems,
             'items' => $items,
             'id' => $id,
+            'blocks' => $blocks,
+            'block_paths' => $blockPaths,
+            'block' => $block,
         ]);
     }
 
@@ -353,5 +343,29 @@ class BlockController extends AbstractController
         }
 
         return $array;
+    }
+
+    private function getBlocksPath()
+    {
+        $block_paths = scandir($this->getParameter('block_directory'), 1);
+        array_pop($block_paths);
+        array_pop($block_paths);
+
+        $blocks = $this->getDoctrine()
+            ->getRepository(Block::class)
+            ->findAll();
+
+        foreach($blocks as $block){
+            $path = $block->getPath();
+            if(in_array($path , $block_paths)){
+                $key = array_search ($path , $block_paths);
+                unset($block_paths[$key]);
+            }
+        }
+
+        return [
+            'block_paths' => $block_paths,
+            'blocks' => $blocks
+        ];
     }
 }

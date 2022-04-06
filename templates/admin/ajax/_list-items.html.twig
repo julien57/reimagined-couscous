@@ -1,11 +1,19 @@
 
-<div class="flex-row _items_list">
-    <select class="item_select" name="items_list_0">
-        {%  set id = '' %}
-        {% for item in items %}
-            <option value="{{  item.id  }}">{{ item.value }}</option>
-        {% endfor %}
-    </select>
-    <a  class="items_rem-no-id" href="" >X</a>
+<div class="flex-row _items_list mt-3 mb-3">
+    <div class="row">
+        <div class="col-md-8">
+            <select class="item_select form-control" name="items_list_0">
+                {%  set id = '' %}
+                {% for item in items %}
+                    <option value="{{  item.id  }}">{{ item.value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <a  class="items_rem-no-id" href="">
+                <i class="fas fa-trash-alt fa-2x"></i>
+            </a>
+        </div>
+    </div>
 </div>
 

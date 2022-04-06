@@ -18,12 +18,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% set locale = app.session.get('_locale_edit') ?? app.session.get('_locale') %}
-                {% if locale == 'us' %}
-                    {% set locale = 'en' %}
-                {% endif %}
+
                 {% for page in pages %}
                     {% set langagesAvailable = twig_service.getLanguagesByPage(page) %}
+
                     {% if page.name != 'site' and page.name != 'article' and page.type != 'post' %}
                         <tr>
                             <td>{{ page.name }}</td>
@@ -31,15 +29,12 @@
                                 <a href="{{ app.request.schemeAndHttpHost ~ '/fr/' ~ page.slug }}" target="_blank">{{ app.request.schemeAndHttpHost ~ '/fr/' ~ page.slug }}</a>
                             </td>
                             <td>
-                            {% if constant('App\\Entity\\Content::LANGUAGE_FR') in langagesAvailable %}
-                                <i class="flag-icon flag-icon-fr"></i>
-                            {% endif %}
-                            {% if constant('App\\Entity\\Content::LANGUAGE_EN') in langagesAvailable %}
-                                <i class="flag-icon flag-icon-us"></i>
-                            {% endif %}
-                            {% if constant('App\\Entity\\Content::LANGUAGE_DE') in langagesAvailable %}
-                                <i class="flag-icon flag-icon-de"></i>
-                            {% endif %}
+                                {% for lang in langagesAvailable %}
+                                    {% if lang == 'en' %}
+                                        {% set lang = 'us' %}
+                                    {% endif %}
+                                    <i class="flag-icon flag-icon-{{ lang }}"></i>
+                                {% endfor %}
                             </td>
                             <td>
                                 {% if page.active %}

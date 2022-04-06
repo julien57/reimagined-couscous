@@ -1,0 +1,110 @@
+{% extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-8">
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edition du block <strong>{{ block.name }}</strong></h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="flex-col large-section">
+                        <div class="flex-row">
+                            <div id="item" class="_item">
+
+                                {{ form_start(form) }}
+                                {{ form_errors(form) }}
+
+                                {{ form_row(form.name) }}
+                                {{ form_row(form.path) }}
+                                {{ form_row(form.type) }}
+                                {{ form_row(form.image) }}
+                                {{ form_row(form.subBlock) }}
+
+                                {%  for key,_item in array_items  %}
+                                    <div class="flex-row _items_list mt-3 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <select class="item_select form-control" name="items_list_0">
+                                                    {% set item_id = ''  %}
+                                                    {% for item in items %}
+                                                        {%  set selected = ""  %}
+                                                        {%  if _item.id ==  item.id  %}
+                                                            {% set selected = "selected"%}
+                                                            {% set item_id = item.id %}
+                                                        {% endif  %}
+                                                        <option disabled {{ selected }} value="{{ item.id }}">{{ item.htmlName }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a data-id = "{{ item_id }}" class="items_rem" href="">
+                                                    <i class="fas fa-trash-alt fa-2x"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {%  endfor %}
+
+
+                                <a href="" id="new_item" class="btn btn-block btn-secondary btn-sm col-md-3">Ajouter un champs</a>
+                                <div id="new_item_list"></div>
+                                <div id="new_item_hidden"></div>
+
+                                <div class="form-group d-flex justify-content-between col-md-12 mt-5">
+                                    <div class="custom-file col-md-4 d-flex justify-content-start">
+                                        <button data-context="add" class="btn btn-block btn-success" id="aj_bl-form" type="submit">Modifier</button>
+                                    </div>
+                                    <div class="custom-file col-md-4 d-flex justify-content-end">
+                                        <button data-context="del" class="btn btn-block btn-danger" id="aj_bl-form-del" type="submit">Supprimer</button>
+                                    </div>
+                                </div>
+                                <input id="block_item_id" name="block_id" type="hidden" value="{{ id }}">
+                                {{ form_end(form) }}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card -->
+        </div>
+        <div class="col-4">
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Templates disponibles</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% for block in block_paths %}
+                        {{ loop.index }} - <a data-path="{{ block }}" href="" class="flex-row _path-block"> {{ block }}</a><br>
+                    {%  endfor %}
+
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+
+{% endblock %}

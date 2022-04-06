@@ -6,6 +6,7 @@ use App\Entity\Block;
 use App\Entity\BlockItem;
 use App\Entity\Item;
 use App\Form\ItemType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,49 +15,62 @@ use Symfony\Component\HttpFoundation\Response;
 class ItemController extends AbstractController
 {
     /**
-     * @param null $id
+     * @var EntityManagerInterface
      */
-    public function index(Request $request, $id = null): Response
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @param Request $request
+     * @param Item|null $item
+     * @return Response
+     */
+    public function index(Request $request): Response
     {
         $item = new Item();
-
-        $form = $this->createForm(ItemType::class, $item,
-            [
-                'action' => $this->generateUrl('admin_item'),
-                'method' => 'POST',
-            ]
-        );
-
-        $form->handleRequest($request);
+        $form = $this->createForm(ItemType::class, $item)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($page);
-            $entityManager->flush();
+            $this->em->persist($page);
+            $this->em->flush();
         }
 
-        $items = $this->getDoctrine()->getRepository(Item::class)->findAll();
-
-        $_items = [];
-        foreach ($items as $item) {
-            $_items[] = $item->getName();
-        }
-
-        return $this->render('admin/item/index.html.twig', [
+        return $this->render('bo/super_admin/item/new.html.twig', [
             'form' => $form->createView(),
-            'items' => $items,
+            'items' => $this->getDoctrine()->getRepository(Item::class)->findAll(),
+            'item' => $item,
         ]);
     }
 
     /**
-     * @param BlockItem $item
-     *
-     * @return JsonResponse
+     * @param Item $item
+     * @param Request $request
+     * @return Response
      */
-    public function remove(Request $request, $block, $item)
+    public function update(Item $item, Request $request): Response
     {
-        $block = $request->request->get('block');
+        $form = $this->createForm(ItemType::class, $item)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+        }
+
+        return $this->render('bo/super_admin/item/update.html.twig', [
+            'form' => $form->createView(),
+            'items' => $this->getDoctrine()->getRepository(Item::class)->findAll(),
+            'item' => $item,
+        ]);
+    }
+
+    public function remove(Item $item, EntityManagerInterface $em)
+    {
+        /*
+         $block = $request->request->get('block');
         $item = $request->request->get('item');
         $block = $this->getDoctrine()->getRepository(Block::class)->find(
             $block
@@ -69,11 +83,16 @@ class ItemController extends AbstractController
         $blockItem = $this->getDoctrine()->getRepository(BlockItem::class)->findOneBy(
             ['block' => $block, 'item' => $item]
         );
+         */
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($blockItem);
+        foreach ($item->getBlockItems() as $blockItem) {
+            $em->remove($blockItem);
+        }
+
+        $em->remove($item);
         $em->flush();
 
-        return new JsonResponse(['success' => 'ok']);
+        $this->addFlash('success', 'Champs supprimé');
+        return $this->redirectToRoute('admin_item');
     }
 }
