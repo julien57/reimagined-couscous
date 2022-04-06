@@ -2,6 +2,7 @@
 
 namespace App\Controller\Bo;
 
+use App\Entity\Menu;
 use App\Repository\LanguageRepository;
 use App\Repository\MenuRepository;
 use App\Repository\PageRepository;
@@ -12,12 +13,26 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends AbstractController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     public function editMenu(
         PageRepository $pageRepository,
         LanguageRepository $languageRepository,
         MenuRepository $menuRepository)
     {
         $menu = $menuRepository->findOneBy(['name' => 'main_menu']);
+
+        if (!$menu) {
+            $menu = $this->create();
+        }
 
         return $this->render('bo/menu/edit.html.twig', [
             'pages' => $pageRepository->findAll(),
@@ -43,5 +58,16 @@ class MenuController extends AbstractController
         return $this->json([
             'status' => 'ok',
         ], Response::HTTP_OK);
+    }
+
+    private function create()
+    {
+        $menu = new Menu();
+        $menu->setName('main_menu');
+
+        $this->em->persist($menu);
+        $this->em->flush();
+
+        return $menu;
     }
 }
