@@ -3,6 +3,7 @@
 namespace App\Controller\Bo;
 
 use App\Entity\Page;
+use App\Entity\PageBlock;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
 use App\Repository\PageRepository;
@@ -46,52 +47,34 @@ class PostController extends AbstractController
         $this->em = $em;
     }
 
-    public function createPost(Request $request, SessionInterface $session, LangService $langService)
+
+    public function createPost(SessionInterface $session, Request $request)
     {
-        $page = $this->pageRepository->findOneBy(['name' => 'article']);
-        $lastPage = $this->pageRepository->findOneBy([], ['id' => 'DESC']);
-        $lastPageId = $lastPage->getId() + 1;
- 
-        $new = clone $page;
-        $new->setName('Nouvel article '.$lastPageId);
+        if (!$request->get('page_name')) {
+            $this->addFlash('danger', 'Aucun nom pour l’actu');
+            return $this->redirectToRoute('bo');
+        }
+
+        $new = new Page();
+        $new->setName($request->get('page_name'));
         $new->setType(Page::PAGE_TYPE_POST);
+
+        $newBlockPage = new PageBlock();
+        $newBlockPage->setItemOrder(0);
+        $new->addPageBlock($newBlockPage);
+        $newBlockPage->setPage($new);
+
 
         $localSession = $session->get('_locale_edit');
         if ('en' === $localSession) {
             $localSession = 'us';
         }
 
-        $currentLang = $this->languageRepository->findOneBy(['code' => $localSession]);
-        $otherContentsPage = $this->contentRepository->getLangExist($currentLang->getId(), $page->getId());
-        $codeNextLang = $langService->getLocaleByLanguageId($currentLang->getId());
-
-        foreach ($page->getPageBlock() as $blockPage) {
-            $newBlockPage = clone $blockPage;
-            $new->addPageBlock($newBlockPage);
-            $newBlockPage->setPage($new);
-            $this->em->persist($newBlockPage);
-
-            foreach ($blockPage->getPageBlock() as $childBlock) {
-                $newBlockChild = clone $childBlock;
-                $newBlockPage->addPageBlock($newBlockChild);
-                $newBlockChild->setPageBlock($newBlockPage);
-                $this->em->persist($newBlockChild);
-            }
-
-            $oldContent = $this->contentRepository->findOneBy(['pageBlock' => $blockPage]);
-
-            if ($oldContent) {
-                $newContent = clone $oldContent;
-                $newContent->setLanguage($langService->getCodeLanguage($codeNextLang));
-                $newContent->setPageblock($newBlockPage);
-                $this->em->persist($newContent);
-            }
-        }
-
+        $this->em->persist($newBlockPage);
         $this->em->persist($new);
         $this->em->flush();
 
-        $this->addFlash('success', 'Page dupliquée, vous êtes maintenant sur la page "'.$new->getName().'" !');
+        $this->addFlash('success', 'Actualitée créée');
 
         return $this->redirectToRoute('bo_page_by_type', [
             'slug' => $new->getSlug(),

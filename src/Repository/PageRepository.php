@@ -65,7 +65,7 @@ class PageRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->addSelect('bp')//page
             ->addSelect('bl')//block
-            ->leftJoin('p.pageBlock', 'bp')
+            ->leftJoin('p.pageBlocks', 'bp')
             ->leftJoin('bp.block', 'bl')
             ->where('p.name != :name')
             ->setParameter('name', 'site')
@@ -80,7 +80,7 @@ class PageRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->addSelect('bp')//page
             ->addSelect('bl')//block
-            ->leftJoin('p.pageBlock', 'bp')
+            ->leftJoin('p.pageBlocks', 'bp')
             ->leftJoin('bp.block', 'bl')
             ->where('p.name != :name')
             ->setParameter('name', 'site')

@@ -1,0 +1,28 @@
+<!-- Modal duplicate page -->
+<div class="modal fade" id="modal-new-post" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary">
+            <form method="POST" action="{{ path('bo_create_post') }}">
+                <div class="modal-header">
+                    <h4 class="modal-title">Création d'une <strong>nouvelle actualitée</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Nom de l'actu</label>
+                        <input type="text" class="form-control" id="page_name" name="page_name" placeholder="Nom de l'actualité">
+                        <small>Le nom servira pour la recherche et le slug par défaut.</small>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-outline-light">Ajouter</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

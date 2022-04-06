@@ -47,13 +47,13 @@ bo_save_menu:
     path:       /bo/menu/save
     controller: App\Controller\Bo\MenuController::saveMenu
     methods: POST
-bo_create_post:
-    path:       /bo/create/post
-    controller: App\Controller\Bo\PostController::createPost
-    methods: GET
 bo_create_page:
     path:       /bo/create/page
     controller: App\Controller\Bo\PageController::createPage
+    methods: GET|POST
+bo_create_post:
+    path:       /bo/create/post
+    controller: App\Controller\Bo\PostController::createPost
     methods: GET|POST
 bo_list_post:
     path:       /bo/list/post
