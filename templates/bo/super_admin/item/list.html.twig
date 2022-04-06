@@ -1,0 +1,9 @@
+{% for item in items %}
+    <a href="{{ path('admin_item_update', {'id': item.id}) }}">{{  item.name }}</a>
+    <a
+            href="{{ path('admin_item_remove', {'id': item.id}) }}"
+            onclick="return confirm('Attention, ce champs est peut-être utilisé dans des blocks présents sur le site, le supprimer ?')">
+        <i class="fas fa-trash-alt" style="color:red"></i>
+    </a>
+    {% if not loop.last %} |{% endif %}
+{% endfor %}

@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.sql_type) }}
+    {{ form_row(form.html_name) }}
+    {{ form_row(form.html_type) }}
+
+    <div class="form-group col-md-4">
+        <div class="custom-file">
+            <button id="aj_bl-form" class="btn btn-block btn-info" type="submit">{{ item.id ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+    </div>
+
+{{ form_end(form) }}
