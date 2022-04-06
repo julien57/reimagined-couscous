@@ -6,7 +6,7 @@
  * Time: 21:45.
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller\Bo\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 

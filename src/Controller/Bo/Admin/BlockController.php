@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Bo\Admin;
 
 //use http\Env\Request;
 use App\Entity\Block;

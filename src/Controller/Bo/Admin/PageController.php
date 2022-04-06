@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Bo\Admin;
 
 use App\Entity\Block;
 use App\Entity\User;

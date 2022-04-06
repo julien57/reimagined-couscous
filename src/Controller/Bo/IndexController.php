@@ -45,11 +45,17 @@ class IndexController extends AbstractController
      */
     private $session;
 
-    public function __construct(EntityManagerInterface $em, ContentRepository $contentRepository, SessionInterface $session)
+    /**
+     * @var LanguageRepository
+     */
+    private LanguageRepository $languageRepository;
+
+    public function __construct(EntityManagerInterface $em, ContentRepository $contentRepository, SessionInterface $session, LanguageRepository $languageRepository)
     {
         $this->em = $em;
         $this->contentRepository = $contentRepository;
         $this->session = $session;
+        $this->languageRepository = $languageRepository;
     }
 
     public function listPage(PageRepository $pageRepository)
@@ -137,7 +143,7 @@ class IndexController extends AbstractController
             $locale = $session->get('_locale_edit');
         }
 
-        $blocks_page = $this->_getDataPage($page, $default_block, $langService->getCodeLanguage($locale));
+        $blocks_page = $this->_getDataPage($page, $default_block, $locale);
 
         $sliders = $this->getDoctrine()->getRepository(Block::class)->findByPageAndType($slug, 3); //type slider = 3
 
@@ -291,7 +297,7 @@ class IndexController extends AbstractController
 
             foreach ($otherContentsPage as $otherContent) {
                 $newContent = clone $otherContent;
-                $newContent->setLanguage($langService->getCodeLanguage($codeNextLang));
+                $newContent->setLanguage($langId);
                 $this->em->persist($newContent);
             }
 
@@ -419,7 +425,8 @@ class IndexController extends AbstractController
 
     protected function _getDataPage($page, $block = '', string $langId)
     {
-        $contents = $this->contentRepository->getLangExist($langId, $page->getId());
+        $lang = $this->languageRepository->findOneBy(['code' => $langId]);
+        $contents = $this->contentRepository->getLangExist($lang->getId(), $page->getId());
 
         /*
         if(!empty($block)){

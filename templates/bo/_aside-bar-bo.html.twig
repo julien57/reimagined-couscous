@@ -130,28 +130,44 @@
                     <a href="#" class="nav-link">
                         <i class="fas fa-users mr-2"></i>
                         <p>
-                            Administrateurs
+                            Utilisateur
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-
-                        {# {% for page in pages  %} #}
-                            <li class="nav-item">
-                                <a href="{{ path('back_user_list') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Liste</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('back_user_add') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Ajouter un admin</p>
-                                </a>
-                            </li>
-                        {# {% endfor  %} #}
+                        <li class="nav-item">
+                            <a href="{{ path('back_user_list') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Liste</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('back_user_add') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ajouter un admin</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
+                {% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+                    <li class="nav-item ">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-mask mr-2"></i>
+                            <p>
+                                Super administration
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Champs formulaire</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
                 <!-- slider -->
                 {% if default_page is defined and default_page is not empty %}
                     <!--
