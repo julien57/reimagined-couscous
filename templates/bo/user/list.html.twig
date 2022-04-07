@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
                         <th>Email</th>
+                        <th>Rôle</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -22,6 +23,7 @@
                             {% else %}
                                 <td>{{ user.email }}</td>
                             {% endif %}
+                            <td>{{ user.roles.0 }}</td>
                             <td>
                                 <div class="row col-md-12">
                                     <div class="col-md-6">

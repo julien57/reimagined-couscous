@@ -66,18 +66,20 @@ class UserController extends AbstractController
          $form->handleRequest($request);
 
          if ($form->isSubmitted() && $form->isValid()) {
-             $userData = $request->get('user');
+             $userData = $request->request->all();
 
-             $user->setRoles([$userData['role']]);
+             if (isset($userData['user']['role'])) {
+                 $user->setRoles([$userData['user']['role']]);
+             }
 
-             $passwordEncoded = $encoder->encodePassword($user, $user->getPassword());
-             $user->setPassword($passwordEncoded);
+             if (isset($userData['user']['password']) && $userData['user']['password']['first'] !== '') {
+                 $passwordEncoded = $encoder->encodePassword($user, $userData['user']['password']['first']);
+                 $user->setPassword($passwordEncoded);
+             }
 
-             $this->em->persist($user);
              $this->em->flush();
 
              $this->addFlash('success', 'Administrateur '.$user->getEmail().' edité !');
-
              return $this->redirectToRoute('back_user_list');
          }
 

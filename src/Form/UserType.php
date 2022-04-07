@@ -19,6 +19,8 @@ class UserType extends AbstractType
     {
         /** @var User $currentUser */
         $currentUser = $options['currentUser'];
+        /** @var User $userForm */
+        $userForm = $options['data'];
 
         $builder
             ->add('email', EmailType::class, [
@@ -32,7 +34,8 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe doivent être identiques.',
                 'options' => ['attr' => ['class' => 'form-control']],
-                'required' => true,
+                'required' => $userForm->getId() ? false : true,
+                'mapped' => false,
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmation mot de passe'],
             ])
@@ -44,19 +47,6 @@ class UserType extends AbstractType
                     'label' => 'Rôle',
                     'choices' => [
                         'Super Admin' => 'ROLE_SUPER_ADMIN',
-                        'Administrateur' => 'ROLE_ADMIN',
-                    ],
-                    'mapped' => false,
-                    'attr' => [
-                        'class' => 'form-control'
-                    ],
-                ])
-            ;
-        } else {
-            $builder
-                ->add('role', ChoiceType::class, [
-                    'label' => 'Rôle',
-                    'choices' => [
                         'Administrateur' => 'ROLE_ADMIN',
                     ],
                     'mapped' => false,

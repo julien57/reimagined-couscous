@@ -96,6 +96,9 @@ bo_user:
 login:
     path:   /login
     controller: App\Controller\SecurityController::login
+app_logout:
+    path:   /logout
+    controller: App\Controller\SecurityController::logout
 
 ###admin###
 admin:
