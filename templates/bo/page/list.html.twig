@@ -44,7 +44,12 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a class="btn btn-block bg-gradient-info btn-sm" href="{{ path('bo_page_by_type', {slug:page.slug, type: 2 }) }}">Editer</a>
+                                <a class="btn btn-block bg-gradient-info btn-sm" href="{{ path('bo_page_by_type', {slug:page.slug, type: 2 }) }}"><i class="fas fa-edit"></i> Editer</a>
+                                <a class="btn btn-block bg-gradient-danger btn-sm"
+                                   href="{{ path('bo_remove_page', {id: page.id}) }}"
+                                   onclick="return confirm('Etes-vous sûr de vouloir supprimer cette page ?')">
+                                    <i class="fas fa-trash-alt"></i> Supprimer
+                                </a>
                             </td>
                         </tr>
                     {% endif %}

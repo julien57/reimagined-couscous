@@ -333,7 +333,7 @@ class IndexController extends AbstractController
 
         $this->addFlash('success', 'Page supprimée !');
 
-        return $this->redirectToRoute('bo');
+        return $this->redirectToRoute('bo_page_list');
     }
 
     public function deactivePage(Page $page, SluggerInterface $slugger)
