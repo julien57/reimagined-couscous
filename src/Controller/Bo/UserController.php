@@ -101,7 +101,7 @@ class UserController extends AbstractController
      /**
       * @Route("/delete-admin/{id}", name="back_user_delete")
       */
-     public function deleteUser(UserRepositoryOld $userRepository, int $id)
+     public function deleteUser(UserRepository $userRepository, int $id)
      {
          $user = $userRepository->find($id);
          $this->em->remove($user);
