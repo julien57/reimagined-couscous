@@ -12,11 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
- /**
-  * @Route ("/bo")
-  */
- class UserController extends AbstractController
- {
+/**
+* @Route ("/bo")
+*/
+class UserController extends AbstractController
+{
      /**
       * @var EntityManagerInterface;
       */
@@ -33,10 +33,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
      public function new(Request $request, UserPasswordEncoderInterface $encoder)
      {
          $user = new User();
-         $form = $this->createForm(UserType::class, $user)->handleRequest($request);
+         $form = $this->createForm(UserType::class, $user, ['currentUser' => $this->getUser()]);
+         $form->handleRequest($request);
 
          if ($form->isSubmitted() && $form->isValid()) {
-             $user->setRoles(['ROLE_ADMIN']);
+             $userData = $request->get('user');
+
+             $user->setRoles([$userData['role']]);
 
              $passwordEncoded = $encoder->encodePassword($user, $user->getPassword());
              $user->setPassword($passwordEncoded);
@@ -50,7 +53,37 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
          }
 
          return $this->render('bo/user/add.html.twig', [
-              'form' => $form->createView(),
+             'form' => $form->createView(),
+          ]);
+     }
+
+     /**
+      * @Route("/edit-admin/{id}", name="back_user_edit")
+      */
+     public function edit(User $user, Request $request, UserPasswordEncoderInterface $encoder)
+     {
+         $form = $this->createForm(UserType::class, $user, ['currentUser' => $this->getUser()]);
+         $form->handleRequest($request);
+
+         if ($form->isSubmitted() && $form->isValid()) {
+             $userData = $request->get('user');
+
+             $user->setRoles([$userData['role']]);
+
+             $passwordEncoded = $encoder->encodePassword($user, $user->getPassword());
+             $user->setPassword($passwordEncoded);
+
+             $this->em->persist($user);
+             $this->em->flush();
+
+             $this->addFlash('success', 'Administrateur '.$user->getEmail().' edité !');
+
+             return $this->redirectToRoute('back_user_list');
+         }
+
+         return $this->render('bo/user/edit.html.twig', [
+             'form' => $form->createView(),
+             'user' => $user
           ]);
      }
 
@@ -60,7 +93,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
      public function getUsers(UserRepository $userRepository)
      {
          return $this->render('bo/user/list.html.twig', [
-              'users' => $userRepository->getUsers($this->getUser()),
+              'users' => $userRepository->findAll(),
               'langs' => $this->getDoctrine()->getRepository(Language::class)->findAll(),
           ]);
      }
@@ -68,7 +101,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
      /**
       * @Route("/delete-admin/{id}", name="back_user_delete")
       */
-     public function deleteUser(UserRepository $userRepository, int $id)
+     public function deleteUser(UserRepositoryOld $userRepository, int $id)
      {
          $user = $userRepository->find($id);
          $this->em->remove($user);
@@ -78,4 +111,4 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
          return $this->redirectToRoute('back_user_list');
      }
- }
+}
