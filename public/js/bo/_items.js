@@ -26,8 +26,7 @@ $(function(){
     /**
      *   Send form
      */
-    $(document).on('click', '#aj_bl-forms', function(e){
-        e.preventDefault()
+    $(document).on('click', '#aj_bl-forms', function(){
 
         var data = $(this).closest('form').serialize();
 
@@ -36,9 +35,9 @@ $(function(){
             type:       'POST',
             data:    data,
             dataType:   'JSON',
-         //   async:      true,
+            //   async:      true,
             success: function(data, status) {
-              console.log(data);
+                console.log(data);
             },
 
             error : function(xhr, textStatus, errorThrown) {
@@ -53,27 +52,24 @@ $(function(){
      */
     $(document).on("change",'.items_list', function( e ){
         e.preventDefault();
-       /* var id = $(this).val();
-        alert(id);
-        $.ajax({
-            url:        '/admin/ajax/item/new',
-            type:       'POST',
-            data: {'id':id},
-            dataType:   'json',
-            async:      true,
-
-            success: function(data, status) {
-                var template_hidden = '<input type="hidden" value="'+data.id+'"/>';
-                var template = '<a data-id="'+data.id+'">'+data.name+'</a>';
-
-                $('#new_item_list').append( template );
-                $('#new_item_hidden').append( template_hidden );
-
-            },
-            error : function(xhr, textStatus, errorThrown) {
-                alert('Ajax request failed.');
-            }
-        });*/
+        /* var id = $(this).val();
+         alert(id);
+         $.ajax({
+             url:        '/admin/ajax/item/new',
+             type:       'POST',
+             data: {'id':id},
+             dataType:   'json',
+             async:      true,
+             success: function(data, status) {
+                 var template_hidden = '<input type="hidden" value="'+data.id+'"/>';
+                 var template = '<a data-id="'+data.id+'">'+data.name+'</a>';
+                 $('#new_item_list').append( template );
+                 $('#new_item_hidden').append( template_hidden );
+             },
+             error : function(xhr, textStatus, errorThrown) {
+                 alert('Ajax request failed.');
+             }
+         });*/
     });
 
 

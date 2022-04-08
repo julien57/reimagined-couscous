@@ -27,7 +27,7 @@
                         {%  set block_id = item.block.id %}
                     {% endif %}
 
-                    {% set include = '/admin/input/'~item.item.htmlType~'.html.twig' %}
+                    {% set include = 'bo/super_admin/input/'~item.item.htmlType~'.html.twig' %}
                     {% include include with { 'data' : item.item, json: json } %}
 
                 {%  endfor %}

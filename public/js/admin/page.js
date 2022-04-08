@@ -297,7 +297,7 @@ $(function(){
             type:       'POST',
             async:      true,
             success: function(data, status) {
-                console.log(data.page[0].hasNewsletter)
+
                 if (data.page[0].hasNewsletter === true) {
                     console.log($('#newsletterCurrent'))
                     $('#newsletterCurrent').attr('checked', true);

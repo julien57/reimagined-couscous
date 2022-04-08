@@ -23,7 +23,7 @@
     {% set items = block.blockItems %}
     <form action="/admin/page/block/add" method="post" class="flex-col a-items-start _form-bl-item mb-5 pb-5" enctype="multipart/form-data">
         {% for item in items %}
-            {%  set include = '/admin/input/'~item.item.htmlType~'.html.twig' %}
+            {%  set include = 'bo/super_admin/input/'~item.item.htmlType~'.html.twig' %}
             {% include include with {'data' : item.item} %}
         {%  endfor %}
 
@@ -67,7 +67,7 @@
                 <hr>
             {% endif %}
             {% for block_children in block_page.blockChildrens %}
-                {% include 'admin/ajax/_sub-block.html.twig' with { block_children : block_children } %}
+                {% include 'bo/super_admin/ajax/_sub-block.html.twig' with { block_children : block_children } %}
             {% endfor %}
         </div>
     {% endif %}

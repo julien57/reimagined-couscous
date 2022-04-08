@@ -5,7 +5,7 @@
         {% if block_page.json is defined and block_page.json.title is defined %}
             {% set titleBlock = block_page.json.title %}
         {% endif %}
-        {% include '/bo/blocks/_block.html.twig' with {'block_page' : block_page , json:block_page.json, titleBlock: titleBlock} %}
+        {% include 'bo/blocks/_block.html.twig' with {'block_page' : block_page , json:block_page.json, titleBlock: titleBlock} %}
     {% endfor %}
     <hr>
 </div>

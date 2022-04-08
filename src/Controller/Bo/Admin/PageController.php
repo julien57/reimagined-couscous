@@ -398,7 +398,11 @@ class PageController extends AbstractController
 
         foreach ($pageBlock->getBlockChildrens() as $children) {
             $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(['blockChildren' => $children]);
-            $entityManager->remove($content);
+
+            if ($content) {
+                $entityManager->remove($content);
+            }
+
             $pageBlock->removeBlockChildren($children);
             $entityManager->remove($children);
         }

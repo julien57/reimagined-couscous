@@ -171,7 +171,7 @@ class BlockController extends AbstractController
         //$blockChildren  = $this->getDoctrine()->getRepository(BlockChildren::class)->find( $blockChildren->getId() );
         //$blockChildren = $this->getDoctrine()->getRepository(BlockChildren::class)->getBlocksChildrenByBlockId($block->getId());
 
-        return $this->render('admin/ajax/_sub-block.html.twig', [
+        return $this->render('bo/super_admin/ajax/_sub-block.html.twig', [
             'block_children' => $newBlockChildren,
         ]);
     }
@@ -209,7 +209,7 @@ class BlockController extends AbstractController
             }
         }
 
-        return $this->render('admin/ajax/_list-items.html.twig', [
+        return $this->render('bo/super_admin/ajax/_list-items.html.twig', [
             'items' => $array,
         ]);
     }
@@ -317,7 +317,7 @@ class BlockController extends AbstractController
         $block_page_id = $page_block->getId();
 
         //create pageblock
-        return $this->render('admin/ajax/_block-page.html.twig', [
+        return $this->render('bo/super_admin/ajax/_block-page.html.twig', [
             'items' => $items,
             'block' => $block,
             'block_page_id' => $block_page_id,
