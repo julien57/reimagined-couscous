@@ -143,9 +143,9 @@ class IndexController extends AbstractController
             $locale = $session->get('_locale_edit');
         }
 
-        $blocks_page = $this->_getDataPage($page, $default_block, $locale);
-
         $sliders = $this->getDoctrine()->getRepository(Block::class)->findByPageAndType($slug, 3); //type slider = 3
+
+        $blocks_page = $this->_getDataPage($page, $default_block, $locale);
 
         foreach ($blocks_page  as $key => $b_p) {
             $b_p->json = json_decode($b_p->getjsonData(), true);

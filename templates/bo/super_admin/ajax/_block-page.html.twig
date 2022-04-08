@@ -1,59 +1,66 @@
-<div class="block-page-admin flex-col relative w-100 mt-2 position-relative">
+<div class=" block_page container position-relative">
+    {#
+    {% for block_children in block_page.pageBlock %}
+        {% include 'admin/ajax/_sub-block.html.twig' with { block_children : block_children } %}
+    {% endfor %}
+    #}
 
-    <h3 class="relative flex-row">
-        {{ block.name|upper }}
+    <h3 class="row show-form">
+        <strong>{{ block.name|upper }}</strong>
+        <p class="manage-block">
+            <!--
+            <span class="rem_block">X</span>
+            <span class="more_block"><i class="fas fa-plus-circle"></i></span>
+            -->
+        </p>
     </h3>
-    {% if json is not defined  %}
-        {% set json = '' %}
-    {% endif %}
-    {%  set block_id = block.id %}
-
-    <form action="/admin/page/block/add" method="post" class="flex-col a-items-start _form-bl-item" enctype="multipart/form-data">
-
+    {% set items = block.blockItems %}
+    <form action="/admin/page/block/add" method="post" class="flex-col a-items-start _form-bl-item mb-5 pb-5" enctype="multipart/form-data">
         {% for item in items %}
-            {% if item.block.id !=  block_id %}
-                {%  set block_id= item.block.id %}
-            {% endif  %}
             {%  set include = 'bo/super_admin/input/'~item.item.htmlType~'.html.twig' %}
-            {% include include with {'data' : item.item , json: json} %}
+            {% include include with {'data' : item.item} %}
         {%  endfor %}
 
-        <input class="block_id" type="hidden" name="block" value="{{ block_id  }}"/>
-        <input class="block_page_id" type="hidden" name="block_page_id" value="{{ block_page_id  }}"/>
+        <input class="block_id" type="hidden" name="block" value="{{ block.id  }}">
+        <input type="hidden" value ="{{ block_page.id }}" name="block_page_id">
         <input type="hidden" value ="{{ app.session.get('_locale_edit') }}" name="lang_block">
         <div class="row">
-            <div id="message{{ block_page_id }}"></div>
+            <div id="message{{ block_page.id }}"></div>
         </div>
-        <button  class="submit btn btn-primary add_block"  type="submit">Enregistrer</button>
+
+        <button type="button" class="submit btn btn-block btn-info add_block draft col-md-4 mt-3 mr-3 float-left">Enregistrer en brouillon <i class="fas fa-pencil-ruler ml-2"></i></button>
+        <button type="button" class="submit btn btn-block btn-success add_block col-md-4 mt-3 float-right">Publier <i class="fas fa-save ml-2"></i></button>
     </form>
+
     <div class="flex-row wrap_action_block position-absolute" style="top:3px;right:30px;">
-        <a data-block="{{ block_id }}" class="rem_block" href="" style="color:#fff;">X</a>
-        <!--<a data-block="{{ block_id }}" class="block_select more_block" href="">+</a>-->
+        <a data-block="{{ block.id }}" data-blockpage="{{ block_page.id }}" data-lang="{{ app.session.get('_locale_edit') }}" class="rem_block" href="" style="color:#fff;">X</a>
+        <!--<a data-block="{{ block.id }}" class="block_select more_block" href="">+</a>-->
     </div>
 
-    {% if block.subBlock == true and list_block is not empty %}
-
-        <div class="subBlock col">
+    {% if block.subBlock == true %}
+        <div class="subBlock col pl-5">
             <h2>Sous blocs</h2>
-            <div class="flex-row">
-                <select class="sub_block_list form-control" name="list_block_id">
-                    {% for bl in list_block %}
+            {% if list_block is not empty %}
+                <div class="row mb-3">
+                    <select class="sub_block_list form-control col-md-8" name="list_block_id">
+                        {% for bl in list_block %}
+                            {% set selected = 'selected' %}
+                            {% if loop.index > 1 %}
+                                {% set selected = '' %}
+                            {% endif %}
 
-                        {% set selected = 'selected' %}
-                        {% if loop.index > 1 %}
-                            {% set selected = '' %}
-                        {% endif %}
-
-                        <option value="{{ bl.id  }}" >{{ bl.name }}</option>
-                    {% endfor %}
-                </select>
-                <a  class="new_sub_block flex-col" data-bp="{{ block_page_id }}"  data-block="{{ block_id }}" href=""> +</a>
-            </div>
-
-            {% for block_children in block_page.pageBlock %}
+                            <option value="{{ bl.id  }}" >{{ bl.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <a class="new_sub_block flex-col col-md-4" data-bp="{{ block_page.id }}" data-block="{{ block.id }}" href="">
+                        <button type="button" class="btn btn-outline-primary btn-block col-md-12"><i class="fa fa-plus"></i> Ajouter ce sous block</button>
+                    </a>
+                </div>
+                <hr>
+            {% endif %}
+            {% for block_children in block_page.blockChildrens %}
                 {% include 'bo/super_admin/ajax/_sub-block.html.twig' with { block_children : block_children } %}
             {% endfor %}
         </div>
     {% endif %}
-
 </div>

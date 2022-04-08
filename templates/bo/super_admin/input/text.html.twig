@@ -1,6 +1,6 @@
 <div class="input flex-col">
     <label>{{ data.name }}</label><br>
-    {% if json is not empty %}
+    {% if json is defined and json is not empty %}
         {% if json[data.htmlName] is defined %}
             <input value="{{ json[data.htmlName] }}" class="form-control" type="{{ data.htmlType }}" name="{{ data.htmlName }}">
         {% else %}

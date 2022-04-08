@@ -321,7 +321,8 @@ class BlockController extends AbstractController
             'items' => $items,
             'block' => $block,
             'block_page_id' => $block_page_id,
-            'list_block' => [],
+            'block_page' => $page_block,
+            'list_block' => $this->getDoctrine()->getRepository(Block::class)->findBy(['type' => 5], ['name' => 'ASC']),
         ]);
     }
 
