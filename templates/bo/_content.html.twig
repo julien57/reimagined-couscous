@@ -17,7 +17,7 @@
 
                             {% set locale = app.session.get('_locale_edit') ?? app.session.get('_locale') %}
 
-                            <i class="flag-icon flag-icon-{{ locale }} mr-2"></i>
+                            <i class="flag-icon flag-icon-{{ (locale == 'en') ? 'us' : locale }} mr-2"></i>
 
                             <small style="font-size:45%;">
                                 | URL de la page :
@@ -25,8 +25,8 @@
                                     {% set locale = 'en' %}
                                 {% endif %}
                                 <strong>
-                                    <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' ~ app.request.attributes.get('_route_params').slug }}">
-                                        {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' ~ app.request.attributes.get('_route_params').slug }}
+                                    <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}">
+                                        {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}
                                     </a>
                                 </strong>
                             </small>
