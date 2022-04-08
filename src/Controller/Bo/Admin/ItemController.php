@@ -87,7 +87,7 @@ class ItemController extends AbstractController
 
 
         foreach ($item->getBlockItems() as $blockItem) {
-            $blockItem->setItem(null);
+            $em->remove($blockItem);
         }
 
         $em->remove($item);
