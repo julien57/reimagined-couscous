@@ -102,21 +102,23 @@ class IndexController extends AbstractController
      */
     public function page($slug, Request $request, MenuRepository $menuRepository, LangService $langService)
     {
-        $page = $this->getDoctrine()->getRepository(Page::class)->findBy(['slug' => $slug]);
+        $page = $this->getDoctrine()->getRepository(Page::class)->getPageBySlug($slug);
+        $locale = $request->getLocale();
 
-        if (!empty($page)) {
-            $lang = $this->langService->getCodeLanguage($request->getLocale());
+        if ($page && $page->getSlugs()[$locale] === $slug) {
+            $lang = $this->langService->getCodeLanguage($locale);
 
             $array = [];
             $datas['slug'] = $slug;
-            $datas['locale'] = $request->getLocale();
-            $site = $this->_getDataSite($langService->getCodeLanguage($lang));
+            $datas['locale'] = $locale;
+
+            $site = $this->_getDataSite($lang);
+
             if(!empty($site)){
                 $datas['header'] = $site[0]->datas;
                 if(isset( $site[1]))
                     $datas['newsletter_block'] = $site[1]->datas;
             }
-
 
             // Footer components
             // TODO Footer
@@ -142,7 +144,7 @@ class IndexController extends AbstractController
                 $datas['footer']['social'] = $site[5]->getPageBlock()[4]->json ?? [];
             }*/
 
-            $datas['blocks'] = $this->_getDataPage($slug, $request->getLocale(), $page[0]->getId());
+            $datas['blocks'] = $this->_getDataPage($slug, $request->getLocale(), $page->getId());
 
             if (empty($datas['blocks'])) {
                 return new Response(
@@ -152,8 +154,8 @@ class IndexController extends AbstractController
             }
 
             //get Header
-            if(!empty( $this->_getDataHeader($slug)))
-                $datas['header'] = $this->_getDataHeader($slug)[0]->datas;
+            $datas['header'] = $this->_getDataHeader();
+            $datas['footer'] = $this->_getDataFooter();
 
             $menu = $menuRepository->findOneBy(['name' => 'main_menu']);
             $datas['menus'] = json_decode($menu->getJsonData());
@@ -165,10 +167,10 @@ class IndexController extends AbstractController
                 } else {
                     $sub = [];
                     if (true == $dt->getBlock()->getSubBlock()) {
-                        foreach ($dt->getPageBlock() as $children) {
+                        foreach ($dt->getBlockChildrens() as $children) {
                             $sub[] = $children->json;
                         }
-                        $dt->datas['slider'] = $sub;
+                        $dt->datas['sub_blocks'] = $sub;
                     }
                     $template = $dt->getBlock()->getPath();
                     $array['blocks'][] = ['data' => $dt->datas, 'template' => $template];
@@ -177,6 +179,7 @@ class IndexController extends AbstractController
 
             unset($datas['blocks']);
             $datas = array_merge($datas, $array);
+
         } else {
 
             $pages = $this->getDoctrine()->getRepository(Page::class)->findAll();
@@ -225,7 +228,7 @@ class IndexController extends AbstractController
         $datas['newsletter_form'] = $newsletter_form->createView();
 
         if (!empty($page)) {
-            $hasNewsletter = $page[0]->getHasNewsletter();
+            $hasNewsletter = $page->getHasNewsletter();
             $datas['has_newsletter'] = $hasNewsletter;
         }
 
@@ -266,16 +269,16 @@ class IndexController extends AbstractController
         return $this->_getData($page_blocks);
     }
 
-    protected function _getDataHeader($slug)
+    protected function _getDataHeader()
     {
-        $page_blocks = $this->getDoctrine()->getRepository(PageBlock::class)->getbyNameByBlockType($slug, 1);
+        $page_blocks = $this->getDoctrine()->getRepository(PageBlock::class)->getbyNameByBlockType('header');
 
         return $this->_getData($page_blocks);
     }
 
-    protected function _getDataFooter($slug)
+    protected function _getDataFooter()
     {
-        $page_blocks = $this->getDoctrine()->getRepository(PageBlock::class)->getbyNameByBlockType($slug, 5);
+        $page_blocks = $this->getDoctrine()->getRepository(PageBlock::class)->getbyNameByBlockType('footer');
 
         return $this->_getData($page_blocks);
     }
@@ -296,8 +299,9 @@ class IndexController extends AbstractController
             $jsonDatas = $request->get('preview') ? $pb->getJsonDataPreview() : $pb->getJsonData();
 
             $pb->datas = json_decode($jsonDatas ?? $pb->getJsonData(), true);
-            if (true === $pb->getBlock()->getSubBlock()) {
-                foreach ($pb->getPageBlock() as $p_b) {
+
+            if ($pb->getBlock() && true === $pb->getBlock()->getSubBlock()) {
+                foreach ($pb->getBlockChildrens() as $p_b) {
                     $p_b->json = json_decode($p_b->getjsonData(), true);
                 }
             }

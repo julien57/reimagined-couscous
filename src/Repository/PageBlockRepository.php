@@ -57,27 +57,20 @@ class PageBlockRepository extends ServiceEntityRepository
     }
 
     //for front
-    public function getbyNameByBlockType($slug, $type = null)
+    public function getbyNameByBlockType($slug)
     {
-        $qb = $this->createQueryBuilder('bp')
+        return $this->createQueryBuilder('bp')
             ->addSelect('p')//page
             ->addSelect('bl')//block
             ->leftJoin('bp.page', 'p')
             ->leftJoin('bp.block', 'bl')
             ->where('p.slug = :slug')
-            ->setParameter('slug', $slug);
-
-        if ($type) {
-            $qb
-                ->andWhere('bl.type = :type')
-                ->setParameter('type', $type);
-        }
-
-        $qb
+            ->setParameter('slug', $slug)
+            ->andWhere('bp.block IS NOT NULL')
+            ->andWhere('p.type = :type')
+            ->setParameter('type', $slug)
             ->orderBy('bp.itemOrder', 'ASC')
-        ;
-
-        return $qb->getQuery()
+            ->getQuery()
             ->getResult();
     }
 

@@ -26,7 +26,11 @@
                         <tr>
                             <td>{{ page.name }}</td>
                             <td>
-                                <a href="{{ app.request.schemeAndHttpHost ~ '/fr/' ~ page.slug }}" target="_blank">{{ app.request.schemeAndHttpHost ~ '/fr/' ~ page.slug }}</a>
+                                {% if page.slugs['fr'] %}
+                                    <a href="{{ app.request.schemeAndHttpHost ~ '/fr/' ~ page.slugs['fr'] }}" target="_blank">{{ app.request.schemeAndHttpHost ~ '/fr/' ~ page.slugs['fr'] }}</a>
+                                {% else %}
+                                    Non disponible en FR
+                                {% endif %}
                             </td>
                             <td>
                                 {% for lang in langagesAvailable %}

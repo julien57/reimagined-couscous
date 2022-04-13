@@ -13,7 +13,9 @@
     <div id="main">
         <!-- header -->
         {% if header is defined %}
-            {% include "home/blocks/header.html.twig"  with{ 'headerinfos': header } %}
+            {% include "home/blocks/header.html.twig" %}
+        {% else %}
+            {% block header %}{% endblock %}
         {% endif %}
 
         <!-- content -->
@@ -22,7 +24,9 @@
 
         <!-- footer -->
         {%  if footer is defined %}
-             {%  include "home/blocks/footer.html.twig" with{ 'footerInfos': footer } %}
+             {% include "home/blocks/footer.html.twig" %}
+        {% else %}
+            {% block footer %}{% endblock %}
         {%  endif %}
     </div>
 

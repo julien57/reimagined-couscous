@@ -7,10 +7,14 @@
                     <h1 class="m-0">
                         {% if app.request.attributes.get('_route_params') is defined and app.request.attributes.get('_route_params').slug is defined %}
                             {% if default_page is defined %}
-                                {{ default_page.name }}
+                                {% if default_page.slug == 'header' or default_page.slug == 'footer' %}
+                                    {{ default_page.slug|capitalize }}
+                                {% else %}
+                                    {{ default_page.name }}
+                                {% endif %}
                             {% endif %}
 
-                            {% if default_page is defined %}
+                            {% if default_page is defined and default_page.slug != 'header' %}
                                 <span style="font-size:1.4rem;{{ default_page.active ? 'color:green;' : 'color:red;' }}">{{ default_page.active ? '(En ligne)' : '(Hors-ligne)' }}</span>
                             {% endif %}
                             |
@@ -19,20 +23,22 @@
 
                             <i class="flag-icon flag-icon-{{ (locale == 'en') ? 'us' : locale }} mr-2"></i>
 
-                            <small style="font-size:45%;">
-                                | URL de la page :
-                                {% if locale == 'us' %}
-                                    {% set locale = 'en' %}
-                                {% endif %}
-                                <strong>
-                                    <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}">
-                                        {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}
-                                    </a>
-                                </strong>
-                            </small>
+                            {% if default_page is defined and default_page.slug != 'header' %}
+                                <small style="font-size:45%;">
+                                    | URL de la page :
+                                    {% if locale == 'us' %}
+                                        {% set locale = 'en' %}
+                                    {% endif %}
+                                    <strong>
+                                        <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}">
+                                            {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}
+                                        </a>
+                                    </strong>
+                                </small>
+                            {% endif %}
                         {% endif %}
                     </h1>
-                    {% if default_page is defined %}
+                    {% if default_page is defined and default_page.slug != 'header' %}
                         <div class="row">
                             {% set defaultSlug = default_page.slug %}
                             {% if default_page.slugs[locale] is defined and default_page.slugs[locale] is not null %}
@@ -51,8 +57,6 @@
                                 </a>
                             </form>
                         </div>
-                    {% endif %}
-                    {% if default_page is defined and page != 'site' %}
                         <div class="row">
                             <a href="{{ path('bo_deactive_page', {'id': default_page.id}) }}"
                                class="btn btn-block btn-warning btn-sm col-md-3 mt-3 mr-3"

@@ -25,18 +25,20 @@
                     {% for page in menus %}
                         {% set currentPage = twig_service.getPageById(page.id) %}
                         {% set arrayPagesExist = arrayPagesExist|merge([page.id]) %}
-                        <div class="list-group-item nested-1 font-weight-bold" data-id="{{ currentPage.id }}" style="background:#e6e6e6;">
-                            {{ currentPage.name }}
-                            <div class="list-group nested-sortable">
-                                {% for child in page.children %}
-                                    {% set currrentChild = twig_service.getPageById(child.id) %}
-                                    {% set arrayPagesExist = arrayPagesExist|merge([child.id]) %}
-                                    <div class="list-group-item nested-1" data-id="{{ currrentChild.id }}" draggable="false" style="background:#cccccc">
-                                        {{ currrentChild.name }}
-                                    </div>
-                                {% endfor %}
+                        {% if currentPage %}
+                            <div class="list-group-item nested-1 font-weight-bold" data-id="{{ currentPage.id }}" style="background:#e6e6e6;">
+                                {{ currentPage.name }}
+                                <div class="list-group nested-sortable">
+                                    {% for child in page.children %}
+                                        {% set currrentChild = twig_service.getPageById(child.id) %}
+                                        {% set arrayPagesExist = arrayPagesExist|merge([child.id]) %}
+                                        <div class="list-group-item nested-1" data-id="{{ currrentChild.id }}" draggable="false" style="background:#cccccc">
+                                            {{ currrentChild.name }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

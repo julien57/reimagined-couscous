@@ -61,7 +61,7 @@ class IndexController extends AbstractController
     public function listPage(PageRepository $pageRepository)
     {
         return $this->render('bo/page/list.html.twig', [
-            'pages' => $pageRepository->findBy([], ['id' => 'DESC']),
+            'pages' => $pageRepository->findBy(['type' => 'page'], ['id' => 'DESC']),
         ]);
     }
 
@@ -107,7 +107,7 @@ class IndexController extends AbstractController
     /**
      * @return mixed
      */
-    public function page(Request $request, $slug, $type = 0, SessionInterface $session, LangService $langService)
+    public function page(Request $request, $slug, $type = 0, SessionInterface $session)
     {
         // TOOD FORCE LOCALE
         //$session->set('_locale', 'fr');
@@ -120,10 +120,11 @@ class IndexController extends AbstractController
         //get all langue
         $langs = $this->getDoctrine()->getRepository(Language::class)->findAll();
         //get all pages
-        $pages = $this->getDoctrine()->getRepository(Page::class)->getPages();
+        //$pages = $this->getDoctrine()->getRepository(Page::class)->getPages();
 
         //get all pages block
         $default_block = '';
+
         $default_page = $page = $this->getDoctrine()->getRepository(Page::class)->findOneBySlug($slug);
 
         /* TODO Type block
@@ -174,7 +175,7 @@ class IndexController extends AbstractController
             'default_page' => $default_page,
             'blocks_page' => $blocks_page,
             'block_page_id' => $id,
-            'pages' => $pages,
+            //'pages' => $pages,
             'sliders' => $sliders,
             'blocks' => $blocks,
             'list_block' => $list_block,

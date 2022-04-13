@@ -1,3 +1,27 @@
+<!-- If menu in BO is empty or not exist -->
 <header style="height:100px;width:100%;background:#3b4252;color:#fff;display:flex;justify-content:center;align-items:center">
-    Default header
+    {% if menus is not defined %}
+        Default header
+    {% else %}
+        <div class="container">
+            {% if header is not empty %}
+                <h1>{{ header.0.datas ? header.0.datas.title : 'Caméléon' }}</h1>
+            {% endif %}
+            <nav>
+                <ul>
+                    {% for menu in menus %}
+                        {% set pageMenu = twig_service.getPageById(menu.id) %}
+                        {% if pageMenu and pageMenu.slugs[app.request.getLocale()] is defined %}
+                            <li>
+                                <a href="{{ path('front_index_page', {'slug': pageMenu.slugs[app.request.getLocale()]}) }}" style="color:#fff">
+                                    {{ pageMenu.name }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+
+    {% endif %}
 </header>

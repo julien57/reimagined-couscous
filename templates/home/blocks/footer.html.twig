@@ -1,3 +1,7 @@
 <footer style="height:100px;width:100%;background:#5c6065;color:#fff;display:flex;justify-content:center;align-items:center">
-    Default footer
+    {% if footer is not empty %}
+        <h1>{{ footer.0.datas ? footer.0.datas.title : 'Caméléon' }}</h1>
+    {% else %}
+        Default footer
+    {% endif %}
 </footer>

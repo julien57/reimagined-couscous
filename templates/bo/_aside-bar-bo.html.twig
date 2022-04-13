@@ -68,12 +68,16 @@
                                 <p>Menu</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item ">
-                            <a href="{{ path('bo_page', {slug: 'site'}) }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page' %}active{% endif %}">
+                            <a href="{{ path('bo_page_by_type', {slug:'header', type: 2 }) }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page_by_type' %}active{% endif %}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Général</p>
+                                <p>Header</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{{ path('bo_page_by_type', {slug:'footer', type: 2 }) }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page_by_type' %}active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Footer</p>
                             </a>
                         </li>
                     </ul>
