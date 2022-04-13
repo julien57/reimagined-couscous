@@ -154,8 +154,8 @@ class IndexController extends AbstractController
             }
 
             //get Header
-            $datas['header'] = $this->_getDataHeader();
-            $datas['footer'] = $this->_getDataFooter();
+            $datas['header'] = $this->_getDataHeader($locale);
+            $datas['footer'] = $this->_getDataFooter($locale);
 
             $menu = $menuRepository->findOneBy(['name' => 'main_menu']);
             $datas['menus'] = json_decode($menu->getJsonData());
@@ -269,16 +269,16 @@ class IndexController extends AbstractController
         return $this->_getData($page_blocks);
     }
 
-    protected function _getDataHeader()
+    protected function _getDataHeader(string $locale)
     {
-        $page_blocks = $this->getDoctrine()->getRepository(PageBlock::class)->getbyNameByBlockType('header');
+        $page_blocks = $this->getDoctrine()->getRepository(PageBlock::class)->getbyNameByBlockType('header', $locale);
 
         return $this->_getData($page_blocks);
     }
 
-    protected function _getDataFooter()
+    protected function _getDataFooter(string $locale)
     {
-        $page_blocks = $this->getDoctrine()->getRepository(PageBlock::class)->getbyNameByBlockType('footer');
+        $page_blocks = $this->getDoctrine()->getRepository(PageBlock::class)->getbyNameByBlockType('footer', $locale);
 
         return $this->_getData($page_blocks);
     }

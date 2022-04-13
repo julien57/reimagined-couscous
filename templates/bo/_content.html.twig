@@ -14,7 +14,7 @@
                                 {% endif %}
                             {% endif %}
 
-                            {% if default_page is defined and default_page.slug != 'header' %}
+                            {% if default_page is defined and default_page.slug != 'header' and default_page.slug != 'footer' %}
                                 <span style="font-size:1.4rem;{{ default_page.active ? 'color:green;' : 'color:red;' }}">{{ default_page.active ? '(En ligne)' : '(Hors-ligne)' }}</span>
                             {% endif %}
                             |
@@ -23,7 +23,7 @@
 
                             <i class="flag-icon flag-icon-{{ (locale == 'en') ? 'us' : locale }} mr-2"></i>
 
-                            {% if default_page is defined and default_page.slug != 'header' %}
+                            {% if default_page is defined and default_page.slug != 'header' and default_page.slug != 'footer' %}
                                 <small style="font-size:45%;">
                                     | URL de la page :
                                     {% if locale == 'us' %}
@@ -38,7 +38,7 @@
                             {% endif %}
                         {% endif %}
                     </h1>
-                    {% if default_page is defined and default_page.slug != 'header' %}
+                    {% if default_page is defined and default_page.slug != 'header' and default_page.slug != 'footer' %}
                         <div class="row">
                             {% set defaultSlug = default_page.slug %}
                             {% if default_page.slugs[locale] is defined and default_page.slugs[locale] is not null %}

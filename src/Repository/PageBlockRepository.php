@@ -57,7 +57,7 @@ class PageBlockRepository extends ServiceEntityRepository
     }
 
     //for front
-    public function getbyNameByBlockType($slug)
+    public function getbyNameByBlockType(string $slug, string $locale)
     {
         return $this->createQueryBuilder('bp')
             ->addSelect('p')//page
@@ -69,6 +69,8 @@ class PageBlockRepository extends ServiceEntityRepository
             ->andWhere('bp.block IS NOT NULL')
             ->andWhere('p.type = :type')
             ->setParameter('type', $slug)
+            ->andWhere('p.slugs LIKE :slugs')
+            ->setParameter('slugs', '%""'.$locale.'""%')
             ->orderBy('bp.itemOrder', 'ASC')
             ->getQuery()
             ->getResult();
