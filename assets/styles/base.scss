@@ -16,17 +16,17 @@ body {
     margin:0;
 }
 
-header {
-    nav {
-        width:80%;
-        margin:auto;
+.container {
+    width: 80%;
+    margin: auto;
+}
 
-        ul {
-            list-style-type: none;
-            padding:0;
-            display: flex;
-            justify-content: space-between;
-        }
+header {
+    ul {
+        list-style-type: none;
+        padding:0;
+        display: flex;
+        justify-content: space-between;
     }
 }
 

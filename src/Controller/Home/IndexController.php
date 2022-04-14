@@ -168,6 +168,8 @@ class IndexController extends AbstractController
                     $sub = [];
                     if (true == $dt->getBlock()->getSubBlock()) {
                         foreach ($dt->getBlockChildrens() as $children) {
+                            $templateChildren = $children->getBlock()->getPath();
+                            $children->json['template'] = $templateChildren;
                             $sub[] = $children->json;
                         }
                         $dt->datas['sub_blocks'] = $sub;

@@ -1,1 +1,13 @@
-{{ dump(data) }}
+<div class="container">
+    <h2>Block</h2>
+    {% for key, value in data %}
+        {% if key == 'sub_blocks' %}
+            {% for subBlock in value %}
+                {% set template = subBlock.template %}
+                {% include 'home/blocks/' ~ template with subBlock %}
+            {% endfor %}
+        {% else %}
+            {{ key }} : {{ value }}<br>
+        {% endif %}
+    {% endfor %}
+</div>

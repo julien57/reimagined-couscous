@@ -1,0 +1,12 @@
+<div class="container">
+    <h4>Sous block</h4>
+    {% for key, value in subBlock %}
+        {{ key }} :
+        {% if value is iterable %}
+            {{ value.0|raw }}
+        {% else %}
+            {{ value }}
+        {% endif %}
+        <br>
+    {% endfor %}
+</div>
