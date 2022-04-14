@@ -69,8 +69,8 @@ class PageBlockRepository extends ServiceEntityRepository
             ->andWhere('bp.block IS NOT NULL')
             ->andWhere('p.type = :type')
             ->setParameter('type', $slug)
-            ->andWhere('p.slugs LIKE :slugs')
-            ->setParameter('slugs', '%""'.$locale.'""%')
+            ->andWhere('bp.jsonData LIKE :locale')
+            ->setParameter('locale', '%"lang_block":"'.$locale.'"%')
             ->orderBy('bp.itemOrder', 'ASC')
             ->getQuery()
             ->getResult();

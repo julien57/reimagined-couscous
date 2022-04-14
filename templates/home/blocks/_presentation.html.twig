@@ -7,7 +7,7 @@
                 {% include 'home/blocks/' ~ template with subBlock %}
             {% endfor %}
         {% else %}
-            {{ key }} : {{ value }}<br>
+            {{ key }} : {{ value is iterable ? value.0|raw : value }}<br>
         {% endif %}
     {% endfor %}
 </div>

@@ -1,27 +1,31 @@
 <!-- If menu in BO is empty or not exist -->
-<header style="height:100px;width:100%;background:#3b4252;color:#fff;display:flex;justify-content:center;align-items:center">
+<header>
     {% if menus is not defined %}
         Default header
     {% else %}
-        <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             {% if header is not empty %}
-                <h1>{{ header.0.datas ? header.0.datas.title : 'Caméléon' }}</h1>
+                <a class="navbar-brand" href="#">{{ header.0.datas ? header.0.datas.title : 'Caméléon' }}</a>
             {% endif %}
-            <nav>
-                <ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
                     {% for menu in menus %}
                         {% set pageMenu = twig_service.getPageById(menu.id) %}
                         {% if pageMenu and pageMenu.slugs[app.request.getLocale()] is defined %}
-                            <li>
-                                <a href="{{ path('front_index_page', {'slug': pageMenu.slugs[app.request.getLocale()]}) }}" style="color:#fff">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ path('front_index_page', {'slug': pageMenu.slugs[app.request.getLocale()]}) }}">
                                     {{ pageMenu.name }}
                                 </a>
                             </li>
                         {% endif %}
                     {% endfor %}
+
                 </ul>
-            </nav>
-        </div>
+            </div>
+        </nav>
 
     {% endif %}
 </header>
