@@ -8,15 +8,11 @@ use App\Entity\Item;
 use App\Form\ItemType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends AbstractController
 {
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -25,9 +21,7 @@ class ItemController extends AbstractController
     }
 
     /**
-     * @param Request $request
      * @param Item|null $item
-     * @return Response
      */
     public function index(Request $request): Response
     {
@@ -47,11 +41,6 @@ class ItemController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Item $item
-     * @param Request $request
-     * @return Response
-     */
     public function update(Item $item, Request $request): Response
     {
         $form = $this->createForm(ItemType::class, $item)->handleRequest($request);
@@ -85,7 +74,6 @@ class ItemController extends AbstractController
         );
          */
 
-
         foreach ($item->getBlockItems() as $blockItem) {
             $em->remove($blockItem);
         }
@@ -94,6 +82,7 @@ class ItemController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'Champs supprimé');
+
         return $this->redirectToRoute('admin_item');
     }
 }

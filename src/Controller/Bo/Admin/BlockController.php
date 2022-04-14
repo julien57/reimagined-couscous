@@ -90,30 +90,26 @@ class BlockController extends AbstractController
     /**
      * remove block (in cascade ?)
      *
-     * @param Request $request
      * @param $id
-     * @return Response
      */
     public function ajaxRemove(Request $request, $id): Response
     {
         $block = $this->getDoctrine()->getRepository(Block::class)->find($id);
         $entityManager = $this->getDoctrine()->getManager();
 
-        if(!empty($block)){
-
-            $blockitem = $this->getDoctrine()->getRepository(BlockItem::class)->findOneBy(array('block' =>$id ));
-            if(!empty($blockitem)){
+        if (!empty($block)) {
+            $blockitem = $this->getDoctrine()->getRepository(BlockItem::class)->findOneBy(['block' => $id]);
+            if (!empty($blockitem)) {
                 $entityManager->remove($blockitem);
                 $entityManager->flush();
             }
 
-            $pageBlock = $this->getDoctrine()->getRepository(PageBlock::class)->findOneBy(array('block' =>$id ));
+            $pageBlock = $this->getDoctrine()->getRepository(PageBlock::class)->findOneBy(['block' => $id]);
 
-            if(!empty($pageBlock)){
+            if (!empty($pageBlock)) {
+                $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(['pageBlock' => $pageBlock->getId()]);
 
-                $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(array('pageBlock' => $pageBlock->getId() ));
-
-                if(!empty($content)){
+                if (!empty($content)) {
                     $entityManager->remove($content);
                     $entityManager->flush();
                 }
@@ -126,7 +122,6 @@ class BlockController extends AbstractController
             $entityManager->remove($block);
             $entityManager->flush();
         }
-
 
         return new JsonResponse(['succes' => 'ok']);
     }
@@ -273,7 +268,7 @@ class BlockController extends AbstractController
                 $entityManager->flush();
             }
 
-            ++$i;
+            $i++;
         }
 
         return new JsonResponse(['success' => 'ok']);
@@ -356,17 +351,17 @@ class BlockController extends AbstractController
             ->getRepository(Block::class)
             ->findAll();
 
-        foreach($blocks as $block){
+        foreach ($blocks as $block) {
             $path = $block->getPath();
-            if(in_array($path , $block_paths)){
-                $key = array_search ($path , $block_paths);
+            if (in_array($path, $block_paths)) {
+                $key = array_search($path, $block_paths);
                 unset($block_paths[$key]);
             }
         }
 
         return [
             'block_paths' => $block_paths,
-            'blocks' => $blocks
+            'blocks' => $blocks,
         ];
     }
 }

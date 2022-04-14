@@ -30,24 +30,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class IndexController extends AbstractController
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @var ContentRepository
-     */
+    /** @var ContentRepository */
     private $contentRepository;
 
-    /**
-     * @var SessionInterface
-     */
+    /** @var SessionInterface */
     private $session;
 
-    /**
-     * @var LanguageRepository
-     */
     private LanguageRepository $languageRepository;
 
     public function __construct(EntityManagerInterface $em, ContentRepository $contentRepository, SessionInterface $session, LanguageRepository $languageRepository)
@@ -250,7 +241,7 @@ class IndexController extends AbstractController
         if (!$request->get('slug') || !$request->get('pageId')) {
             return $this->json([
                 'status' => 'error',
-                'message' => 'Missing parameters'
+                'message' => 'Missing parameters',
             ], Response::HTTP_NOT_FOUND);
         }
 
@@ -268,7 +259,7 @@ class IndexController extends AbstractController
 
         return $this->json([
             'status' => 'ok',
-            'slug' => $request->get('slug')
+            'slug' => $request->get('slug'),
         ], Response::HTTP_OK);
     }
 

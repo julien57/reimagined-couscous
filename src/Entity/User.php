@@ -19,14 +19,10 @@ class User implements UserInterface
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    /** @ORM\Column(type="string", length=180, unique=true) */
     private $email;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    /** @ORM\Column(type="json") */
     private $roles = [];
 
     /**
@@ -35,9 +31,7 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Timeline::class, mappedBy="user", orphanRemoval=true)
-     */
+    /** @ORM\OneToMany(targetEntity=Timeline::class, mappedBy="user", orphanRemoval=true) */
     private $timelines;
 
     public function getId(): ?int

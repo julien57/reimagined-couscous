@@ -24,9 +24,7 @@ class Content
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    /** @ORM\Column(type="text", nullable=true) */
     private $json;
 
     /**
@@ -41,19 +39,13 @@ class Content
      */
     private $blockChildren;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
+    /** @ORM\Column(type="integer", nullable=false) */
     private $language;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
+    /** @ORM\Column(type="integer", nullable=false) */
     private $target = self::TARGET_BLOCK;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    /** @ORM\Column(type="text", nullable=true) */
     private $jsonPreview;
 
     public function getId(): ?int

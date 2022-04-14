@@ -17,9 +17,7 @@ class BlockChildren
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    /** @ORM\Column(type="text", nullable=true) */
     private $jsonData;
 
     /**
@@ -34,9 +32,7 @@ class BlockChildren
      */
     private $block;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    /** @ORM\Column(type="text", nullable=true) */
     private $jsonDataPreview;
 
     public function getId(): ?int

@@ -12,7 +12,7 @@ class Mail
 
     public function __construct(MailerInterface $mailer)
     {
-        $this->mailer = $mailer;   
+        $this->mailer = $mailer;
     }
 
     public function sendContactMail(Contact $contactForm)

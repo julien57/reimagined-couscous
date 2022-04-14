@@ -15,25 +15,16 @@
 
     {%
         set excluded_template = {
-            0:'_welcome.html.twig',
-            1:'_logos-service.html.twig',
-            2:'_block-infos.html.twig',
-            4:'_gift-large.html.twig',
-            5:'_gift-reservation.html.twig',
-            6:'_big-block.html.twig',
-            7:'_header.html.twig',
-            8:'_news-letter.html.twig',
-            9:'_slider.html.twig',
         }
     %}
 
     {%  for key,block in blocks %}
 
-        {% set include = '/home/blocks/'~block.template %}
-        {% set no_margin_top ='' %}
-        {% set even ='' %}
+        {% set include = '/home/blocks/' ~ block.template %}
+        {% set no_margin_top = '' %}
+        {% set even = '' %}
 
-        {% include include  with { 'data' : block.data , 'even' : even, 'index' : index} %}
+        {% include include with { 'data': block.data, 'even': even, 'index': index } %}
 
     {%  endfor  %}
 

@@ -7,7 +7,6 @@ use App\Entity\PageBlock;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
 use App\Repository\PageRepository;
-use App\Service\LangService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +31,7 @@ class PageController extends AbstractController
     {
         if (!$request->get('page_name')) {
             $this->addFlash('danger', 'Aucun nom pour la page');
+
             return $this->redirectToRoute('bo');
         }
 
@@ -43,7 +43,6 @@ class PageController extends AbstractController
         $newBlockPage->setItemOrder(0);
         $new->addPageBlock($newBlockPage);
         $newBlockPage->setPage($new);
-
 
         $localSession = $session->get('_locale_edit');
         if ('en' === $localSession) {

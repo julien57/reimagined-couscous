@@ -19,29 +19,19 @@ class Item
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $sqlType;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $htmlName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $htmlType;
 
-    /**
-     * @ORM\OneToMany(targetEntity="BlockItem", mappedBy="item")
-     */
+    /** @ORM\OneToMany(targetEntity="BlockItem", mappedBy="item") */
     private $blockItems;
 
     public function __construct()

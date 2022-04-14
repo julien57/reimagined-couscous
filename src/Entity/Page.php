@@ -22,49 +22,31 @@ class Page
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
+    /** @ORM\Column(type="string", length=255, unique=true) */
     private $name;
 
-    /**
-     * @ORM\Column(name="active",type="boolean")
-     */
+    /** @ORM\Column(name="active",type="boolean") */
     private $active = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PageBlock", mappedBy="page", cascade={"remove"})
-     */
+    /** @ORM\OneToMany(targetEntity="PageBlock", mappedBy="page", cascade={"remove"}) */
     private $pageBlocks;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    /** @ORM\Column(type="boolean", nullable=true) */
     private $hasNewsletter;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(type="string", length=255, nullable=true) */
     private $slug;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(type="string", length=255, nullable=true) */
     private $type;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(type="string", length=255, nullable=true) */
     private $metaTitle;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    /** @ORM\Column(type="text", nullable=true) */
     private $metaDescription;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    /** @ORM\Column(type="json", nullable=true) */
     private $slugs = [];
 
     public function __construct()

@@ -17,9 +17,7 @@ class Timeline
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    /** @ORM\Column(type="datetime", nullable=true) */
     private $updatedAt;
 
     /**
@@ -28,9 +26,7 @@ class Timeline
      */
     private $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=PageBlock::class, inversedBy="timelines")
-     */
+    /** @ORM\ManyToOne(targetEntity=PageBlock::class, inversedBy="timelines") */
     private $pageBlock;
 
     public function getId(): ?int

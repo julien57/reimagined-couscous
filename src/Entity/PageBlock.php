@@ -31,34 +31,22 @@ class PageBlock
      */
     private $page;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Content", mappedBy="pageBlock", cascade={"remove"})
-     */
+    /** @ORM\OneToMany(targetEntity="Content", mappedBy="pageBlock", cascade={"remove"}) */
     private $contents;
 
-    /**
-     * @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="pageBlock", cascade={"remove"})
-     */
+    /** @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="pageBlock", cascade={"remove"}) */
     private $blockChildrens;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
+    /** @ORM\Column(type="integer", nullable=false) */
     private $itemOrder;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    /** @ORM\Column(type="text", nullable=true) */
     private $jsonData;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    /** @ORM\Column(type="text", nullable=true) */
     private $jsonDataPreview;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Timeline::class, mappedBy="pageBlock", cascade={"remove"})
-     */
+    /** @ORM\OneToMany(targetEntity=Timeline::class, mappedBy="pageBlock", cascade={"remove"}) */
     private $timelines;
 
     /**

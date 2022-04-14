@@ -3,13 +3,13 @@
 namespace App\Controller\Bo\Admin;
 
 use App\Entity\Block;
-use App\Entity\User;
 use App\Entity\BlockChildren;
 use App\Entity\Content;
 use App\Entity\Language;
 use App\Entity\Page;
 use App\Entity\PageBlock;
 use App\Entity\Timeline;
+use App\Entity\User;
 use App\Form\PageType;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
@@ -165,7 +165,7 @@ class PageController extends AbstractController
                         $fileName = $fileUploader->upload($obj);
                         $array[strtolower($key)][] = $fileName;
                     }
-                    ++$i;
+                    $i++;
                 }
 
                 if (!empty($array[$hidden_array])) {
@@ -188,11 +188,11 @@ class PageController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        if(empty($this->getUser())){
+        if (empty($this->getUser())) {
             $user = $this->getDoctrine()->getRepository(User::class)->find(1);
-            //$this->getUser() ;
-        }else{
-            $user =  $this->getUser();
+        //$this->getUser() ;
+        } else {
+            $user = $this->getUser();
         }
 
         // Add timeline
@@ -205,7 +205,7 @@ class PageController extends AbstractController
         }
 
         $entityManager->flush();
-        if(empty($locale)){
+        if (empty($locale)) {
             $locale = 'fr';
         }
         $localeToSearch = $locale;
@@ -219,7 +219,7 @@ class PageController extends AbstractController
         if (is_null($localeToSearch)) {
             $localeToSearch = $session->get('_locale_edit');
         }
-       
+
         $lang = $this->getDoctrine()->getRepository(Language::class)->findOneByCode($localeToSearch);
 
         if (!empty($_POST['sub_block_id'])) {
@@ -235,9 +235,7 @@ class PageController extends AbstractController
                 $content->setBlockChildren($context_record);
                 $content->setTarget(2);
             }
-
         } else {
-
             $content = $this->getDoctrine()->getRepository(Content::class)->findOneBy(
                 [
                         'pageBlock' => $block_page_id,
@@ -255,7 +253,7 @@ class PageController extends AbstractController
                 $context_record->addContent($content);
             }
         }
-        
+
         // Publish or draft
         if ($content) {
             if ($request->get('draft')) {
@@ -263,7 +261,7 @@ class PageController extends AbstractController
             } else {
                 $content->setJson($json);
             }
-            
+
             $content->setLanguage($lang->getId());
 
             $entityManager->persist($content);
@@ -346,7 +344,7 @@ class PageController extends AbstractController
      */
     public function getAjaxDataPage(Request $request, $id): Response
     {
-       // $id = $request->request->get('id');
+        // $id = $request->request->get('id');
 
         $default_page = $page = $this->getDoctrine()->getRepository(Page::class)->find($id);
         $blocks_page = $this->_getDataPage($page);
@@ -388,7 +386,9 @@ class PageController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $blockpagge = $request->get('blockpage');
         $lang = $request->get('lang');
-        if(empty($lang)) $lang = 'fr';
+        if (empty($lang)) {
+            $lang = 'fr';
+        }
 
         $lang = $langService->getCodeLanguage($lang);
 

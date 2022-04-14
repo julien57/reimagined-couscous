@@ -9,19 +9,13 @@ use App\Repository\PageRepository;
 
 class TwigService
 {
-    /**
-     * @var ContentRepository
-     */
+    /** @var ContentRepository */
     private $contentRepository;
 
-    /**
-     * @var PageRepository
-     */
+    /** @var PageRepository */
     private $pageRepository;
 
-    /**
-     * @var LanguageRepository
-     */
+    /** @var LanguageRepository */
     private $languageRepository;
 
     public function __construct(ContentRepository $contentRepository, PageRepository $pageRepository, LanguageRepository $languageRepository)

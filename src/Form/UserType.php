@@ -9,8 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
@@ -51,7 +49,7 @@ class UserType extends AbstractType
                     ],
                     'mapped' => false,
                     'attr' => [
-                        'class' => 'form-control'
+                        'class' => 'form-control',
                     ],
                 ])
             ;
@@ -62,7 +60,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'currentUser' => 'currentUser'
+            'currentUser' => 'currentUser',
         ]);
     }
 }

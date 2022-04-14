@@ -13,9 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends AbstractController
 {
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)

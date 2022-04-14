@@ -22,44 +22,28 @@ class Block
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $path;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    /** @ORM\Column(type="integer") */
     private $type;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(type="string", length=255, nullable=true) */
     private $image;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PageBlock", mappedBy="block")
-     */
+    /** @ORM\OneToMany(targetEntity="PageBlock", mappedBy="block") */
     private $pageBlocks;
 
-    /**
-     * @ORM\OneToMany(targetEntity="BlockItem", mappedBy="block")
-     */
+    /** @ORM\OneToMany(targetEntity="BlockItem", mappedBy="block") */
     private $blockItems;
 
-    /**
-     * @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="block")
-     */
+    /** @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="block") */
     private $childrens;
 
-    /**
-     * @ORM\Column(name="subBlock",type="boolean")
-     */
+    /** @ORM\Column(name="subBlock",type="boolean") */
     private $subBlock = false;
 
     public function __construct()
