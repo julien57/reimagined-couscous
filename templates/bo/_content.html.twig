@@ -30,9 +30,15 @@
                                         {% set locale = 'en' %}
                                     {% endif %}
                                     <strong>
-                                        <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}">
-                                            {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}
-                                        </a>
+                                        {% if default_page.type == 'post' %}
+                                            <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/news/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}">
+                                                {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/news/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}
+                                            </a>
+                                        {% else %}
+                                            <a target="_blank" href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}">
+                                                {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}{{ default_page.slugs[locale] is defined ? default_page.slugs[locale] : app.request.attributes.get('_route_params').slug }}
+                                            </a>
+                                        {% endif %}
                                     </strong>
                                 </small>
                             {% endif %}
@@ -47,14 +53,24 @@
 
                             <form id="formSaveSlug" class="d-flex align-items-end col-md-12">
                                     <span class="d-flex align-items-end font-weight-bold mr-3">
-                                        {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}
+                                        {% if default_page.type == 'post' %}
+                                            {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/news/' }}
+                                        {% else %}
+                                            {{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' }}
+                                        {% endif %}
                                         <input type="text" name="slug" value="{{ defaultSlug }}" style="height:24px;">
                                         <input type="hidden" name="pageId" value="{{ default_page.id }}">
                                     </span>
                                 <button type="submit" class="btn btn-block btn-success btn-xs mr-3" style="width:100px" id="btnSlug"><i class="fas fa-save"></i> Enregistrer</button>
-                                <a href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' ~ defaultSlug ?? default_page.slug }}" class="btn btn-block btn-info btn-xs" id="btnSeePage" style="width:100px" target="_blank">
-                                    <i class="fas fa-eye"></i> Voir
-                                </a>
+                                {% if default_page.type == 'post' %}
+                                    <a href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/news/' ~ defaultSlug ?? default_page.slug }}" class="btn btn-block btn-info btn-xs" id="btnSeePage" style="width:100px" target="_blank">
+                                        <i class="fas fa-eye"></i> Voir
+                                    </a>
+                                {% else %}
+                                    <a href="{{ app.request.schemeAndHttpHost ~ '/' ~ locale ~ '/' ~ defaultSlug ?? default_page.slug }}" class="btn btn-block btn-info btn-xs" id="btnSeePage" style="width:100px" target="_blank">
+                                        <i class="fas fa-eye"></i> Voir
+                                    </a>
+                                {% endif %}
                             </form>
                         </div>
                         <div class="row">

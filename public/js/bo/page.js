@@ -16,7 +16,11 @@ $(function(){
 
             success: function(data, status) {
                 $('#btnSlug i').removeClass('fa-save').addClass('fa-check');
-                $('#btnSeePage').attr('href', `${window.location.origin}/${localForMessage}/${data.slug}`);
+                if (data.type === 'post') {
+                    $('#btnSeePage').attr('href', `${window.location.origin}/${localForMessage}/news/${data.slug}`);
+                } else {
+                    $('#btnSeePage').attr('href', `${window.location.origin}/${localForMessage}/${data.slug}`);
+                }
             },
 
             error : function(xhr, textStatus, errorThrown) {

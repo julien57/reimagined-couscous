@@ -85,10 +85,10 @@ class IndexController extends AbstractController
 
         return $this->render('bo/dashboard.html.twig',
             [
-                'page' => 'dashbord',
+                'page' => 'dashboard',
                 'pages' => $pages,
                 'langs' => $langs,
-                'countPages' => $pageRepository->getCountPages(),
+                'countPages' => $pageRepository->count(['type' => 'page']),
                 'countPosts' => $pageRepository->count(['type' => 'post']),
                 'timelines' => $arrayTimelines,
             ]
@@ -260,6 +260,7 @@ class IndexController extends AbstractController
         return $this->json([
             'status' => 'ok',
             'slug' => $request->get('slug'),
+            'type' => $page->getType(),
         ], Response::HTTP_OK);
     }
 

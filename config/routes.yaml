@@ -237,6 +237,13 @@ app_page:
     controller: App\Controller\Home\IndexController::page
     defaults:
         _locale: fr
+        slug: ''
+app_news:
+    path:       /{_locale}/news/{slug}
+    controller: App\Controller\Home\IndexController::page
+    defaults:
+        _locale: fr
+        slug: ''
 app_page_preview:
     path:       /{_locale}/preview/page/{slug}
     controller: App\Controller\Home\IndexController::page
