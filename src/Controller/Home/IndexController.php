@@ -102,6 +102,9 @@ class IndexController extends AbstractController
      */
     public function page($slug, Request $request, MenuRepository $menuRepository, LangService $langService)
     {
+        if ($slug === '/') {
+            return $this->redirect('/fr/accueil');
+        }
         $page = $this->getDoctrine()->getRepository(Page::class)->getPageBySlug($slug);
         $locale = $request->getLocale();
 
