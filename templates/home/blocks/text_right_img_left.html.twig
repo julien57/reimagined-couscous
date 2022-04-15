@@ -1,0 +1,15 @@
+<div class="container block text-left-img-right mb-5 mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            {% if data.illustration is defined and data.illustration is not empty %}
+                <img src="{{ asset('uploads/' ~ data.illustration.0) }}" title="{{ data.title }}">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center">Block {{ data.title }}</h2>
+            {% if data.content is not empty %}
+                {{ data.content.0|raw }}
+            {% endif %}
+        </div>
+    </div>
+</div>
