@@ -41,7 +41,8 @@ class ItemType extends AbstractType
                 ]
             )
             ->add('info', TextType::class, [
-                'label' => 'Info sous le champs'
+                'label' => 'Info sous le champs',
+                'required' => false
             ])
         ;
     }
