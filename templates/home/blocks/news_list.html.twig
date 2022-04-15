@@ -1,0 +1,49 @@
+<div class="container block mt-5 mb-5">
+    <h2 class="text-center">Block {{ data.title }}</h2>
+
+    {% if data.content is not empty %}
+        {{ data.content.0|raw }}
+    {% endif %}
+
+    {# Order news in BO #}
+    {% set newsOrder = 'DESC' %}
+    {% if data.news_order is defined %}
+        {% set newsOrder = data.news_order %}
+    {% endif %}
+
+    {# Limit news in BO #}
+    {% set newsLimit = null %}
+    {% if data.nb_news is defined %}
+        {% set newsLimit = data.nb_news %}
+    {% endif %}
+
+    {% set news = twig_service.getLatestNews(newsLimit, newsOrder, app.request.locale) %}
+
+    <div class="row">
+        {% for new in news %}
+            <div class="card" style="width: 18rem;">
+                {% if new.data.illustration is defined %}
+                    <img class="card-img-top"
+                         src="{{ asset('uploads/' ~ new.data.illustration.0) }}"
+                         alt="{{ new.data.title }}">
+                {% else %}
+                    <img class="card-img-top"
+                         src="{{ asset('img/news_default.jpg') }}"
+                         alt="{{ new.data.title }}">
+                {% endif%}
+                <div class="card-body">
+                    <h5 class="card-title">{{ new.data.title }}</h5>
+                    <div class="card-text">
+                        {% if new.data.content is defined and new.data.content is not empty %}
+                            {{ new.data.content.0|raw }}
+                        {% endif %}
+                    </div>
+                    <a href="{{ path('app_news', {'slug': new.slugs[app.request.locale]} )}}" class="btn btn-primary">
+                        Voir
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>

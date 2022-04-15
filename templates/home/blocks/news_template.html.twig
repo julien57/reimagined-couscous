@@ -1,4 +1,7 @@
-<div class="container">
+<div class="container block text-image-full">
+    {% if data.illustration is defined and data.illustration is not empty %}
+        <img src="{{ asset('uploads/' ~ data.illustration.0) }}" title="{{ data.title }}">
+    {% endif %}
     <h2 class="text-center">Block {{ data.title }}</h2>
 
     {% if data.content is not empty %}

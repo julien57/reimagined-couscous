@@ -34,6 +34,11 @@ class Item
     /** @ORM\OneToMany(targetEntity="BlockItem", mappedBy="item") */
     private $blockItems;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $info;
+
     public function __construct()
     {
         $this->blockItems = new ArrayCollection();
@@ -118,6 +123,18 @@ class Item
                 $blockItem->setItem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInfo(): ?string
+    {
+        return $this->info;
+    }
+
+    public function setInfo(?string $info): self
+    {
+        $this->info = $info;
 
         return $this;
     }

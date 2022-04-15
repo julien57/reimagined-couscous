@@ -29,6 +29,28 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function getlatestPosts(?int $limit, string $order, string $locale)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.slugs LIKE :slug')
+            ->setParameter('slug', '%"'.$locale.'"%')
+            ->andWhere('p.active = 1')
+            ->andWhere('p.type = :type')
+            ->setParameter('type', 'post');
+
+        if ($limit) {
+            $qb
+                ->setMaxResults($limit);
+        }
+
+        $qb = $qb
+            ->orderBy('p.id', $order)
+            ->getQuery()
+            ->getResult();
+
+        return $qb;
+    }
+
     /**
      * Get one page in array.
      *

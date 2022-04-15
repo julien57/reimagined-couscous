@@ -64,4 +64,24 @@ class TwigService
 
         return $values;
     }
+
+    public function getLatestNews(?int $limit, string $order = 'DESC', string $locale = 'fr')
+    {
+        $posts = $this->pageRepository->getlatestPosts($limit, $order, $locale);
+        $pageBlocks = [];
+
+        foreach ($posts as $post) {
+            foreach ($post->getPageBlocks() as $pageBlock) {
+                if ($pageBlock->getJsonData()) {
+                    $data = json_decode($pageBlock->getJsonData());
+                    if ($data->lang_block === $locale) {
+                        $post->data = $data;
+                        $pageBlocks[] = $post;
+                    }
+                }
+            }
+        }
+
+        return $pageBlocks;
+    }
 }

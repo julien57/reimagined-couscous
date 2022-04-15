@@ -9,7 +9,7 @@
     <div id="containerPreviews" class="row"></div>
 
 
-    {% if json is not empty  %}
+    {% if json is defined and json is not empty  %}
         {%  set key =  data.htmlName|lower %}
             {% if json[key] is defined %}
                 <div class="flex-row files row">
