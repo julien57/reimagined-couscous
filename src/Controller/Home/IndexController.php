@@ -90,10 +90,13 @@ class IndexController extends AbstractController
                             $children->json['template'] = $templateChildren;
                             $sub[] = $children->json;
                         }
+
                         $dt->datas['sub_blocks'] = $sub;
                     }
                     $template = $dt->getBlock()->getPath();
-                    $array['blocks'][] = ['data' => $dt->datas, 'template' => $template];
+                    if (isset($dt->datas['lang_block']) && $dt->datas['lang_block'] === $locale) {
+                        $array['blocks'][] = ['data' => $dt->datas, 'template' => $template];
+                    }
                 }
             }
 
