@@ -106,6 +106,7 @@ $(function(){
                 const datas = JSON.parse(data);
                 console.log(datas)
                 $('#formtmp').removeAttr('id');
+                const urlDraft = document.getElementById('btnSeePage').href;
 
                 if (btnSubmit.hasClass('draft')) {
 
@@ -113,7 +114,7 @@ $(function(){
                                                       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                                       <h5><i class="icon fas fa-check"></i> Brouillon enregistré !</h5>
                                                       Pensez à publier vos modifications après avoir 
-                                                      <a href="/${datas.locale_current}/${datas.slug_current}?preview=preview" target="_blank" style="font-weight:bold">visualiser l’aperçu</a>
+                                                      <a href="${urlDraft}?preview=preview" target="_blank" style="font-weight:bold">visualiser l’aperçu</a>
                                                     </div>`);
 
 

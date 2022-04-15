@@ -178,6 +178,7 @@ $(function(){
                                 const datas = JSON.parse(data);
 
                                 $('#formtmp').removeAttr('id');
+                                const urlDraft = document.getElementById('btnSeePage').href;
 
                                 if (btnSubmit.hasClass('draft')) {
 
