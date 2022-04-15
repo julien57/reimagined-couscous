@@ -15,6 +15,7 @@
         "doctrine/orm": "^2.8",
         "knplabs/knp-time-bundle": "^1.17",
         "mailchimp/marketing": "^3.0",
+        "ps/image-optimizer": "^2.0",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.2.*",
