@@ -14,4 +14,4 @@ import './styles/base.scss';
 import './bootstrap';
 
 // Example :
-//import './js/header.js';
+import './js/langSelect.js';

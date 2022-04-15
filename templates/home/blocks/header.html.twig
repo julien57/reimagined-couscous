@@ -25,6 +25,13 @@
 
                 </ul>
             </div>
+            <div>
+                <select id="selectChoice" class="form-control">
+                    {% for code, slug in page.slugs %}
+                        <option value="/{{ code }}/{{ slug }}" {% if locale == code %}selected{% endif %}>{{ code }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </nav>
 
     {% endif %}

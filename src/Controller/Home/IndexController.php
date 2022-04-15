@@ -60,6 +60,7 @@ class IndexController extends AbstractController
         if ($page && $page->getSlugs()[$locale] === $slug) {
             $array = [];
             $datas['slug'] = $slug;
+            $datas['page'] = $page;
             $datas['locale'] = $locale;
             $datas['blocks'] = $this->_getDataPage($locale, $page->getId());
 
