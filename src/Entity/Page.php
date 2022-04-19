@@ -49,6 +49,11 @@ class Page
     /** @ORM\Column(type="json", nullable=true) */
     private $slugs = [];
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $metas = [];
+
     public function __construct()
     {
         $this->hasNewsletter = false;
@@ -188,6 +193,18 @@ class Page
     public function setSlugs(?array $slugs): self
     {
         $this->slugs = $slugs;
+
+        return $this;
+    }
+
+    public function getMetas(): ?array
+    {
+        return $this->metas;
+    }
+
+    public function setMetas(?array $metas): self
+    {
+        $this->metas = $metas;
 
         return $this;
     }

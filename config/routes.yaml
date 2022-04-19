@@ -131,6 +131,11 @@ admin_page_ajax_get_block:
     path:       /admin/page/{id}/blocks
     controller: App\Controller\Bo\Admin\PageController::getAjaxDataPage
     methods: GET
+#Save metas page
+admin_page_save_metas:
+    path:       /bo/page/metas/save
+    controller: App\Controller\Bo\Admin\PageController::saveMetaPage
+    methods: POST
 #page get Entity without template
 get_page_entity:
     path:       /admin/page/entity/{id}

@@ -54,6 +54,7 @@ class IndexController extends AbstractController
      */
     public function page($slug, Request $request, MenuRepository $menuRepository)
     {
+        /** @var Page|null $page */
         $page = $this->getDoctrine()->getRepository(Page::class)->getPageBySlug($slug);
         $locale = $request->getLocale();
 
@@ -77,7 +78,12 @@ class IndexController extends AbstractController
 
             $menu = $menuRepository->findOneBy(['name' => 'main_menu']);
             $datas['menus'] = json_decode($menu->getJsonData());
-            //$datas['metas'] = [];
+
+            // Metas
+            $datas['metas'] = [];
+            if ($page->getMetas() && isset($page->getMetas()[$locale])) {
+                $datas['metas'] = $page->getMetas()[$locale];
+            }
 
             foreach ($datas['blocks'] as $key => $dt) {
                 if (isset($dt->datas) && array_key_exists('meta_title', $dt->datas)) {

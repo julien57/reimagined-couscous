@@ -16,6 +16,7 @@ use App\Repository\LanguageRepository;
 use App\Repository\PageRepository;
 use App\Service\FileUploader;
 use App\Service\LangService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,13 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class PageController extends AbstractController
 {
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @param null $id
      */
@@ -439,6 +447,39 @@ class PageController extends AbstractController
         }
 
         return new JsonResponse(json_encode(['success' => true]));
+    }
+
+    public function saveMetaPage(Request $request, PageRepository $pageRepository)
+    {
+        if (!$request->get('page_id') || !$request->get('lang_meta')) {
+            return $this->json([
+                'message' => 'Missing parameter'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $page = $pageRepository->find($request->get('page_id'));
+        $metas = $page->getMetas();
+
+        if (!isset($metas[$request->get('lang_meta')])) {
+            $metaLang = [
+                'title' => $request->get('meta_title'),
+                'description' => $request->get('meta_description')
+            ];
+            $metas[$request->get('lang_meta')] = $metaLang;
+
+        } else {
+            $metas[$request->get('lang_meta')] = [
+                'title' => $request->get('meta_title'),
+                'description' => $request->get('meta_description')
+            ];
+        }
+
+        $page->setMetas($metas);
+        $this->em->flush();
+
+        return $this->json([
+            'message' => 'Ok'
+        ], Response::HTTP_OK);
     }
 
     /**

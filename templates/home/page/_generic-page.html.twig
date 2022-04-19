@@ -1,22 +1,10 @@
 {% extends 'index.html.twig' %}
 
-{% block metas %}
-    {% if metas.meta_title is defined %}
-        <title>{{ metas.meta_title }}</title>
-    {% endif %}
-    {% if metas.meta_description is defined %}
-        <meta name="description" content="{{ metas.meta_description }}">
-    {% endif %}
-{% endblock %}
-
 {% block content %}
 
     {% set index = 0  %}
 
-    {%
-        set excluded_template = {
-        }
-    %}
+    {% set excluded_template = {} %}
 
     {%  for key,block in blocks %}
 

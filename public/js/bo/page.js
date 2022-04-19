@@ -1,4 +1,36 @@
 $(function(){
+    console.log('coucou')
+    /**
+     * Save Metas page
+     */
+    $(document).on("submit",'#saveMetasPage', function( e ){
+        e.preventDefault();
+
+        var data = $(this).closest('form').serialize();
+
+
+        $.ajax({
+            url: `/bo/page/metas/save`,
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            async: true,
+
+            success: function(data, status) {
+                $('#messageSeo').html(`<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-check"></i> Enregistré !</h5>
+                    </div>`);
+            },
+
+            error : function(xhr, textStatus, errorThrown) {
+                $('#messageSeo').html(`<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-check"></i> Ajax request failed.</h5>
+                    </div>`);
+            }
+        });
+    });
 
     /**
      * Save slug page
