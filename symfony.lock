@@ -540,6 +540,9 @@
             "config/packages/reset_password.yaml"
         ]
     },
+    "tinify/tinify": {
+        "version": "1.5.3"
+    },
     "twig/extra-bundle": {
         "version": "v3.3.0"
     },
