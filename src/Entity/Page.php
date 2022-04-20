@@ -40,12 +40,6 @@ class Page
     /** @ORM\Column(type="string", length=255, nullable=true) */
     private $type;
 
-    /** @ORM\Column(type="string", length=255, nullable=true) */
-    private $metaTitle;
-
-    /** @ORM\Column(type="text", nullable=true) */
-    private $metaDescription;
-
     /** @ORM\Column(type="json", nullable=true) */
     private $slugs = [];
 
@@ -127,30 +121,6 @@ class Page
     public function setType(?string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getMetaTitle(): ?string
-    {
-        return $this->metaTitle;
-    }
-
-    public function setMetaTitle(?string $metaTitle): self
-    {
-        $this->metaTitle = $metaTitle;
-
-        return $this;
-    }
-
-    public function getMetaDescription(): ?string
-    {
-        return $this->metaDescription;
-    }
-
-    public function setMetaDescription(?string $metaDescription): self
-    {
-        $this->metaDescription = $metaDescription;
 
         return $this;
     }

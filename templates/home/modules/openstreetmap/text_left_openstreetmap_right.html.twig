@@ -1,0 +1,13 @@
+<div class="container block text-left-img-right mb-5 mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-center">Block {{ data.title }}</h2>
+            {% if data.content is not empty %}
+                {{ data.content.0|raw }}
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>

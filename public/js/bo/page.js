@@ -1,5 +1,43 @@
-$(function(){
-    console.log('coucou')
+$(function() {
+
+    /**
+     * Activate Module
+     */
+    $(document).on("change",'.form-activate-module', function( e ){
+        e.preventDefault();
+
+        var data = $(this).closest('form').serialize();
+        var thisForm = $(this);
+
+        $.ajax({
+            url: `/admin/modules/activate`,
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            async: true,
+
+            success: function(data, status) {
+                if (data.isActivated) {
+                    thisForm.parent().find('.ribbon-wrapper').replaceWith(`<div class="ribbon-wrapper ribbon-lg">
+                                <div class="ribbon bg-success text-lg">
+                                    Activé
+                                </div>
+                            </div>`);
+                } else {
+                    thisForm.parent().find('.ribbon-wrapper').replaceWith(`<div class="ribbon-wrapper ribbon-lg">
+                                <div class="ribbon bg-danger text-lg">
+                                    Désactivé
+                                </div>
+                            </div>`);
+                }
+            },
+
+            error : function(xhr, textStatus, errorThrown) {
+                alert('ERROR')
+            }
+        });
+    });
+
     /**
      * Save Metas page
      */

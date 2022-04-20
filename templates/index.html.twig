@@ -16,6 +16,12 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
+
+    {% for block in blocks %}
+        {% if block.module and block.module.moduleAsset %}
+            {{ block.module.moduleAsset.css|raw }}
+        {% endif %}
+    {% endfor %}
 </head>
 <body>
     <div id="main">
@@ -43,5 +49,21 @@
     {% endblock %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {% for block in blocks %}
+        {% if block.module and block.module.moduleAsset %}
+            <script>
+                {% for variable, data in block.data %}
+                    {% if data is not iterable %}
+                        let {{ variable }} = `{{ data }}`;
+                    {% else %}
+                        let {{ variable }} = `{{ data.0|raw }}`;
+                    {% endif %}
+                {% endfor %}
+            </script>
+
+            {{ block.module.moduleAsset.js|raw }}
+        {% endif %}
+    {% endfor %}
 </body>
 </html>

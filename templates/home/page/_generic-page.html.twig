@@ -3,16 +3,24 @@
 {% block content %}
 
     {% set index = 0  %}
-
     {% set excluded_template = {} %}
 
     {%  for key,block in blocks %}
 
-        {% set include = '/home/blocks/' ~ block.template %}
+        {% set include = null %}
+        {% if block.module and block.module.isActivated %}
+            {# Modules directory #}
+            {% set include = '/home/modules/' ~ block.module.templateFolder ~ '/' ~ block.template %}
+        {% elseif block.template %}
+            {% set include = '/home/blocks/' ~ block.template %}
+        {% endif %}
+
         {% set no_margin_top = '' %}
         {% set even = '' %}
 
-        {% include include with { 'data': block.data, 'even': even, 'index': index } %}
+        {% if include %}
+            {% include include with { 'data': block.data, 'even': even, 'index': index } %}
+        {% endif %}
 
     {%  endfor  %}
 

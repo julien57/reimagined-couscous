@@ -3,6 +3,7 @@
 namespace App\Controller\Home;
 
 use App\Entity\Block;
+use App\Entity\Content;
 use App\Entity\Newsletter;
 use App\Entity\Page;
 use App\Entity\PageBlock;
@@ -99,15 +100,31 @@ class IndexController extends AbstractController
 
                         $dt->datas['sub_blocks'] = $sub;
                     }
+
                     $template = $dt->getBlock()->getPath();
+
+                    $module = null;
+                    if ($dt->getBlock()->getModule()) {
+                        if ($dt->getBlock()->getModule()->getIsActivated()) {
+                            $module = $dt->getBlock()->getModule();
+                        } else {
+                            $template = false;
+                        }
+                    }
+
                     if (isset($dt->datas['lang_block']) && $dt->datas['lang_block'] === $locale) {
-                        $array['blocks'][] = ['data' => $dt->datas, 'template' => $template];
+                        $array['blocks'][] = [
+                            'data' => $dt->datas,
+                            'template' => $template,
+                            'module' => $module
+                        ];
                     }
                 }
             }
 
             unset($datas['blocks']);
             $datas = array_merge($datas, $array);
+
         } else {
             // If !$page redirect to welcome_page
             $pages = $this->getDoctrine()->getRepository(Page::class)->findAll();
@@ -163,7 +180,7 @@ class IndexController extends AbstractController
         $contents = $this->contentRepository->getLangExist($lang, $pageId);
 
         $arrayPageBlocks = [];
-
+        /** @var Content $content */
         foreach ($contents as $content) {
             $json = $content->getJson();
             if ($content->getPageBlock()) {

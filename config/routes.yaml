@@ -259,8 +259,22 @@ front_ajax_valid_offer:
     path:       /offer/send-form
     controller: App\Controller\Home\IndexController::validOfferForm
 
-#ajax
+#Modules
+admin_module_list:
+    path:       /admin/modules/liste
+    controller: App\Controller\Bo\Admin\ModuleController::list
+    methods: GET
+admin_active_module:
+    path:       /admin/modules/activate
+    controller: App\Controller\Bo\Admin\ModuleController::activateModule
+    methods: POST
+#Modules Assets
+admin_assets_module_edit:
+    path:       /admin/modules/assets/{id}
+    controller: App\Controller\Bo\Admin\ModuleAssetController::editAssetModule
+    methods: GET|POST
 
+#ajax
 ajax_form:
     path:       /form/ajax/
     controller: App\Controller\Home\AjaxController::ajax

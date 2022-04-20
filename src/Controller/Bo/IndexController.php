@@ -155,7 +155,7 @@ class IndexController extends AbstractController
             $list_block = $this->getDoctrine()->getRepository(Block::class)->findBy(['type' => 5], ['name' => 'ASC']);
         }
 
-        $blocks = $this->getDoctrine()->getRepository(Block::class)->findBy([], ['name' => 'ASC']);
+        $blocks = $this->getDoctrine()->getRepository(Block::class)->getBlocksPageWithModuleActivated();
 
         if ('site' == $slug) {
             $list_block = [];

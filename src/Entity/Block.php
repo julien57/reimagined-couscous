@@ -46,6 +46,11 @@ class Block
     /** @ORM\Column(name="subBlock",type="boolean") */
     private $subBlock = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Module::class, inversedBy="blocks")
+     */
+    private $module;
+
     public function __construct()
     {
         $this->pageBlocks = new ArrayCollection();
@@ -204,6 +209,18 @@ class Block
                 $children->setChildren(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getModule(): ?Module
+    {
+        return $this->module;
+    }
+
+    public function setModule(?Module $module): self
+    {
+        $this->module = $module;
 
         return $this;
     }

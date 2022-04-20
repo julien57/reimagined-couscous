@@ -177,6 +177,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item {% if app.request.attributes.get('_route') == 'admin_module_list' %}menu-is-opening menu-open{% endif %}">
+                        <a href="{{ path('admin_module_list') }}" class="nav-link {% if app.request.attributes.get('_route') == 'admin_module_list' %}active{% endif %}">
+                            <i class="nav-icon fas fa-plug"></i>
+                            <p>Modules</p>
+                        </a>
+                    </li>
                 {% endif %}
                 <!-- slider -->
                 {% if default_page is defined and default_page is not empty %}

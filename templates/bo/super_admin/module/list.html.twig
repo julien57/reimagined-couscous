@@ -1,0 +1,38 @@
+{% extends 'bo/base_bo.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Modules</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="row">
+                {% for module in modules %}
+                    <div class="col-sm-4 mt-4 position-relative">
+                        <div class="position-relative p-3 bg-gray" style="height: 180px">
+                            <div class="ribbon-wrapper ribbon-lg">
+                                <div class="ribbon bg-{{ module.isActivated ? 'success' : 'danger' }} text-lg">
+                                    {{ module.isActivated ? 'Activé' : 'Désactivé' }}
+                                </div>
+                            </div>
+                            {{ module.name }}<br>
+                            <small>{{ module.description }}</small>
+                            <form class="position-absolute form-activate-module" style="bottom:0">
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch3" {% if module.isActivated %}checked{% endif %}>
+                                        <label class="custom-control-label" for="customSwitch3">Activer / Désactiver</label>
+                                    </div>
+                                    <input type="hidden" value="{{ module.id }}" name="module_id">
+                                </div>
+                            </form>
+                            <a href="{{ path('admin_assets_module_edit', {'id': module.id}) }}" class="position-absolute" style="bottom:15px;right:15px">Options</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+{% endblock %}

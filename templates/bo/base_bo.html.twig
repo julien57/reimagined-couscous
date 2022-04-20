@@ -33,6 +33,9 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
+    <link rel="stylesheet" href="{{ asset('bo/plugins/codemirror/codemirror.css') }}">
+    <link rel="stylesheet" href="{{ asset('bo/plugins/codemirror/theme/monokai.css') }}">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -136,6 +139,11 @@
 <script src="{{ asset('/bo/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
+<script src="{{ asset('bo/plugins/codemirror/codemirror.js') }}"></script>
+<script src="{{ asset('bo/plugins/codemirror/mode/css/css.js') }}"></script>
+<script src="{{ asset('bo/plugins/codemirror/mode/xml/xml.js') }}"></script>
+<script src="{{ asset('bo/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
+
 <!-- ChartJS -->
  <script src="{{ asset('/bo/plugins/chart.js/Chart.min.js') }}"></script>
 <!-- Sparkline -->
@@ -169,6 +177,14 @@
 {% block javascript %}{% endblock %}
 
 <script>
+    CodeMirror.fromTextArea(document.getElementById("module_asset_css"), {
+        mode: "htmlmixed",
+        theme: "monokai"
+    });
+    CodeMirror.fromTextArea(document.getElementById("module_asset_js"), {
+        mode: "htmlmixed",
+        theme: "monokai"
+    });
     /*
     function loadMultipleFile(event, input) {
         let containerPreview = input.nextElementSibling;
