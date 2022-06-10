@@ -1,0 +1,135 @@
+{% set data = {
+    0: {title: 'Entrée',
+        menu: {
+            0: {
+                title: 'Crispy Spicy Fried Quail',
+                price: '22',
+                content: 'Bleu Cheese Dressing | Fermented Fresno | Hot Sauce Pickled Quail Eggs | Fresh Celery'
+            },
+            1: {
+                title: 'Oyster Nachos',
+                price: '18',
+                content: 'Cornmeal Fried Oysters | Cracker Garlic Aioli |  Habanero Salsa | Cotija CheesePickled Quail Eggs | Fresh Celery'
+            },
+            2: {
+                title: 'Shrimp Campechana',
+                price: '21',
+                content: 'Gulf Shrimp | Spicy Cucumber CocktailCorn Tortilla Chips | Avocado | Cilantro'
+            },
+            3: {
+                title: 'Crispy Spicy Fried Quail',
+                price: '22',
+                content: 'Bleu Cheese Dressing | Fermented Fresno | Hot Sauce Pickled | Quail Eggs | Fresh Celery'
+            },
+            4: {
+                title: 'Southwest Romaine & Kale Caesar Salad ',
+                price: '19',
+                content: 'Romaine LeĴuce | Lacinato Kale | Tortilla strips | Avocado | Tomato | Chipotle Caesar | Parmigiano Reggiano'
+            },
+            5: {
+                title: '12 Gage Garden Salad',
+                price: '15',
+                content: 'Baby LeĴuce Mix | Radishes | Red Onions | Carrots | Cucumber | Tomatoes | Toasted Pumpkin Seeds | Cotija Cheese'
+            },
+        },
+    },
+    1: {title: 'Plat principal',
+        menu: {
+            0: {
+                title: 'Crispy Spicy Fried Quail',
+                price: '22',
+                content: 'Bleu Cheese Dressing | Fermented Fresno | Hot Sauce Pickled Quail Eggs | Fresh Celery'
+            },
+            1: {
+                title: 'Oyster Nachos',
+                price: '18',
+                content: 'Cornmeal Fried Oysters | Cracker Garlic Aioli |  Habanero Salsa | Cotija CheesePickled Quail Eggs | Fresh Celery'
+            },
+            2: {
+                title: 'Shrimp Campechana',
+                price: '21',
+                content: 'Gulf Shrimp | Spicy Cucumber CocktailCorn Tortilla Chips | Avocado | Cilantro'
+            },
+            3: {
+                title: 'Crispy Spicy Fried Quail',
+                price: '22',
+                content: 'Bleu Cheese Dressing | Fermented Fresno | Hot Sauce Pickled | Quail Eggs | Fresh Celery'
+            },
+            4: {
+                title: 'Southwest Romaine & Kale Caesar Salad ',
+                price: '19',
+                content: 'Romaine LeĴuce | Lacinato Kale | Tortilla strips | Avocado | Tomato | Chipotle Caesar | Parmigiano Reggiano'
+            },
+            5: {
+                title: '12 Gage Garden Salad',
+                price: '15',
+                content: 'Baby LeĴuce Mix | Radishes | Red Onions | Carrots | Cucumber | Tomatoes | Toasted Pumpkin Seeds | Cotija Cheese'
+            },
+        },
+    },
+    2: {title: 'Dessert',
+        menu: {
+            0: {
+                title: 'Crispy Spicy Fried Quail',
+                price: '22',
+                content: 'Bleu Cheese Dressing | Fermented Fresno | Hot Sauce Pickled Quail Eggs | Fresh Celery'
+            },
+            1: {
+                title: 'Oyster Nachos',
+                price: '18',
+                content: 'Cornmeal Fried Oysters | Cracker Garlic Aioli |  Habanero Salsa | Cotija CheesePickled Quail Eggs | Fresh Celery'
+            },
+            2: {
+                title: 'Shrimp Campechana',
+                price: '21',
+                content: 'Gulf Shrimp | Spicy Cucumber CocktailCorn Tortilla Chips | Avocado | Cilantro'
+            },
+            3: {
+                title: 'Crispy Spicy Fried Quail',
+                price: '22',
+                content: 'Bleu Cheese Dressing | Fermented Fresno | Hot Sauce Pickled | Quail Eggs | Fresh Celery'
+            },
+            4: {
+                title: 'Southwest Romaine & Kale Caesar Salad ',
+                price: '19',
+                content: 'Romaine LeĴuce | Lacinato Kale | Tortilla strips | Avocado | Tomato | Chipotle Caesar | Parmigiano Reggiano'
+            },
+            5: {
+                title: '12 Gage Garden Salad',
+                price: '15',
+                content: 'Baby LeĴuce Mix | Radishes | Red Onions | Carrots | Cucumber | Tomatoes | Toasted Pumpkin Seeds | Cotija Cheese'
+            },
+        },
+    }
+}%}
+
+<div class="menu" name="menu">
+    <h2 class="title">Menu</h2>
+    <div class="menu-wrapper">
+        <ul class="items" style="left: calc(50vw - 687px);">
+            {% for menu in data %}
+                <li class="item course" data-id="{{ loop.index }}">
+                    <h3 class="submenu">{{ menu.title }}</h3>
+                    <div class="sepvert"></div>
+                    <div class="menu-items">
+                        {% for item in menu.menu %}
+                        <div class="item-container">
+                            <div class="menu-left">
+                                <ul class="menu-name">
+                                    <li class="name">{{ item.title }}</li>
+                                    <li class="price">{{ item.price }}</li>
+                                </ul>
+                            </div>
+                            <div class="menu-right">
+                                <p class="menu-content">{{ item.content }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </li>
+            {% endfor %}
+            <div class="sepvertbottom"></div>
+        </ul>
+    </div>
+    <div class="sep"></div>
+</div>

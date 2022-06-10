@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54">
+  <g id="Groupe_4475" data-name="Groupe 4475" transform="translate(-626.212 -16.136)" style="isolation: isolate">
+    <path id="Icon_ionic-ios-arrow-back" data-name="Icon ionic-ios-arrow-back" d="M14.181,14.693l6.433-6.428a1.215,1.215,0,1,0-1.721-1.716L11.6,13.832a1.213,1.213,0,0,0-.035,1.675l7.319,7.334a1.215,1.215,0,0,0,1.721-1.716Z" transform="translate(649.28 28.9)" fill="#fff"/>
+    <g id="Ellipse_90" data-name="Ellipse 90" transform="translate(626.212 16.136)" fill="none" stroke="#beab7c" stroke-width="2">
+      <circle cx="27" cy="27" r="27" stroke="none"/>
+      <circle cx="27" cy="27" r="26" fill="none"/>
+    </g>
+    <path id="Icon_ionic-ios-arrow-back-2" data-name="Icon ionic-ios-arrow-back" d="M14.181,14.693l6.433-6.428a1.215,1.215,0,1,0-1.721-1.716L11.6,13.832a1.213,1.213,0,0,0-.035,1.675l7.319,7.334a1.215,1.215,0,0,0,1.721-1.716Z" transform="translate(657.501 58.291) rotate(180)" fill="#fff"/>
+    <line id="Ligne_126" data-name="Ligne 126" y1="49" x2="22" transform="translate(642.712 18.636)" fill="none" stroke="#beab7c" stroke-width="2"/>
+  </g>
+</svg>

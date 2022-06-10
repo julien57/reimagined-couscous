@@ -1,0 +1,103 @@
+{% set datas = {
+    'news1': {
+        'title': 'news 1',
+        'subtitle': 'subtitle',
+        'publishedAt': 'now'|date('d/m/Y'),
+        'selected': false,
+        'images_url': 'https://static.dw.com/image/39323077_401.jpg',
+        'contents': {
+            0: {
+                'type': 'img',
+                'content': 'https://static.dw.com/image/39323077_401.jpg'
+            },
+            1: {
+                'type': 'text',
+                'content': 'Content wthwtwhtxhthxthxfthtfx'
+            },
+            2: {
+                'type': 'img',
+                'content': 'https://static.dw.com/image/39323077_401.jpg'
+            },
+        }
+    },
+    'news2': {
+        'title': 'news 1',
+        'subtitle': 'subtitle',
+        'publishedAt': 'now'|date('d/m/Y'),
+        'selected': true,
+        'images_url': 'https://static.dw.com/image/39323077_401.jpg',
+        'contents': {
+            1: {
+                'type': 'text',
+                'content': 'Content wthwtwhtxhthxthxfthtfx'
+            },
+            2: {
+                'type': 'img',
+                'content': 'https://static.dw.com/image/39323077_401.jpg'
+            },
+        }
+    },
+    'news3': {
+        'title': 'news 3',
+        'subtitle': 'subtitle',
+        'publishedAt': 'now'|date('d/m/Y'),
+        'selected': false,
+        'images_url': 'https://static.dw.com/image/39323077_401.jpg',
+        'contents': {
+            0: {
+                'type': 'img',
+                'content': 'https://static.dw.com/image/39323077_401.jpg'
+            },
+            1: {
+                'type': 'text',
+                'content': 'Content wthwtwhtxhthxthxfthtfx'
+            },
+        }
+    },
+}
+%}
+
+{% if data is not defined and app.request.locale == 'en'%}
+    {%  set data = {'block_page_id' : 969 ,'title' : 'News'} %}
+{%  endif %}
+
+{% if data is defined %}
+    {% set news = twig_service.getLatestNews(data.block_page_id) %}
+
+   {% set datas = news|filter_news(news) %}
+
+      {% set isSelected = false %}
+     {% set dateNow = 'now'|date('U') %}
+
+     <div class="news">
+         <h1 class="title">{{ data.title }}</h1>
+         <div class="news-wrapper">
+             <div class="scroll">Scroll</div>
+             <ul class="items">
+                 {% set nbLoop = 1 %}
+                 {% for news in datas %}
+                     {%  set lang = app.request.locale  %}
+
+                     {%  if app.request.locale == 'en' %}
+                         {%  set lang = 'us'  %}
+                     {%  endif  %}
+
+                     {%  if lang == news.0.lang_block %}
+                         {% set postSelected = false %}
+                         {% set datePost = news.0.published_at|date('U') %}
+
+                         {% if datePost > dateNow and not isSelected %}
+                             {% set isSelected = true %}
+                             {% set postSelected = true %}
+                         {% endif %}
+
+                         {% include 'home/blocks/news_single.html.twig' with {'data': news, 'item' : nbLoop, 'selected': postSelected} %}
+                         {% set nbLoop = nbLoop + 1 %}
+                     {%  endif  %}
+
+                 {% endfor %}
+             </ul>
+         </div>
+         <div class="sep"></div>
+     </div>
+{% endif %}

@@ -1,0 +1,123 @@
+# translations/messages.de.yaml
+
+
+hotel: Hotel
+about-us: Über uns
+rooms: Zimmer
+apartements: Wohnungen
+special-offers: Spezialangebote
+exclusive-packages: Exklusivangebote
+gift-vouchers: Geschenkgutscheine
+brochures: Broschüren
+
+restaurant-and-bar: Restaurant und Bar
+la-veranda-restaurant: Restaurant La Veranda
+lounge-bar: Loungebar
+
+spa-and-leisure: Spa & Freizeit
+swimming-pools: Pools
+wellness-area: Wellnessbereich
+leisure-and-sports: Freizeit & Sport
+bed-and-bike: Bed & Bike
+rallye: Rallye
+
+events: Veranstaltungen
+wedding: Hochzeit
+baptism-and-communion: Taufe & Kommunion
+birthday: Geburtstag
+class-reunion: Klassentreffen
+conferences: Konferenz
+
+our-reception-rooms: Empfangsräume
+small-rooms: Kleinere Räume
+medium-rooms: Mittelgroßer Räume
+big-room: Großer Räume
+bowling-room: Bowlinghalle
+restaurant: Restaurant
+more: Verbindungen
+
+search:
+  room: Schlafzimmer
+  restaurant: Restaurant reservieren
+  chambre: Zimmer reservieren
+  reservation_restaurant: ZIMMER RESTAURANT
+  reservation_room: ZIMMER RESERVIEREN
+  arrival: Ankunft
+  departure: Absfaht
+  adults: Erwachsene
+  check_dispo: Voir les disponibilités
+  code_promo: Gutscheincode ?
+  when: Wenn ?
+  visitors: Besucher
+  book: Zimmer buchen
+  restaurant_book: Restaurant buchen
+  chambre_book: Zimmer buchen
+  choice_date: Datum wählen
+
+menu:
+  hotel: Hotel
+  hotel_about: Über uns
+  hotel_room: Zimmer
+  hotel_ap: Wohnungen
+  hotel_so: Spezielle Angebote
+  hotel_ep: Exklusive Pakete
+  hotel_gv: Geschenkgutscheine
+  hotel_b: Broschüren
+
+  restaurant: Restaurant & bar
+  restaurant_lv: La Veranda Restaurant
+  restaurant_lb: Lounge Bar
+
+  spa: Spa & Freizeit
+  spa_sp: Schwimmbäder
+  spa_wa: Wellnessbereich
+  spa_ls: Freizeit & Sports
+  spa_bb: Bed & Bike
+  spa_r: Rallye
+
+  event: Veranstaltungen
+  event_w: Hochzeit
+  event_bc: Taufe & Kommunion
+  event_b: Geburtstag
+  event_cr: Klassentreffen
+  event_c: Konferenz
+
+  meeting: Sitzungen
+  meeting_ss: kleines Raum
+  meeting_ms: mittlerer Raum
+  meeting_bs: großes Raum
+  meeting_br: Bowlingraum
+
+form:
+  name: Name
+  lastname: Vorrname
+  phone_number: Telefonnummer
+  email: Email
+  nb_street: Hausnummer / Name
+  person_name: DER NAME DER PERSON, DIE DAS GESCHENK EMPFÄNGT
+  country: Land
+  message: Möchten Sie uns etwas mitteilen, dann nutzen Sie bitte diesen Kasten
+  amount: HÖHE
+  company: Geschäft
+  phone: Telefon
+  event_type: Ereignistyp
+  nb_people: Personenzahl
+  booking_room: Möchten Sie in unserem Hotel übernachten?
+  yes: Ja
+  no: Nein
+  wedding: Hochzeit
+  birthday: Geburtstag
+  event_pro: Professionelle Veranstaltung
+  other: Andere
+  specifities: Besonderheiten
+  postcode: Postleitzahl
+  city: Stadt
+  date: Gewünschtes Datum
+  your_room: Zimmer
+  confort_1: 10h00-17h00 - Doppelzimmer comfort / 80,00 €
+  superior_1: 10h00-17h00 - Doppelzimmer superior / 90,00 €
+  confort_2: 15h00-21h00 - Doppelzimmer comfort / 80,00 €
+  superior_2: 15h00-21h00 - Doppelzimmer superior / 90,00 €
+
+footer:
+  chambres: Zimmers

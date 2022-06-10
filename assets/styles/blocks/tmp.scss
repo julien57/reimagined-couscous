@@ -1,0 +1,266 @@
+@import '../commons/colors';
+
+.title{
+    font-size: 45px;
+    font-weight: 300;
+    font-style: normal;
+    letter-spacing: .1em;
+    color: $gold;
+}
+
+.text{
+    font-size: 20px;
+    font-weight: 300 !important;
+    font-style: normal !important;
+    color: $black;
+    margin-top: 50px;
+}
+
+.baseline{
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    margin-top: 72px;
+    margin-bottom: 120px;
+}
+
+
+
+.content{
+    width: 625px;
+    margin: 60px auto 0;
+
+    .newsletter{
+        position: relative;
+        
+        .title{
+            font-size: 20px;
+            font-weight: 400;
+            font-style: normal;
+            font-family: "futura-pt", sans-serif;
+            letter-spacing: .25em;
+        }
+
+        input[type="text" ]{
+            padding: 25px 100px 25px 25px;
+            margin: 10px 0;
+            border: 1.5px solid $grey;
+            width: calc(100% - 128px);
+            
+            &::placeholder{
+                color: $black;
+                font-size: 18px;
+                font-weight: 400;
+                font-style: normal;
+                font-family: "futura-pt", sans-serif;
+                text-transform: uppercase;
+            }
+            
+        }
+
+        button{
+            position: absolute;
+            right: 0px;
+            top: 52px;
+            margin: 0;
+            margin-left: -90px;
+            padding-left: 27px;
+            background-color: transparent;
+            border: none;
+            border-left: 1.5px solid $darkgrey;
+            color: $black;
+            font-size: 18px;
+            font-weight: 400;
+            font-style: normal;
+            font-family: "futura-pt", sans-serif;
+            cursor: pointer;
+            transition: all .3s;
+
+            &:hover{
+                opacity: .5;
+            }
+        }
+    }
+}
+
+.social-links{
+    .facebook{
+        width: 42px;
+        height: 42px;
+        background-image: url('');
+    }
+}
+
+.bottom{
+    width: 100%;
+    .address{
+        width: 45%;
+    }
+}
+
+
+.shutter{
+    position: absolute;
+    height: 100vh;
+    z-index: 2;
+
+    $cw: calc(34vw + 26.7vh);
+    $cw: 53vh;
+    $cw2: calc(100vw + 26.7vh);
+    $ch: 57vh;
+    $wn: 300px;
+    $hn: 540px;
+
+    .right, .left{
+       position: absolute;
+       height: 100%;
+       width: 50vw;
+
+       .img{
+           position: absolute;
+           height: 100vh;
+           width: 130vw;
+           background-repeat: no-repeat;
+
+           background-size: cover;
+           cursor: url('/public/images/cursor-opener.png'), auto;
+
+           .number{
+               position: absolute;
+               background-repeat: no-repeat;
+               background-position: center bottom;
+               width: $wn;
+               height: $hn;
+           }
+       }
+    }
+
+    .right{
+
+       .img{
+           background-image: url('/public/images/header/header-bg-six-12.jpg');
+           //clip-path: polygon($cw 0, 150vw 0, 150vw 100vh, calc(#{$cw} - #{$ch}) 100vh);
+           clip-path: polygon($cw 0, 150vw 0, 150vw 100vh, 0 100vh);
+           //clip-path: polygon(34vw 0, 100vw 0, 100vw 100vh, 0 100vh);
+           left: 27vw;
+           background-position: bottom left;
+
+           .number{
+               //left: calc(50vw - 17.03vh);
+               left: calc(23vw - 17.03vh);
+               top: 50vh;
+               background-image: url('/public/images/six.svg');
+               background-size: 20vh;
+               background-position: top left;
+               opacity: .8;
+           }
+       }
+    }
+
+   .left{
+       left: -50vw;
+       //display: none;
+
+       .img{
+           background-image: url('/public/images/header/header-bg-seven-12.jpg');
+           //clip-path: polygon(-50vw 0, $cw2 0, calc(#{$cw2} - #{$ch}) 100vh, -50vw 100vh);
+           clip-path: polygon(-50vw 0, calc(77vw + 53vh) 0, calc(calc(77vw + 57vh) - 57vh) 100vh, -50vw 100vh);
+           background-position: bottom right;
+
+           .number{
+                //right: calc(50vw - 15.5vh);
+               right: calc(30vw - 15.5vh);
+               bottom: 50vh;
+               background-image: url('/public/images/seven.svg');
+               background-size: 22vh;
+               background-position: bottom right;
+           }
+       }
+   }
+
+   &.open{
+       .right, .left{
+            .img .number{
+                cursor: url('/public/images/cursor-closer.png'), auto;
+            }
+        }
+    }
+}
+
+.shutter{
+    position: absolute;
+    height: 100vh;
+    z-index: 2;
+
+    $cw: calc(50vw + 26.7vh);
+    $cw2: calc(100vw + 26.7vh);
+    $ch: 57vh;
+    $wn: 300px;
+    $hn: 540px;
+
+    .right, .left{
+       position: absolute;
+       height: 100%;
+       width: 50vw;
+
+       .img{ 
+           position: absolute;
+           height: 100vh;
+           width: 150vw;
+           background-repeat: no-repeat;
+           background-position: center bottom;
+           background-size: cover;
+           cursor: url('/public/images/cursor-opener.png'), auto;	
+
+           .number{
+               position: absolute;
+               background-repeat: no-repeat;
+               background-position: center bottom;
+               width: $wn; 
+               height: $hn;
+           }
+       }
+    }
+
+    .right{
+
+       .img{
+           background-image: url('/public/images/header/header-bg-six-12.jpg');
+           clip-path: polygon($cw 0, 150vw 0, 150vw 100vh, calc(#{$cw} - #{$ch}) 100vh);
+
+           .number{
+               left: calc(50vw - 17.03vh);
+               top: 50vh;
+               background-image: url('/public/images/six.svg');
+               background-size: 20vh;
+               background-position: top left;
+               opacity: .8;
+           }
+       }
+    }
+    
+   .left{
+       left: -50vw;
+
+       .img{
+           background-image: url('/public/images/header/header-bg-seven-12.jpg');
+           clip-path: polygon(-50vw 0, $cw2 0, calc(#{$cw2} - #{$ch}) 100vh, -50vw 100vh);
+
+           .number{
+               right: calc(50vw - 15.5vh);
+               bottom: 50vh;
+               background-image: url('/public/images/seven.svg');
+               background-size: 22vh;
+               background-position: bottom right;
+           }
+       }
+   }
+
+   &.open{
+       .right, .left{
+            .img .number{
+                cursor: url('/public/images/cursor-closer.png'), auto;
+            }
+        }
+    }
+}

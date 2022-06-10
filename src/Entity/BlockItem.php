@@ -18,21 +18,25 @@ class BlockItem
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Block", inversedBy="blockItems")
+     * @ORM\ManyToOne(targetEntity="Block", inversedBy="blockItem")
      * @ORM\JoinColumn(nullable=false)
      */
     private $block;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="blockItems")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="blockItem")
      * @ORM\JoinColumn(nullable=false)
      */
     private $item;
 
-    /** @ORM\Column(type="integer", nullable=false) */
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
     private $item_order;
 
-    /** @ORM\Column(type="text", nullable=true) */
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $json_data;
 
     public function getId(): ?int

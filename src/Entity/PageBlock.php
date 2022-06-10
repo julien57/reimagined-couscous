@@ -20,46 +20,52 @@ class PageBlock
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Block", inversedBy="pageBlocks")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="Block", inversedBy="pageBlock")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $block;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Page", inversedBy="pageBlocks")
+     * @ORM\ManyToOne(targetEntity="Page", inversedBy="pageBlock")
      * @ORM\JoinColumn(nullable=false)
      */
     private $page;
 
-    /** @ORM\OneToMany(targetEntity="Content", mappedBy="pageBlock", cascade={"remove"}) */
+    /**
+     * @ORM\OneToMany(targetEntity="Content", mappedBy="pageBlock")
+     */
     private $contents;
 
-    /** @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="pageBlock", cascade={"remove"}) */
-    private $blockChildrens;
-
-    /** @ORM\Column(type="integer", nullable=false) */
-    private $itemOrder;
-
-    /** @ORM\Column(type="text", nullable=true) */
-    private $jsonData;
-
-    /** @ORM\Column(type="text", nullable=true) */
-    private $jsonDataPreview;
-
-    /** @ORM\OneToMany(targetEntity=Timeline::class, mappedBy="pageBlock", cascade={"remove"}) */
-    private $timelines;
+    /**
+     * @ORM\OneToMany(targetEntity="BlockChildren", mappedBy="pageBlock", cascade={"remove"})
+     */
+    private $pageBlock;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Language::class)
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(type="integer", nullable=false)
      */
-    private $language;
+    private $itemOrder;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $jsonData;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $jsonDataPreview;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Timeline::class, mappedBy="pageBlock", cascade={"remove"})
+     */
+    private $timelines;
 
     public function __construct()
     {
+        $this->pageBlock = new ArrayCollection();
         $this->timelines = new ArrayCollection();
         $this->contents = new ArrayCollection();
-        $this->blockChildrens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +117,36 @@ class PageBlock
     public function setPage(?Page $page): self
     {
         $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BlockChildren[]
+     */
+    public function getPageBlock(): Collection
+    {
+        return $this->pageBlock;
+    }
+
+    public function addPageBlock(BlockChildren $pageBlock): self
+    {
+        if (!$this->pageBlock->contains($pageBlock)) {
+            $this->pageBlock[] = $pageBlock;
+            $pageBlock->setPageBlock($this);
+        }
+
+        return $this;
+    }
+
+    public function removePageBlock(BlockChildren $pageBlock): self
+    {
+        if ($this->pageBlock->removeElement($pageBlock)) {
+            // set the owning side to null (unless already changed)
+            if ($pageBlock->getPageBlock() === $this) {
+                $pageBlock->setPageBlock(null);
+            }
+        }
 
         return $this;
     }
@@ -188,48 +224,6 @@ class PageBlock
                 $content->setPageBlock(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|BlockChildren[]
-     */
-    public function getBlockChildrens(): Collection
-    {
-        return $this->blockChildrens;
-    }
-
-    public function addBlockChildren(BlockChildren $blockChildren): self
-    {
-        if (!$this->blockChildrens->contains($blockChildren)) {
-            $this->blockChildrens[] = $blockChildren;
-            $blockChildren->setPageBlock($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBlockChildren(BlockChildren $blockChildren): self
-    {
-        if ($this->blockChildrens->removeElement($blockChildren)) {
-            // set the owning side to null (unless already changed)
-            if ($blockChildren->getPageBlock() === $this) {
-                $blockChildren->setPageBlock(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getLanguage(): ?Language
-    {
-        return $this->language;
-    }
-
-    public function setLanguage(?Language $language): self
-    {
-        $this->language = $language;
 
         return $this;
     }

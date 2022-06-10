@@ -26,8 +26,7 @@ $(function(){
     /**
      *   Send form
      */
-    $(document).on('click', '#aj_bl-forms', function(e){
-        e.preventDefault()
+    $(document).on('click', '#aj_bl-forms', function(){
 
         var data = $(this).closest('form').serialize();
 

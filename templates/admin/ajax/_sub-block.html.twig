@@ -1,0 +1,53 @@
+<div class="row row-sublock">
+    <div class="col-md-10">
+        <div class="block-page-admin flex-col relative mt-2" style="border:3px dashed lightgrey;">
+
+            {% set block = block_children.children %}
+            {% set block_id = block.id %}
+            {% set json = '' %}
+            {% set items = block.blockItem %}
+            {% set sub_block_id = block_children.id %}
+
+            {%  if   block_children.json is defined %}
+                {% set json =  block_children.json %}
+            {% endif %}
+            
+            <h3 class="relative flex-row" style="margin-bottom:0;">
+                {{ block.name|upper }}
+
+                <span data-id="{{ block_children.id  }}" data-sub='1' class=rem_sub>X</span>
+
+            </h3>
+
+            <form action="/admin/page/block/add" method="post" class="flex-col a-items-start _form-bl-item" enctype="multipart/form-data" style="padding:35px;">
+
+                {% for item in items %}
+
+                    {% if item.block.id !=  block_id %}
+                        {%  set block_id = item.block.id %}
+                    {% endif %}
+
+                    {% set include = '/admin/input/'~item.item.htmlType~'.html.twig' %}
+                    {% include include with { 'data' : item.item, json: json } %}
+
+                {%  endfor %}
+
+                <input class="sub_block_id" type="hidden" name="sub_block_id" value="{{ sub_block_id  }}"/>
+
+                <div class="row">
+                    <div id="message{{ block_children.id }}"></div>
+                </div>
+
+                <button  class="submit btn btn-success add_sub_block float-right" type="submit" style="margin-bottom:35px!important;">Enregistrer ce sous block</button>
+
+            </form>
+        </div>
+    </div>
+    <div class="col-md-2 d-flex align-items-center">
+        <button type="button" data-id="{{ block_children.id }}" data-sub='1'
+                class="btn btn-outline-danger btn-block remove-sub-block rem_sub"
+                onclick="var confirm = confirm('Etes-vous sûr de vouloir supprimer ce sous-block ?');if (confirm){return true}ele{return false}">
+            Supprimer <i class="fa fa-trash pl-2"></i>
+        </button>
+    </div>
+</div>

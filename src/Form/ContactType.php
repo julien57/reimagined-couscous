@@ -14,7 +14,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContactType extends AbstractType
 {
-    /** @var TranslatorInterface */
+    /**
+     * @var TranslatorInterface
+     */
     private $translator;
 
     public function __construct(TranslatorInterface $translator)
@@ -27,7 +29,7 @@ class ContactType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                     'attr' => [
-                        'placeholder' => '* '.$this->translator->trans('form.name'),
+                        'placeholder' => '* ' . $this->translator->trans('form.name'),
                         'title' => 'name',
                     ],
              ]
@@ -35,7 +37,7 @@ class ContactType extends AbstractType
             ->add('lastName', TextType::class,
                     [
                         'attr' => [
-                    'placeholder' => '* '.$this->translator->trans('form.lastname'),
+                    'placeholder' => '* ' . $this->translator->trans('form.lastname'),
                     'title' => 'last name',
                         ],
                 ]
@@ -59,7 +61,7 @@ class ContactType extends AbstractType
             ->add('email', TextType::class,
                 [
                     'attr' => [
-                        'placeholder' => '* '.$this->translator->trans('form.email'),
+                        'placeholder' => '* ' . $this->translator->trans('form.email'),
                         'title' => 'email',
                     ],
                 ]
@@ -84,7 +86,7 @@ class ContactType extends AbstractType
                         $this->translator->trans('form.event_type') => 0,
                         $this->translator->trans('form.wedding') => 'event1',
                         $this->translator->trans('form.birthday') => 'event2',
-            $this->translator->trans('form.event_pro') => 'event3',
+			$this->translator->trans('form.event_pro') => 'event3',
                         $this->translator->trans('form.other') => 'event4',
                     ],
                 ]

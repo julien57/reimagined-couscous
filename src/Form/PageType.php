@@ -15,11 +15,11 @@ class PageType extends AbstractType
     {
         $builder
             ->add('name', TextType::class,
-                ['attr' => ['autocomplete' => 'off']]
+                [ 'attr' => ["autocomplete"=> "off"] ]
                 )
             ->add('hasNewsletter', CheckboxType::class, [
                 'label' => 'Ajouter le block Newsletter ?',
-                'required' => false,
+                'required'   => false,
             ])
         ;
     }

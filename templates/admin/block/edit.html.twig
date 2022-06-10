@@ -1,0 +1,53 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+
+    <div class="flex-col large-section">
+        <h3>Creation of new block </h3>
+        <div class="flex-row">
+            <div id="block" class="_block">
+                    {{ form_start(form) }}
+                        {{ form_errors(form) }}
+
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.path) }}
+                        {{ form_row(form.type) }}
+                        {{ form_row(form.image) }}
+                        {{ form_row(form.subBlock) }}
+
+                        {%  for key,_item in array_items  %}
+                            <div class="flex-row _items_list">
+                                <select class="item_select" name="items_list_0">
+                                    {% set item_id = ''  %}
+                                    {% for item in items %}
+                                        {%  set selected = ""  %}
+                                        {%  if _item.id ==  item.id  %}
+                                            {%  set selected = "selected"  %}
+                                            {% set item_id = item.id  %}
+                                        {% endif  %}
+                                          <option disabled {{ selected  }} value="{{  item.id  }}">{{  item.htmlName   }}</option>
+                                    {% endfor %}
+                                </select>
+                                <a data-id = "{{ item_id }}" class="items_rem" href="" >X</a>
+                            </div>
+                        {%  endfor %}
+
+
+                        <a href="" id="new_item">Add item +</a>
+                        <div id="new_item_list"></div>
+                        <div id="new_item_hidden"></div>
+
+                        <div class="form-group flex-row">
+                            <div class="custom-file">
+                                <button data-context="add"  id="aj_bl-form" type="submit">Modifier</button>
+                            </div>
+                            <div class="custom-file">
+                                <button data-context="del" id="aj_bl-form-del" type="submit">Delete</button>
+                            </div>
+                        </div>
+                        <input id="block_item_id" name="block_id" type="hidden" value="{{ id }}">
+                    {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

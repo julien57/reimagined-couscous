@@ -17,10 +17,14 @@ class Language
      */
     private $id;
 
-    /** @ORM\Column(type="string", length=10) */
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
     private $code;
 
-    /** @ORM\Column(type="string", length=100) */
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
     private $name;
 
     public function getId(): ?int

@@ -1,0 +1,23 @@
+# translations/messages.fr.yaml
+header:
+  legal: Mentions légales
+cursor:
+  clickme: cliquez ici
+  openform: Ouvrir
+  closeform: Fermer
+  openpage: ''
+  changelng: Savourez en anglais"
+  legal: Mentions légales
+
+form:
+  civilite: Civilité
+  madame: Madame
+  monsieur: Monsieur
+  votre: Votre
+  prenom: prénom
+  nom: nom
+  email: email
+  phone: n° de téléphone
+  company: entreprise
+  send: Envoyer
+  required: Champs obligatoires

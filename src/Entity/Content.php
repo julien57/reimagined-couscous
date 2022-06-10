@@ -14,9 +14,6 @@ class Content
     public const LANGUAGE_EN = 2;
     public const LANGUAGE_DE = 3;
 
-    public const TARGET_BLOCK = 1;
-    public const TARGET_SUB_BLOCK = 2;
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -24,28 +21,37 @@ class Content
      */
     private $id;
 
-    /** @ORM\Column(type="text", nullable=true) */
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $json;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PageBlock", inversedBy="contents")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="PageBlock", inversedBy="jsonContent")
+     * @ORM\JoinColumn(name="page_block_id", referencedColumnName="id",  nullable = true)
      */
     private $pageBlock;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BlockChildren")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="BlockChildren", inversedBy="jsonContent")
+     * @ORM\JoinColumn(name="block_children_id", referencedColumnName="id",  nullable = true, onDelete="CASCADE")
      */
     private $blockChildren;
 
-    /** @ORM\Column(type="integer", nullable=false) */
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
     private $language;
 
-    /** @ORM\Column(type="integer", nullable=false) */
-    private $target = self::TARGET_BLOCK;
+    //1 for block : 2 :sub-block
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $target = 1;
 
-    /** @ORM\Column(type="text", nullable=true) */
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $jsonPreview;
 
     public function getId(): ?int

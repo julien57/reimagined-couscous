@@ -1,0 +1,168 @@
+@import '../commons/colors';
+
+.main-contact{
+    position: relative;
+    width: 100vw;
+    height: 780px;
+    font-family: "futura-pt", sans-serif;
+
+    background-image: url('/public/images/map.jpg');
+    background-repeat: no-repeat;
+    background-size: 2200px;
+    background-position: center left 70%;
+
+    .form-contact{
+        position: absolute;
+        display: block;
+        top: -50px;
+        right: 5vw;
+        width: 30vw;
+        min-width: 400px;
+        height: calc(100% + 100px);
+        background-color: $white;
+        z-index: 2;
+        padding: 40px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+        h2{
+            font-size: 32px;
+            text-transform: uppercase;
+        }
+    }
+
+    .lines{
+        position: absolute;
+        display: block;
+        top: 194px;
+        left: calc(70% - 914px);
+        width: 676px;
+        height: 386px;
+        background-image: url('/public/images/lines-map.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 0;
+    }
+
+    .map-contact{
+        position: absolute;
+        background-color: $white;
+        padding: 10px 10px 10px 60px;
+        z-index: 1;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+        .name{
+            font-size: 16px;
+            color: black;
+            text-transform: uppercase;
+        }
+
+        .access{
+            font-size: 16px;
+            color: #aaa;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        &.p1{
+            top: 225px;
+            left: calc(70% - 494px);
+
+            &::before{
+                content: "";
+                background-image: url('/public/images/icon-pin.svg');
+                position: absolute;
+                top: -55px;
+                left: -23px;
+                width: 41px;
+                height: 62px;
+            }
+        }
+
+        &.p2{
+            top: 307px;
+            left: calc(70% - 472px);
+        }
+
+        &.p3{
+            top: 380px;
+            left: calc(70% - 714px);
+
+            &::before{
+                content: "";
+                background-image: url('/public/images/icon-tramhamilius.svg');
+                position: absolute;
+                top: 15px;
+                right: -54px;
+                width: 42px;
+                height: 42px;
+            }
+        }
+
+        &.p4{
+            top: 508px;
+            left: calc(70% - 747px);
+        }
+
+        &.parking{
+            background-image: url('/public/images/icon-parking.svg');
+            background-repeat: no-repeat;
+            background-position: center left 10px;
+        }
+
+        &.tram{
+            background-image: url('/public/images/icon-tram.svg');
+            background-repeat: no-repeat;
+            background-position: center right 10px;
+        }
+
+        &.lf{
+            &::after{
+                top: 30px;
+                left: -11px;
+                transform: rotate(-90deg);
+            }
+        }
+
+        &.rt{
+            padding: 20px 60px 20px 10px;
+
+            &::after{
+                top: 30px;
+                right: -11px;
+                transform: rotate(90deg);
+            }
+        }
+
+        &.tp{
+
+            &::after{
+                top: -11px;
+                left: 40px;
+                
+            }
+        }
+
+        &.bt{
+
+            &::after{
+                bottom: -11px;
+                left: 40px;
+                transform: rotate(180deg);
+            }
+        }
+
+        &::after{
+            content: "";
+            background-image: url('/public/images/arrow-map.svg');
+            position: absolute;
+            width: 12px;
+            height: 12px;
+        }
+    }
+}
+
+.seven{
+    .main-contact{
+        background-image: url('/public/images/map-clear.jpg');
+    }
+}

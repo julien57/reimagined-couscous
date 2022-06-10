@@ -1,4 +1,4 @@
-$(function() {
+$(function(){
 
     /**
      *
@@ -58,6 +58,7 @@ $(function() {
             processData: false,
             success: function(data, status) {
                 $('#formtmp').removeAttr('id');
+                alert('Great')
             },
 
             error : function(xhr, textStatus, errorThrown) {

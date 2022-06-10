@@ -23,19 +23,38 @@ class ContentRepository extends ServiceEntityRepository
     public function getLangExist(?int $langId, int $pageId)
     {
         $qb = $this->createQueryBuilder('c')
+            ->leftJoin('c.pageBlock', 'pageBlock')
+            ->leftJoin('pageBlock.page', 'page')
             ->leftJoin('c.blockChildren', 'blockChildren')
-            ->leftJoin('c.pageBlock', 'pageblock')
-            ->leftJoin('pageblock.page', 'page')
+            ->leftJoin('blockChildren.pageBlock', 'pageBlockChildren')
+            ->leftJoin('pageBlockChildren.page', 'pageChildren')
             ->where('page.id = :pageId')
             ->setParameter('pageId', $pageId)
-            ->orWhere('page.id = :pageId')
-            ->setParameter('pageId', $pageId);
+            ->orWhere('pageChildren.id = :pageChild')
+            ->setParameter('pageChild', $pageId);
+
 
         if ($langId) {
             $qb
-                ->andWhere('pageblock.language = :lang')
+                ->andWhere('c.language = :lang')
                 ->setParameter('lang', $langId);
         }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getActuHome(int $pageBlockId)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.pageBlock', 'pageBlock')
+            ->join('pageBlock.page', 'page')
+            ->where('pageBlock.id = :pageBlockId')
+            ->setParameter('pageBlockId', $pageBlockId)
+            ->andWhere('page.type = :type')
+            ->setParameter('type', 'post');
+
 
         return $qb
             ->getQuery()
@@ -62,6 +81,7 @@ class ContentRepository extends ServiceEntityRepository
     public function getContentsByLang(Page $page)
     {
         return $this->createQueryBuilder('c')
+            ->select('c.language')
             ->leftJoin('c.pageBlock', 'pageBlock')
             ->leftJoin('pageBlock.page', 'page')
             ->where('page.id = :pageId')
@@ -70,6 +90,37 @@ class ContentRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function getNews()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->leftJoin('c.pageBlock', 'pageBlock')
+            ->leftJoin('pageBlock.page', 'page')
+            ->where('page.type = :type')
+            ->setParameter('type', 'post');
+
+        return
+            $qb
+                ->getQuery()
+                ->getResult()
+            ;
+    }
+
+    public function getContents(int $pageBlockId)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->leftJoin('c.pageBlock', 'pageBlock')
+            ->where('pageBlock.id = :id')
+            ->setParameter('id', $pageBlockId);
+
+        return
+            $qb
+                ->getQuery()
+                ->getResult()
+            ;
     }
 
     // /**

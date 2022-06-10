@@ -17,22 +17,26 @@ class BlockChildren
      */
     private $id;
 
-    /** @ORM\Column(type="text", nullable=true) */
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $jsonData;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PageBlock", inversedBy="blockChildrens")
+     * @ORM\ManyToOne(targetEntity="PageBlock", inversedBy="pageBlock")
      * @ORM\JoinColumn(nullable=false)
      */
     private $pageBlock;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Block", inversedBy="childrens")
+     * @ORM\ManyToOne(targetEntity="Block", inversedBy="children")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $block;
+    private $children;
 
-    /** @ORM\Column(type="text", nullable=true) */
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $jsonDataPreview;
 
     public function getId(): ?int
@@ -64,20 +68,16 @@ class BlockChildren
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBlock()
+    public function getChildren(): ?Block
     {
-        return $this->block;
+        return $this->children;
     }
 
-    /**
-     * @param mixed $block
-     */
-    public function setBlock($block): void
+    public function setChildren(?Block $children): self
     {
-        $this->block = $block;
+        $this->children = $children;
+
+        return $this;
     }
 
     public function __clone()

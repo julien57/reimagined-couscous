@@ -1,0 +1,11 @@
+<div class="input flex-col form-group">
+    <label>{{ data.name }}</label>
+    {% if json is not empty and  json[data.htmlName] is defined %}
+        <input value="{{ json[data.htmlName] }}" class="form-control datepicker" type="{{ data.htmlType }}" name="{{ data.htmlName }}" required>
+    {% else %}
+        <input  class="form-control datepicker" type="{{ data.htmlType }}" name="{{ data.htmlName }}" required>
+    {% endif %}
+</div>
+
+
+

@@ -1,0 +1,40 @@
+@import '../commons/colors';
+
+.events-main{
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: fit-content;
+    font-family: "futura-pt", sans-serif;
+    color: $white;
+    background: #151515;
+    background-image: url('/public/images/bg-events.jpg');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+    margin-top: -75px;
+    
+    .events{
+
+        .events-left{
+            position: relative;
+            left: calc(50vw - 663px);
+            width: calc(100vw - 1000px);
+            max-width: 600px;
+            margin-bottom: 55px;
+            padding: 80px 130px 80px 0;
+            //background: linear-gradient(90deg, rgba(21,21,21,1) 90%, rgba(21,21,21,0) 100%);
+
+            .title{
+                font-size: 32px;
+                text-transform: uppercase;
+                margin-bottom: 50px;
+            }
+
+            p{
+                margin: 30px 0;
+
+            }
+        }
+    }
+}

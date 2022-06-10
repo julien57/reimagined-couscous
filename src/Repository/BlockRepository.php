@@ -19,18 +19,6 @@ class BlockRepository extends ServiceEntityRepository
         parent::__construct($registry, Block::class);
     }
 
-    public function getBlocksPageWithModuleActivated()
-    {
-        return $this->createQueryBuilder('b')
-            ->leftJoin('b.module', 'module')
-            ->where('b.module IS NULL')
-            ->orWhere('module.isActivated = :isActivated')
-            ->setParameter('isActivated', 1)
-            ->orderBy('b.name', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
     // /**
     //  * @return Block[] Returns an array of Block objects
     //  */
@@ -90,7 +78,7 @@ class BlockRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->addSelect('bp')//block page
             ->addSelect('p')//page
-            ->leftJoin('b.pageBlocks', 'bp')
+            ->leftJoin('b.pageBlock', 'bp')
             ->leftJoin('bp.page', 'p')
             ->where('p.name = :name')
             ->andWhere('b.type = :type')

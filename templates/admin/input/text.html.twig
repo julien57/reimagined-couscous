@@ -1,0 +1,15 @@
+<div class="input flex-col">
+    <label>{{ data.name }}</label><br>
+    {% if json is not empty %}
+        {% if json[data.htmlName] is defined %}
+            <input value="{{ json[data.htmlName] }}" class="form-control" type="{{ data.htmlType }}" name="{{ data.htmlName }}">
+        {% else %}
+            <input  class="form-control" type="{{ data.htmlType }}" name="{{ data.htmlName }}">
+        {% endif %}
+    {% else %}
+        <input  class="form-control" type="{{ data.htmlType }}" name="{{ data.htmlName }}">
+    {% endif %}
+    {% if data.htmlName == 'package_id' %}
+        <small>Attention, si un ID de package est renseigné, le champ "Lien page" ne sera pas pris en compte.</small>
+    {% endif %}
+</div>

@@ -1,0 +1,81 @@
+@import '../commons/colors';
+
+.about{
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    min-height: 500px;
+    font-family: "futura-pt", sans-serif;
+    padding-top: 120px;
+
+    .tags{
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: fit-content;
+        padding-left: 180px;
+
+        .item{
+            position: relative;
+            width: 400px;
+
+            h2{
+                color: $white;
+                font-size: 32px;
+                text-align: center;
+                text-transform: uppercase;
+                letter-spacing: .1em;
+                margin-bottom: 80px;
+                opacity: .5;
+                transition: all .3s;
+
+                &:hover{
+                    //cursor: pointer;
+                    opacity: 1;
+                }
+            }
+
+            &.selected{
+                
+                h2{
+                    opacity: 1;
+
+                    &:hover{
+                        cursor: none;
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .content{
+                opacity: 0;
+                transition: all .5s;
+
+                &.selected{
+                    opacity: 1;
+                }
+
+                >p{
+                    color: $white;
+                    font-size: 16px;
+                    font-weight: 100;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .img{
+        position: absolute;
+        z-index: -1;
+        top: 213px;
+        right: 0;
+        width: 100%;
+        height: 100%;
+
+        background-image: url('/public/images/texture-logo.jpg');
+        background-repeat: no-repeat;
+        background-position: top right 20%;
+        background-size: contain;
+    }
+}
