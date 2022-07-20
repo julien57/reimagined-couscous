@@ -11,29 +11,40 @@
                 <thead>
                     <tr>
                         <th>Email</th>
+                        <th>Rôle</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for user in users %}
-                    <tr>
-                        {% if user == app.user %}
-                        <td><i class="far fa-user"></i> {{ user.email }} </td>
-                        {% else %}
-                        <td>{{ user.email }}</td>
-                        {% endif %}
-                        <td>
-                            {% if user != app.user %}
-                            <div class="d-flex justify-content-around">
-                                <a href="{{ path('back_user_delete', {id:user.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cet administrateur ?')">Supprimer</a>
-                            </div>
+                        <tr>
+                            {% if user == app.user %}
+                                <td><i class="far fa-user"></i> {{ user.email }} </td>
+                            {% else %}
+                                <td>{{ user.email }}</td>
                             {% endif %}
-                        </td>
-                    </tr>
+                            <td>{{ user.roles.0 }}</td>
+                            <td>
+                                <div class="row col-md-12">
+                                    <div class="col-md-6">
+                                        {% if user != app.user %}
+                                            <a href="{{ path('back_user_delete', {id: user.id}) }}"
+                                               class="btn btn-block btn-danger btn-sm"
+                                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cet administrateur ?')">
+                                                <i class="fas fa-trash-alt"></i> Supprimer
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a class="btn btn-block btn-info btn-sm" href="{{ path('back_user_edit', {'id': user.id}) }}"><i class="fas fa-edit"></i> Editer</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     {% else %}
-                    <tr>
-                        <td colspan="3">Aucun utilisateur</td>
-                    </tr>
+                        <tr>
+                            <td colspan="3">Aucun utilisateur</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>

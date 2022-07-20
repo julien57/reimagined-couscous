@@ -19,16 +19,6 @@ class BlockChildrenRepository extends ServiceEntityRepository
         parent::__construct($registry, BlockChildren::class);
     }
 
-    public function getContents(int $pageBlockId)
-    {
-        return $this->createQueryBuilder('bc')
-            ->leftJoin('bc.pageBlock', 'pageBlock')
-            ->where('pageBlock.id = :id')
-            ->setParameter('id', $pageBlockId)
-            ->getQuery()
-            ->getResult();
-    }
-
     // /**
     //  * @return BlockChildren[] Returns an array of BlockChildren objects
     //  */
@@ -58,21 +48,31 @@ class BlockChildrenRepository extends ServiceEntityRepository
     }
     */
 
-    public function getBlockChildren($value): ?BlockChildren
+    public function getBlockChildren(int $blockId): ?BlockChildren
     {
         return $this->createQueryBuilder('bc')
             ->addSelect('bl')//block
             ->addSelect('pb')//page
-            ->addSelect('b_i')//blockitem
-            ->addSelect('i')//item
-            ->leftJoin('bc.children', 'bl')
+            ->leftJoin('bc.block', 'bl')
             ->leftJoin('bc.pageBlock', 'pb')
-            ->leftJoin('bl.blockItem', 'b_i')
-            ->leftJoin('b_i.item', 'i')
-            ->andWhere('bc.id = :val')
-            ->setParameter('val', $value)
+            ->andWhere('bl.id = :val')
+            ->setParameter('val', $blockId)
             ->getQuery()
             ->getOneOrNullResult()
+            ;
+    }
+
+    public function getBlocksChildrenByBlockId(int $blockId): ?array
+    {
+        return $this->createQueryBuilder('bc')
+            ->addSelect('bl')//block
+            ->addSelect('pb')//page
+            ->leftJoin('bc.block', 'bl')
+            ->leftJoin('bc.pageBlock', 'pb')
+            ->andWhere('bl.id = :val')
+            ->setParameter('val', $blockId)
+            ->getQuery()
+            ->getResult()
             ;
     }
 }

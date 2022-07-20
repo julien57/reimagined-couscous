@@ -1,20 +1,38 @@
+<!-- If menu in BO is empty or not exist -->
+<header>
+    {% if menus is not defined %}
+        Default header
+    {% else %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            {% if header is not empty %}
+                <a class="navbar-brand" href="#">{{ header.0.datas ? header.0.datas.title : 'Caméléon' }}</a>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    {% for menu in menus %}
+                        {% set pageMenu = twig_service.getPageById(menu.id) %}
+                        {% if pageMenu and pageMenu.slugs[app.request.getLocale()] is defined %}
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ path('front_index_page', {'slug': pageMenu.slugs[app.request.getLocale()]}) }}">
+                                    {{ pageMenu.name }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
 
+                </ul>
+            </div>
+            <div>
+                <select id="selectChoice" class="form-control">
+                    {% for code, slug in page.slugs %}
+                        <option value="/{{ code }}/{{ slug }}" {% if locale == code %}selected{% endif %}>{{ code }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </nav>
 
-<header class="">
-    <div class="content">
-        <h1 class="title uppercase">{{data.title}}</h1>
-        <p class="text">{{data.content.0|raw}}</p>
-        <p class="baseline">{{data.baseline|raw}}</p>
-        <div class="form-container">
-            {% include "home/blocks/newsletter.html.twig" with{ 'place': 'header' } %}
-        </div>
-    </div>
+    {% endif %}
 </header>
-
-<svg height="200" width="200">
-    <defs>
-        <clipPath id="svgPath">
-            <circle fill="#FFFFFF" stroke-width="1" stroke="red" r="200" cx="400" cy="400"/>
-        </clipPath>
-    </defs>
-</svg>

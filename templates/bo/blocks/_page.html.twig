@@ -5,7 +5,7 @@
         {% if block_page.json is defined and block_page.json.title is defined %}
             {% set titleBlock = block_page.json.title %}
         {% endif %}
-        {% include '/bo/blocks/_block.html.twig' with {'block_page' : block_page , json:block_page.json, titleBlock: titleBlock} %}
+        {% include 'bo/blocks/_block.html.twig' with {'block_page' : block_page , json:block_page.json, titleBlock: titleBlock} %}
     {% endfor %}
     <hr>
 </div>
@@ -26,18 +26,19 @@
             <button type="button" class="btn btn-block btn-info btn-sm btn-block-add">Ajouter un block</button>
         </div>
     </div>
+    <input type="hidden" value="{{ app.session.get('_locale_edit') }}" name="locale" id="locale">
     <hr>
 {% endif %}
 
 <div class="row">
         <div class="col-lg-12 mt-5">
-            {% if default_page.name == 'site' %}
-                <h5>Options générales du <strong>{{ default_page.name }}</strong></h5>
+            {% if default_page.slug == 'header' and default_page.slug == 'footer' %}
+                <h5>Options générales du <strong>{{ default_page.slug }}</strong></h5>
             {% else %}
                 <h5>Options de la page <strong>{{ default_page.name }}</strong></h5>
             {% endif %}
 
-            {% if default_page.name != 'site' %}
+            {% if default_page.slug != 'header' and default_page.slug != 'footer' %}
                 <div class="mt-3 row">
                     <div class="col-lg-4">
                         <div class="card">
@@ -58,36 +59,77 @@
                                 <h5 class="card-title m-0">Dupliquer la page</h5>
                             </div>
                             <div class="card-body">
-                                <button data-target="#modal-secondary" data-toggle="modal" type="button" class="btn btn-block btn-warning btn-sm">Dupliquer la page</button>
+                                <button type="button" data-target="#modal-secondary" data-toggle="modal" class="btn btn-block btn-warning btn-sm">Dupliquer la page</button>
                             </div>
                         </div>
                     </div>
                 {% endif %}
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title m-0">Switch langue</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    {% set locale = app.session.get('_locale_edit') ?? app.session.get('_locale') %}
-                                    {% for lang in langs %}
-                                        {% set countContentByLang = twig_service.isLangExitByPage(lang.id, default_page.id) %}
-                                        <a href="{{ path('bo_new_lang_block', {'id':default_page.id, 'langId': lang.id }) }}"
-                                           class="dropdown-item text-center position-relative {{ locale == lang.code ? 'active' : '' }}">
-                                            <i class="flag-icon flag-icon-{{ lang.code }} mr-2"></i>
-                                            {% if countContentByLang > 0 %}
-                                                <i class="fas fa-edit position-absolute" style="top:0;right:21px;"></i>
-                                            {% else %}
-                                                <i class="fas fa-plus position-absolute" style="top:0;right:21px;"></i>
-                                            {% endif %}
-                                        </a>
-                                    {% endfor %}
-                                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title m-0">Switch langue</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                {% set locale = app.session.get('_locale_edit') ?? app.session.get('_locale') %}
+                                {% for lang in langs %}
+                                    {% set flagLocale = lang.code %}
+                                    {% if lang.code == 'en' %}
+                                        {% set flagLocale = 'us' %}
+                                    {% endif %}
+                                    {% set countContentByLang = twig_service.isLangExitByPage(lang.id, default_page.id) %}
+                                    <a href="{{ path('bo_new_lang_block', {'id':default_page.id, 'langId': lang.id }) }}"
+                                       title="{{ lang.name }}"
+                                       class="dropdown-item text-center position-relative {{ locale == lang.code ? 'active' : '' }}">
+                                        <i class="flag-icon flag-icon-{{ flagLocale }} mr-2"></i>
+                                        {% if countContentByLang > 0 %}
+                                            <i class="fas fa-edit position-absolute" style="top:0;right:21px;"></i>
+                                        {% else %}
+                                            <i class="fas fa-plus position-absolute" style="top:0;right:21px;"></i>
+                                        {% endif %}
+                                    </a>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {% if default_page.slug != 'header' and default_page.slug != 'footer' %}
+                <div class="row">
+                    <div class="col-lg-12 mt-5">
+                        <h5>SEO</h5>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title m-0">Métas</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="saveMetasPage">
+                                    {% set metas = [] %}
+                                    {% if default_page.metas and default_page.metas[locale] is defined %}
+                                        {% set metas = default_page.metas[locale] %}
+                                    {% endif %}
+
+                                    <div class="form-group col-md-12">
+                                        <label for="meta_title">Méta Title</label><br>
+                                        <input id="meta_title" class="form-control" type="text" name="meta_title" {% if metas.title is defined %}value="{{ metas.title }}"{% endif %}>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="meta_description">Méta Description</label><br>
+                                        <input typeof="text" id="meta_description" class="form-control" type="text" name="meta_description" value="{% if metas.description is defined %}{{ metas.description }}{% endif %}">
+                                    </div>
+                                    {% if default_page is defined %}
+                                        <input type="hidden" name="page_id" value="{{ default_page.id }}">
+                                    {% endif %}
+                                    <input type="hidden" name="lang_meta" value="{{ locale }}">
+                                    <div id="messageSeo"></div>
+                                    <button type="submit" class="btn btn-block btn-info btn-sm col-md-3">Enregistrer <i class="fas fa-save ml-2"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
 </div>
 

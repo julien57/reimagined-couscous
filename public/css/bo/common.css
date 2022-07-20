@@ -9,20 +9,14 @@
 }
 
 nav .nav-sidebar >li.nav-item > a.nav-link{
+    background-color: #D4AF37 !important;
     color:white !important;
-    color: #BEAB7C !important;
-    background-color: white !important;
-    border:1px solid #BEAB7C;
-
 }
 [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link {
     color:black!important;
 }
 [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:hover {
     color:grey!important;
-}
-.main-sidebar a.nav-link{
-    background-color:rgba(218, 165, 32, 0.2) !important;
 }
 .main-sidebar a.nav-link.active {
     background-color:rgba(218, 165, 32, 0.2) !important;
@@ -51,10 +45,11 @@ nav .nav-sidebar >li.nav-item > a.nav-link{
 
 .subBlock{
     display:none;
+    padding-bottom:35px;
 }
 
 #pages_block .subBlock h3{
-    background-color: lightgrey !important;
+    background-color: darkgrey !important;
 }
 
 .subBlock .block-page-admin .form{

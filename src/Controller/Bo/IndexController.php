@@ -24,37 +24,35 @@ use App\Service\LangService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class IndexController extends AbstractController
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @var ContentRepository
-     */
+    /** @var ContentRepository */
     private $contentRepository;
 
-    /**
-     * @var SessionInterface
-     */
+    /** @var SessionInterface */
     private $session;
 
-    public function __construct(EntityManagerInterface $em, ContentRepository $contentRepository, SessionInterface $session)
+    private LanguageRepository $languageRepository;
+
+    public function __construct(EntityManagerInterface $em, ContentRepository $contentRepository, SessionInterface $session, LanguageRepository $languageRepository)
     {
         $this->em = $em;
         $this->contentRepository = $contentRepository;
         $this->session = $session;
+        $this->languageRepository = $languageRepository;
     }
 
     public function listPage(PageRepository $pageRepository)
     {
         return $this->render('bo/page/list.html.twig', [
-            'pages' => $pageRepository->findBy([], ['id' => 'DESC']),
+            'pages' => $pageRepository->findBy(['type' => 'page'], ['id' => 'DESC']),
         ]);
     }
 
@@ -87,10 +85,10 @@ class IndexController extends AbstractController
 
         return $this->render('bo/dashboard.html.twig',
             [
-                'page' => 'dashbord',
+                'page' => 'dashboard',
                 'pages' => $pages,
                 'langs' => $langs,
-                'countPages' => $pageRepository->getCountPages(),
+                'countPages' => $pageRepository->count(['type' => 'page']),
                 'countPosts' => $pageRepository->count(['type' => 'post']),
                 'timelines' => $arrayTimelines,
             ]
@@ -100,22 +98,24 @@ class IndexController extends AbstractController
     /**
      * @return mixed
      */
-    public function page(Request $request, $slug, $type = 0, SessionInterface $session, LangService $langService)
+    public function page(Request $request, $slug, $type = 0, SessionInterface $session)
     {
         // TOOD FORCE LOCALE
-        $session->set('_locale', 'fr');
+        //$session->set('_locale', 'fr');
         if (!$session->get('_locale_edit')) {
             $session->set('_locale_edit', 'fr');
         }
 
         $id = $request->request->get('id');
+
         //get all langue
         $langs = $this->getDoctrine()->getRepository(Language::class)->findAll();
         //get all pages
-        $pages = $this->getDoctrine()->getRepository(Page::class)->getPages();
+        //$pages = $this->getDoctrine()->getRepository(Page::class)->getPages();
 
         //get all pages block
         $default_block = '';
+
         $default_page = $page = $this->getDoctrine()->getRepository(Page::class)->findOneBySlug($slug);
 
         /* TODO Type block
@@ -135,14 +135,14 @@ class IndexController extends AbstractController
             $locale = $session->get('_locale_edit');
         }
 
-        $blocks_page = $this->_getDataPage($page, $default_block, $langService->getCodeLanguage($session->get('_locale_edit')));
-
         $sliders = $this->getDoctrine()->getRepository(Block::class)->findByPageAndType($slug, 3); //type slider = 3
+
+        $blocks_page = $this->_getDataPage($page, $default_block, $locale);
 
         foreach ($blocks_page  as $key => $b_p) {
             $b_p->json = json_decode($b_p->getjsonData(), true);
             if (true === $b_p->getBlock()->getSubBlock()) {
-                foreach ($b_p->getPageBlock() as $pb) {
+                foreach ($b_p->getBlockChildrens() as $pb) {
                     $pb->json = json_decode($pb->getjsonData(), true);
                 }
             }
@@ -150,12 +150,12 @@ class IndexController extends AbstractController
 
         //get slide home
         if (3 == $type) {
-            $list_block = $this->getDoctrine()->getRepository(Block::class)->findBy(['id' => 54, 'type' => 5], ['name' => 'ASC']);
+            $list_block = $this->getDoctrine()->getRepository(Block::class)->findOneBy(['id' => 54, 'type' => 5], ['name' => 'ASC']);
         } else {
             $list_block = $this->getDoctrine()->getRepository(Block::class)->findBy(['type' => 5], ['name' => 'ASC']);
         }
 
-        $blocks = $this->getDoctrine()->getRepository(Block::class)->findBy([], ['name' => 'ASC']);
+        $blocks = $this->getDoctrine()->getRepository(Block::class)->getBlocksPageWithModuleActivated();
 
         if ('site' == $slug) {
             $list_block = [];
@@ -166,7 +166,7 @@ class IndexController extends AbstractController
             'default_page' => $default_page,
             'blocks_page' => $blocks_page,
             'block_page_id' => $id,
-            'pages' => $pages,
+            //'pages' => $pages,
             'sliders' => $sliders,
             'blocks' => $blocks,
             'list_block' => $list_block,
@@ -199,13 +199,13 @@ class IndexController extends AbstractController
         $otherContentsPage = $contentRepository->getLangExist($currentLang->getId(), $page->getId());
         $codeNextLang = $langService->getLocaleByLanguageId($currentLang->getId());
 
-        foreach ($page->getPageBlock() as $blockPage) {
+        foreach ($page->getPageBlocks() as $blockPage) {
             $newBlockPage = clone $blockPage;
             $new->addPageBlock($newBlockPage);
             $newBlockPage->setPage($new);
             $this->em->persist($newBlockPage);
 
-            foreach ($blockPage->getPageBlock() as $childBlock) {
+            foreach ($blockPage->getBlockChildrens() as $childBlock) {
                 $newBlockChild = clone $childBlock;
                 $newBlockPage->addPageBlock($newBlockChild);
                 $newBlockChild->setPageBlock($newBlockPage);
@@ -231,6 +231,37 @@ class IndexController extends AbstractController
             'slug' => $slugger->slug($new->getName())->lower(),
             'type' => 2,
         ]);
+    }
+
+    public function saveSlug(SessionInterface $session)
+    {
+        $request = Request::createFromGlobals();
+        $locale = $session->get('_locale_edit');
+
+        if (!$request->get('slug') || !$request->get('pageId')) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'Missing parameters',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $pageId = $request->get('pageId');
+        $page = $this->getDoctrine()
+            ->getRepository(Page::class)
+            ->find($pageId);
+
+        $arraySlugs = $page->getSlugs();
+        $arraySlugs[$locale] = $request->get('slug');
+        $page->setSlugs($arraySlugs);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        return $this->json([
+            'status' => 'ok',
+            'slug' => $request->get('slug'),
+            'type' => $page->getType(),
+        ], Response::HTTP_OK);
     }
 
     public function newLangBlocks(
@@ -259,7 +290,7 @@ class IndexController extends AbstractController
 
             foreach ($otherContentsPage as $otherContent) {
                 $newContent = clone $otherContent;
-                $newContent->setLanguage($langService->getCodeLanguage($codeNextLang));
+                $newContent->setLanguage($langId);
                 $this->em->persist($newContent);
             }
 
@@ -284,7 +315,7 @@ class IndexController extends AbstractController
 
     public function removePage(Page $page)
     {
-        foreach ($page->getPageBlock() as $pageBlock) {
+        foreach ($page->getPageBlocks() as $pageBlock) {
             $contents = $this->getDoctrine()->getRepository(Content::class)->findBy(['pageBlock' => $pageBlock]);
             foreach ($contents as $content) {
                 $this->em->remove($content);
@@ -295,7 +326,7 @@ class IndexController extends AbstractController
 
         $this->addFlash('success', 'Page supprimée !');
 
-        return $this->redirectToRoute('bo');
+        return $this->redirectToRoute('bo_page_list');
     }
 
     public function deactivePage(Page $page, SluggerInterface $slugger)
@@ -387,7 +418,8 @@ class IndexController extends AbstractController
 
     protected function _getDataPage($page, $block = '', string $langId)
     {
-        $contents = $this->contentRepository->getLangExist($langId, $page->getId());
+        $lang = $this->languageRepository->findOneBy(['code' => $langId]);
+        $contents = $this->contentRepository->getLangExist($lang->getId(), $page->getId());
 
         /*
         if(!empty($block)){
@@ -413,20 +445,14 @@ class IndexController extends AbstractController
         }*/
 
         $arrayPageBlocks = [];
-
         foreach ($contents as $content) {
-
             $json = $content->getJson();
-            $lg = $content->getLanguage();
-            if($lg == (int)$langId){
-
-                if ($content->getPageBlock()) {
-                    $content->getPageBlock()->setJsonData($json);
-                    $arrayPageBlocks[$content->getPageBlock()->getItemOrder()] = $content->getPageBlock();
-                } else {
-                    $content->getBlockChildren()->setJsonData($json);
-                    $arrayPageBlocks[$content->getBlockChildren()->getPageBlock()->getItemOrder()] = $content->getBlockChildren()->getPageBlock();
-                }
+            if ($content->getPageBlock()) {
+                $content->getPageBlock()->setJsonData($json);
+                $arrayPageBlocks[$content->getPageBlock()->getItemOrder()] = $content->getPageBlock();
+            } else {
+                $content->getBlockChildren()->setJsonData($json);
+                $arrayPageBlocks[$content->getBlockChildren()->getPageBlock()->getItemOrder()] = $content->getBlockChildren()->getPageBlock();
             }
         }
 

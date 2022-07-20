@@ -3,10 +3,10 @@
 namespace App\Controller\Bo;
 
 use App\Entity\Page;
+use App\Entity\PageBlock;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
 use App\Repository\PageRepository;
-use App\Service\LangService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,24 +14,16 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PostController extends AbstractController
 {
-    /**
-     * @var PageRepository
-     */
+    /** @var PageRepository */
     private $pageRepository;
 
-    /**
-     * @var LanguageRepository
-     */
+    /** @var LanguageRepository */
     private $languageRepository;
 
-    /**
-     * @var ContentRepository
-     */
+    /** @var ContentRepository */
     private $contentRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
     public function __construct(
@@ -46,16 +38,33 @@ class PostController extends AbstractController
         $this->em = $em;
     }
 
-    public function createPost(Request $request, SessionInterface $session, LangService $langService)
+    public function createPost(SessionInterface $session, Request $request)
     {
+        if (!$request->get('page_name')) {
+            $this->addFlash('danger', 'Aucun nom pour l’actu');
+
+            return $this->redirectToRoute('bo');
+        }
+
         $new = new Page();
-        $new->setName('Nouvel article '.uniqid());
+        $new->setName($request->get('page_name'));
         $new->setType(Page::PAGE_TYPE_POST);
 
+        $newBlockPage = new PageBlock();
+        $newBlockPage->setItemOrder(0);
+        $new->addPageBlock($newBlockPage);
+        $newBlockPage->setPage($new);
+
+        $localSession = $session->get('_locale_edit');
+        if ('en' === $localSession) {
+            $localSession = 'us';
+        }
+
+        $this->em->persist($newBlockPage);
         $this->em->persist($new);
         $this->em->flush();
 
-        $this->addFlash('success', 'Page dupliquée, vous êtes maintenant sur la page "'.$new->getName().'" !');
+        $this->addFlash('success', 'Actualitée créée');
 
         return $this->redirectToRoute('bo_page_by_type', [
             'slug' => $new->getSlug(),

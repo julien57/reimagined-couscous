@@ -17,71 +17,45 @@ class Contact
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $lastName;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(type="string", length=255, nullable=true) */
     private $company;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
+    /** @ORM\Column(type="string", length=20) */
     private $phone;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $email;
 
-    /**
-     * @ORM\Column(type="text", length=1000, nullable=true)
-     */
+    /** @ORM\Column(type="text", length=1000, nullable=true) */
     private $adress;
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    /** @ORM\Column(type="string", length=100) */
     private $country;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $eventType;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    /** @ORM\Column(type="datetime") */
     private $eventDate;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    /** @ORM\Column(type="integer") */
     private $peopleNumber;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    /** @ORM\Column(type="boolean", nullable=true) */
     private $bookingRoom = false;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    /** @ORM\Column(type="text", nullable=true) */
     private $message;
-
 
     public function __construct()
     {
         $this->eventDate = new \DateTime();
         $this->peopleNumber = 0;
-
     }
 
     public function getId(): ?int

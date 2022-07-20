@@ -22,50 +22,36 @@ class Page
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
+    /** @ORM\Column(type="string", length=255, unique=true) */
     private $name;
 
-    /**
-     * @ORM\Column(name="active",type="boolean")
-     */
+    /** @ORM\Column(name="active",type="boolean") */
     private $active = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PageBlock", mappedBy="page", cascade={"remove"})
-     */
-    private $pageBlock;
+    /** @ORM\OneToMany(targetEntity="PageBlock", mappedBy="page", cascade={"remove"}) */
+    private $pageBlocks;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    /** @ORM\Column(type="boolean", nullable=true) */
     private $hasNewsletter;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(type="string", length=255, nullable=true) */
     private $slug;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(type="string", length=255, nullable=true) */
     private $type;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $metaTitle;
+    /** @ORM\Column(type="json", nullable=true) */
+    private $slugs = [];
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      */
-    private $metaDescription;
+    private $metas = [];
 
     public function __construct()
     {
         $this->hasNewsletter = false;
-        $this->pageBlock = new ArrayCollection();
+        $this->pageBlocks = new ArrayCollection();
         $this->active = false;
     }
 
@@ -82,36 +68,6 @@ class Page
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|PageBlock[]
-     */
-    public function getPageBlock(): Collection
-    {
-        return $this->pageBlock;
-    }
-
-    public function addPageBlock(PageBlock $pageBlock): self
-    {
-        if (!$this->pageBlock->contains($pageBlock)) {
-            $this->pageBlock[] = $pageBlock;
-            $pageBlock->setPage($this);
-        }
-
-        return $this;
-    }
-
-    public function removePageBlock(PageBlock $pageBlock): self
-    {
-        if ($this->pageBlock->removeElement($pageBlock)) {
-            // set the owning side to null (unless already changed)
-            if ($pageBlock->getPage() === $this) {
-                $pageBlock->setPage(null);
-            }
-        }
 
         return $this;
     }
@@ -169,26 +125,56 @@ class Page
         return $this;
     }
 
-    public function getMetaTitle(): ?string
+    /**
+     * @return Collection|PageBlock[]
+     */
+    public function getPageBlocks(): Collection
     {
-        return $this->metaTitle;
+        return $this->pageBlocks;
     }
 
-    public function setMetaTitle(?string $metaTitle): self
+    public function addPageBlock(PageBlock $pageBlock): self
     {
-        $this->metaTitle = $metaTitle;
+        if (!$this->pageBlocks->contains($pageBlock)) {
+            $this->pageBlocks[] = $pageBlock;
+            $pageBlock->setPage($this);
+        }
 
         return $this;
     }
 
-    public function getMetaDescription(): ?string
+    public function removePageBlock(PageBlock $pageBlock): self
     {
-        return $this->metaDescription;
+        if ($this->pageBlocks->removeElement($pageBlock)) {
+            // set the owning side to null (unless already changed)
+            if ($pageBlock->getPage() === $this) {
+                $pageBlock->setPage(null);
+            }
+        }
+
+        return $this;
     }
 
-    public function setMetaDescription(?string $metaDescription): self
+    public function getSlugs(): ?array
     {
-        $this->metaDescription = $metaDescription;
+        return $this->slugs;
+    }
+
+    public function setSlugs(?array $slugs): self
+    {
+        $this->slugs = $slugs;
+
+        return $this;
+    }
+
+    public function getMetas(): ?array
+    {
+        return $this->metas;
+    }
+
+    public function setMetas(?array $metas): self
+    {
+        $this->metas = $metas;
 
         return $this;
     }

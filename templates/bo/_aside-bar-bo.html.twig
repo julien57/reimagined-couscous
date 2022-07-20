@@ -10,7 +10,7 @@
                <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">-->
             </div>
             <div class="info">
-                <a href="" class="d-block">{{ app.user.email }}</a>
+                <a href="" class="d-block">{# {{ app.user.email }} #}</a>
             </div>
         </div>
 
@@ -68,12 +68,16 @@
                                 <p>Menu</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item ">
-                            <a href="{{ path('bo_page', {slug: 'site'}) }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page' %}active{% endif %}">
+                            <a href="{{ path('bo_page_by_type', {slug:'header', type: 2 }) }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page_by_type' %}active{% endif %}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Général</p>
+                                <p>Header</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{{ path('bo_page_by_type', {slug:'footer', type: 2 }) }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page_by_type' %}active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Footer</p>
                             </a>
                         </li>
                     </ul>
@@ -92,6 +96,12 @@
                             <a href="{{ path('bo_page_list') }}" class="nav-link {% if app.request.attributes.get('_route') == 'bo_page_list' %}active{% endif %}">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>Liste</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a {# href="{{ path('bo_create_page') }}"  #} data-target="#modal-new-page" data-toggle="modal" class="nav-link" style="cursor:pointer;">
+                                <i class="fas fa-pencil-alt nav-icon"></i>
+                                <p>Créer une page</p>
                             </a>
                         </li>
                     </ul>
@@ -113,7 +123,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('bo_create_post') }}" class="nav-link">
+                            <a {# href="{{ path('bo_create_post') }}" #} data-target="#modal-new-post" data-toggle="modal" class="nav-link" style="cursor:pointer">
                                 <i class="fas fa-pencil-alt nav-icon"></i>
                                 <p>Créer une actu</p>
                             </a>
@@ -124,28 +134,56 @@
                     <a href="#" class="nav-link">
                         <i class="fas fa-users mr-2"></i>
                         <p>
-                            Administrateurs
+                            Utilisateur
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-
-                        {# {% for page in pages  %} #}
-                            <li class="nav-item">
-                                <a href="{{ path('back_user_list') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Liste</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('back_user_add') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Ajouter un admin</p>
-                                </a>
-                            </li>
-                        {# {% endfor  %} #}
+                        <li class="nav-item">
+                            <a href="{{ path('back_user_list') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Liste</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('back_user_add') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ajouter un admin</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
+                {% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+                    <li class="nav-item ">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-mask mr-2"></i>
+                            <p>
+                                Super administration
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ path('admin_item') }}" class="nav-link {% if app.request.attributes.get('_route') == 'admin_item' %}active{% endif %}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Champs Items</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('admin_block') }}" class="nav-link {% if app.request.attributes.get('_route') == 'admin_block' %}active{% endif %}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Blocks</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item {% if app.request.attributes.get('_route') == 'admin_module_list' %}menu-is-opening menu-open{% endif %}">
+                        <a href="{{ path('admin_module_list') }}" class="nav-link {% if app.request.attributes.get('_route') == 'admin_module_list' %}active{% endif %}">
+                            <i class="nav-icon fas fa-plug"></i>
+                            <p>Modules</p>
+                        </a>
+                    </li>
+                {% endif %}
                 <!-- slider -->
                 {% if default_page is defined and default_page is not empty %}
                     <!--

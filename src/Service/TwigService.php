@@ -5,56 +5,24 @@ namespace App\Service;
 use App\Entity\Page;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
-use App\Repository\PageBlockRepository;
 use App\Repository\PageRepository;
-use App\Repository\BlockChildrenRepository;
 
 class TwigService
 {
-    /**
-     * @var ContentRepository
-     */
+    /** @var ContentRepository */
     private $contentRepository;
 
-    /**
-     * @var PageRepository
-     */
+    /** @var PageRepository */
     private $pageRepository;
 
-    /**
-     * @var LanguageRepository
-     */
+    /** @var LanguageRepository */
     private $languageRepository;
 
-    /**
-     * @var PageBlockRepository
-     */
-    private $pageBlockRepository;
-
-    /**
-     * @var BlockChildrenRepository
-     */
-    private $blockChildrenRepository;
-
-    public function __construct(ContentRepository $contentRepository, BlockChildrenRepository $blockChildrenRepository, PageRepository $pageRepository, LanguageRepository $languageRepository, PageBlockRepository $pageBlockRepository)
+    public function __construct(ContentRepository $contentRepository, PageRepository $pageRepository, LanguageRepository $languageRepository)
     {
         $this->contentRepository = $contentRepository;
         $this->pageRepository = $pageRepository;
         $this->languageRepository = $languageRepository;
-        $this->pageBlockRepository = $pageBlockRepository;
-        $this->blockChildrenRepository = $blockChildrenRepository;
-    }
-
-    public function getLatestNews(int $pageBlockId)
-    {
-        $posts = $this->pageBlockRepository->getNews();
-        return $posts;
-    }
-
-    public function getContentNews(int $pageBlockId)
-    {
-        $contents = $this->blockChildrenRepository->getContents($pageBlockId);
-        return $contents;
     }
 
     public function isLangExitByPage(int $langId, int $pageId)
@@ -87,11 +55,33 @@ class TwigService
     public function getLanguagesByPage(Page $page)
     {
         $langs = $this->contentRepository->getContentsByLang($page);
+
         $values = [];
         foreach ($langs as $key => $value) {
-            $values[] = $value['language'];
+            $language = $this->languageRepository->find($value->getLanguage());
+            $values[] = $language->getCode();
         }
 
         return $values;
+    }
+
+    public function getLatestNews(?int $limit, string $order = 'DESC', string $locale = 'fr')
+    {
+        $posts = $this->pageRepository->getlatestPosts($limit, $order, $locale);
+        $pageBlocks = [];
+
+        foreach ($posts as $post) {
+            foreach ($post->getPageBlocks() as $pageBlock) {
+                if ($pageBlock->getJsonData()) {
+                    $data = json_decode($pageBlock->getJsonData());
+                    if ($data->lang_block === $locale) {
+                        $post->data = $data;
+                        $pageBlocks[] = $post;
+                    }
+                }
+            }
+        }
+
+        return $pageBlocks;
     }
 }

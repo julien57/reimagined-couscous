@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SIXSEVEN| Dashboard</title>
+    <title>Caméléon CMS</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/cameleon_logo.png') }}">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -32,6 +33,9 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
+    <link rel="stylesheet" href="{{ asset('bo/plugins/codemirror/codemirror.css') }}">
+    <link rel="stylesheet" href="{{ asset('bo/plugins/codemirror/theme/monokai.css') }}">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -41,7 +45,7 @@
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
 
-        <img class="animation__shake" src="{{ asset('img/icon/deco_leaf.svg') }}" alt="parc alvisse" height="60" width="60">
+        <img class="animation__shake" src="{{ asset('img/cameleon_logo.png') }}" alt="Cameleon CMS" height="60" width="90">
     </div>
 
     <!-- Navbar -->
@@ -52,7 +56,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ path('app_page', {'slug':'home' }) }}" class="nav-link">Accueil site</a>
+                <a target="_blank" href="{{ path('app_page', {'slug': '' }) }}" class="nav-link">Accueil site</a>
             </li>
         </ul>
 
@@ -66,7 +70,7 @@
             {% set currentLocale = app.request.locale %}
         {% endif %}
 
-        <!--
+        {#
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
@@ -83,11 +87,16 @@
                 </div>
             </li>
         </ul>
-        -->
+        #}
+
     </nav>
     <!-- /.navbar -->
 
     {% include "/bo/_aside-bar-bo.html.twig" %}
+
+    <!-- Modals for new pages -->
+    {{ include('bo/page/modal_new.html.twig') }}
+    {{ include('bo/post/modal_new.html.twig') }}
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -115,6 +124,12 @@
 <script src="{{ asset('/bo/plugins/jquery/jquery.min.js') }}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('/bo/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
+<script src="{{ asset('/js/bo/1_function.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/js/bo/_items.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/js/bo/page.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/js/bo/_page.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/js/bo/_block.js') }}" type="text/javascript"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
     $.widget.bridge('uibutton', $.ui.button)
@@ -123,6 +138,11 @@
 <!-- Bootstrap 4 -->
 <script src="{{ asset('/bo/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<script src="{{ asset('bo/plugins/codemirror/codemirror.js') }}"></script>
+<script src="{{ asset('bo/plugins/codemirror/mode/css/css.js') }}"></script>
+<script src="{{ asset('bo/plugins/codemirror/mode/xml/xml.js') }}"></script>
+<script src="{{ asset('bo/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
 
 <!-- ChartJS -->
  <script src="{{ asset('/bo/plugins/chart.js/Chart.min.js') }}"></script>
@@ -152,15 +172,19 @@
 <script src="{{ asset('/bo/dist/js/pages/dashboard.js') }}"></script>
 
 
-<script src="{{ asset('/js/bo/1_function.js') }}"></script>
-<script src="{{ asset('/js/bo/page.js') }}"></script>
-<script src="{{ asset('/js/bo/_page.js') }}"></script>
-<script src="{{ asset('/js/bo/_block.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 {% block javascript %}{% endblock %}
 
 <script>
+    CodeMirror.fromTextArea(document.getElementById("module_asset_css"), {
+        mode: "htmlmixed",
+        theme: "monokai"
+    });
+    CodeMirror.fromTextArea(document.getElementById("module_asset_js"), {
+        mode: "htmlmixed",
+        theme: "monokai"
+    });
     /*
     function loadMultipleFile(event, input) {
         let containerPreview = input.nextElementSibling;
@@ -235,7 +259,7 @@
         });
         */
         $(".wys.wysiwyg").each(function () {
-            CKEDITOR.replace(this);
+                CKEDITOR.replace(this);
         });
 
 

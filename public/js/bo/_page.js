@@ -1,5 +1,22 @@
 $(function(){
-    
+
+
+    // Publication date for Posts
+    $('#publishDateForm').submit(function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '/bo/post/date/update',
+            data: $('#publishDateForm').serialize(),
+            success: function (response) {
+                $('#messageDatePost').text('Date sauvegardée !')
+                $('#messageDatePost').css('color', 'green')
+            },
+        });
+    });
+
     if (typeof localForMessage !== 'undefined') {
         const currentLocale = localForMessage;
     } else {
@@ -41,7 +58,7 @@ $(function(){
 
         if (form.find('.wys').length > 0) {
             for (let editor of form.find('.wys')) {
-                
+
                 let textareaName;
 
                 if (editor.getAttribute('id')) {
@@ -65,7 +82,6 @@ $(function(){
 
         $(this).parent('form').attr('id', 'formtmp');
         //var data = $(this).parent('form').serialize();
-
         var form = $('#formtmp');
         var data = new FormData(  form[0] );
         var blockPageId = data.get('block_page_id');
@@ -73,9 +89,9 @@ $(function(){
         var btnSubmit = $(this);
         // If click draft button
         if (btnSubmit.hasClass('draft')) {
-           data.append('draft', true);
+            data.append('draft', true);
         }
-        
+
         $.ajax({
             url:        '/admin/page/block/add',
             type:       'POST',
@@ -88,16 +104,17 @@ $(function(){
             success: function(data, status) {
 
                 const datas = JSON.parse(data);
-
+                console.log(datas)
                 $('#formtmp').removeAttr('id');
+                const urlDraft = document.getElementById('btnSeePage').href;
 
                 if (btnSubmit.hasClass('draft')) {
-                    
+
                     $('#message'+blockPageId).html(`<div class="alert alert-success alert-dismissible">
                                                       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                                       <h5><i class="icon fas fa-check"></i> Brouillon enregistré !</h5>
                                                       Pensez à publier vos modifications après avoir 
-                                                      <a href="https://parc-hotel.jumo.idp.lu/${currentLocale}/${datas.page_name}?preview=preview" target="_blank" style="font-weight:bold">visualiser l’aperçu</a>
+                                                      <a href="${urlDraft}?preview=preview" target="_blank" style="font-weight:bold">visualiser l’aperçu</a>
                                                     </div>`);
 
 
@@ -134,7 +151,7 @@ $(function(){
             editor.value = data;
         }*/
 
-        if (form.find('.wys.wysiwyg').length > 0) {
+        if (form.find('.wys').length > 0) {
             for (let editor of form.find('.wys')) {
 
                 let textareaName;
@@ -245,6 +262,11 @@ $(function(){
 
         e.preventDefault();
 
+        var subBlock = $(this).closest('.subBlock');
+        function getSubBlock() {
+            return subBlock;
+        }
+
         var p_b_id = $(this).data('bp');
         //var block =  $('.sub_block_list').val();
         var block =  $(this).prev().val();
@@ -257,7 +279,24 @@ $(function(){
             data : data,
             async:   true,
             success: function(data, status) {
-                $('.subBlock').append(data);
+                var subBlockData = getSubBlock();
+                subBlockData.append(data);
+
+                if (subBlockData.find('.wys.wysiwyg').length > 0) {
+                    var textareas = subBlockData.find('.wys.wysiwyg');
+                    var textarea = textareas.last()
+                    var uniqId = Math.floor(Math.random() * 100);
+                    textarea.attr('data-id', uniqId)
+
+                    // If WYSIWYG add editor at new block
+                    $(".wys.wysiwyg").each(function () {
+                        if ($(this).attr('data-id')) {
+                            CKEDITOR.replace(this);
+                        }
+                    });
+
+                    textarea.removeAttr('data-id');
+                }
             },
 
             error : function(xhr, textStatus, errorThrown) {

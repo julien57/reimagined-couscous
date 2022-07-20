@@ -47,14 +47,22 @@ bo_save_menu:
     path:       /bo/menu/save
     controller: App\Controller\Bo\MenuController::saveMenu
     methods: POST
+bo_create_page:
+    path:       /bo/create/page
+    controller: App\Controller\Bo\PageController::createPage
+    methods: GET|POST
 bo_create_post:
     path:       /bo/create/post
     controller: App\Controller\Bo\PostController::createPost
-    methods: GET
+    methods: GET|POST
 bo_list_post:
     path:       /bo/list/post
     controller: App\Controller\Bo\PostController::list
     methods: GET
+bo_save_slug:
+    path: /bo/slug/save
+    controller: App\Controller\Bo\IndexController::saveSlug
+    methods: POST
 
 #langue
 bo_lang_new:
@@ -88,66 +96,71 @@ bo_user:
 login:
     path:   /login
     controller: App\Controller\SecurityController::login
+app_logout:
+    path:   /logout
+    controller: App\Controller\SecurityController::logout
 
 ###admin###
 admin:
     path:       /admin
-    controller: App\Controller\Admin\IndexController::index
-admin_index:
-    path:       /admin/{slug}/{id}
-    controller: App\Controller\Admin\IndexController::index
+    controller: App\Controller\Bo\Admin\IndexController::index
 
 #page
 admin_page:
     path:       /admin/page
-    controller: App\Controller\Admin\PageController::index
+    controller: App\Controller\Bo\Admin\PageController::index
     methods: GET
 admin_page_new:
     path:       /admin/page/add/new
-    controller: App\Controller\Admin\PageController::add
+    controller: App\Controller\Bo\Admin\PageController::add
     methods: GET|POST
 admin_page_id:
     path:       /admin/page/{id}
-    controller: App\Controller\Admin\PageController::index
+    controller: App\Controller\Bo\Admin\PageController::index
     methods: GET
 admin_page_add_block:
     path:       /admin/page/block/add
-    controller: App\Controller\Admin\PageController::block
+    controller: App\Controller\Bo\Admin\PageController::block
     methods: GET|POST
 admin_remove_page:
     path:       /admin/remove/page
-    controller: App\Controller\Admin\PageController::removePage
+    controller: App\Controller\Bo\Admin\PageController::removePage
     methods: GET
 #page ajax
 admin_page_ajax_get_block:
     path:       /admin/page/{id}/blocks
-    controller: App\Controller\Admin\PageController::getAjaxDataPage
+    controller: App\Controller\Bo\Admin\PageController::getAjaxDataPage
     methods: GET
+#Save metas page
+admin_page_save_metas:
+    path:       /bo/page/metas/save
+    controller: App\Controller\Bo\Admin\PageController::saveMetaPage
+    methods: POST
 #page get Entity without template
 get_page_entity:
     path:       /admin/page/entity/{id}
-    controller: App\Controller\Admin\PageController::getPageEntity
+    controller: App\Controller\Bo\Admin\PageController::getPageEntity
     methods: POST
 #Change attribute hasNewsletter
 edit_newsletter_page:
     path:       /admin/page/change-newsletter/{id}
-    controller: App\Controller\Admin\PageController::editNewsletterPage
+    controller: App\Controller\Bo\Admin\PageController::editNewsletterPage
     methods: POST
 #remove
 admin_page_ajax_remove_block:
     path:       /admin/page/{page}/blocks/remove/{block}
-    controller: App\Controller\Admin\PageController::removeBlock
+    controller: App\Controller\Bo\Admin\PageController::removeBlock
     methods: POST|GET
 
 #sub_block
 admin_page_ajax_sub_block:
     path:       /admin/page/sub/blocks/new
-    controller: App\Controller\Admin\BlockController::ajaxAddSubBlock
+    controller: App\Controller\Bo\Admin\BlockController::ajaxAddSubBlock
     methods: POST|GET
 #sub_block
 admin_page_ajax_sub_block_rem:
     path:       /admin/page/sub/blocks/remove
-    controller: App\Controller\Admin\BlockController::ajaxRemSubBlock
+    controller: App\Controller\Bo\Admin\BlockController::ajaxRemSubBlock
     methods: POST|GET
 
 admin_page_ajax_sub_block_data_add:
@@ -158,116 +171,84 @@ admin_page_ajax_sub_block_data_add:
 #block
 admin_block:
     path:       /admin/block
-    controller: App\Controller\Admin\BlockController::index
+    controller: App\Controller\Bo\Admin\BlockController::index
 
 admin_block_footer:
     path:       /admin/block/footer
-    controller: App\Controller\Admin\BlockController::footer
+    controller: App\Controller\Bo\Admin\BlockController::footer
 
 admin_block_id:
     path:       /admin/block/edit/{id}
-    controller: App\Controller\Admin\BlockController::edit
+    controller: App\Controller\Bo\Admin\BlockController::edit
     methods: GET
 
 admin_block_form:
     path:       /admin/ajax/form/send
-    controller: App\Controller\Admin\BlockController::ajaxForm
+    controller: App\Controller\Bo\Admin\BlockController::ajaxForm
     methods: POST
 admin_block_remove:
     path:       /admin/ajax/block/remove/{id}
-    controller: App\Controller\Admin\BlockController::ajaxRemove
+    controller: App\Controller\Bo\Admin\BlockController::ajaxRemove
     methods: GET|POST
 
 #item
 admin_item:
     path:       /admin/item
-    controller: App\Controller\Admin\ItemController::index
+    controller: App\Controller\Bo\Admin\ItemController::index
     methods: GET|POST
 
 admin_item_id:
-    path:       /admin/item/{id}
-    controller: App\Controller\Admin\ItemController::index
+    path:       /admin/item
+    controller: App\Controller\Bo\Admin\ItemController::index
+    methods: GET|POST
+admin_item_update:
+    path:       /admin/item/{id<\d+>?}
+    controller: App\Controller\Bo\Admin\ItemController::update
+    methods: GET|POST
+admin_item_remove:
+    path:       /admin/item/remove/{id}
+    controller: App\Controller\Bo\Admin\ItemController::remove
     methods: GET|POST
 
 #ajax item
 admin_item_ajax:
     path:       /admin/ajax/item/new
-    controller: App\Controller\Admin\BlockController::ajaxNewItem
+    controller: App\Controller\Bo\Admin\BlockController::ajaxNewItem
     methods: GET|POST
 
 admin_item_ajax_remove:
     path:       /admin/ajax/block/{block}/item/{item}/remove
-    controller: App\Controller\Admin\ItemController::remove
+    controller: App\Controller\Bo\Admin\ItemController::remove
     methods: GET|POST
 
 admin_item_list_ajax:
     path:       /admin/ajax/item/list
-    controller: App\Controller\Admin\BlockController::ajaxListItem
+    controller: App\Controller\Bo\Admin\BlockController::ajaxListItem
     methods: GET
 
 admin_page_block_get:
     path:       /admin/ajax/block/get
-    controller: App\Controller\Admin\BlockController::generatBlockForm
+    controller: App\Controller\Bo\Admin\BlockController::generatBlockForm
     methods: POST|get
 admin_page_reorder_block:
     path:       /admin/ajax/order/blocks/
-    controller: App\Controller\Admin\PageController::orderBlock
+    controller: App\Controller\Bo\Admin\PageController::orderBlock
     methods: POST|get
 
 
 #sites
-index:
-    path:       /
-    controller: App\Controller\Home\IndexController::index
-redirect_home_birthday:
-    path: /evenements/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_villa:
-    path: /rl_gallery/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_comfort_room:
-    path: rl_gallery/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_rooms:
-    path: hotel/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_location_grandes_salles:
-    path: /location-de-salles/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_event_mariage_rooms:
-    path: /evenements/mariages/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_offre_sejour:
-    path: offres-sejours/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_very_large_room:
-    path: /meetings-and-events/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_event_mariage_idee:
-    path: evenements/mariages/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_tv_channels:
-    path: wp-content/uploads/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_carte_boissons:
-    path: wp-content/uploads/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_home_menu_veranda:
-    path: wp-content/uploads/{slug}
-    controller: App\Controller\Home\IndexController::redirectOldUrl
-app_home_en:
-   path:       /{slug}
-   controller: App\Controller\Home\IndexController::redirectOldUrl
-redirect_page:
-    path:       /{_locale}/{slug}
-    controller: App\Controller\Home\IndexController::page
-    defaults:
-        _locale: fr
 app_page:
     path:       /{_locale}/{slug}
     controller: App\Controller\Home\IndexController::page
     defaults:
         _locale: fr
+        slug: ''
+app_news:
+    path:       /{_locale}/news/{slug}
+    controller: App\Controller\Home\IndexController::page
+    defaults:
+        _locale: fr
+        slug: ''
 app_page_preview:
     path:       /{_locale}/preview/page/{slug}
     controller: App\Controller\Home\IndexController::page
@@ -278,8 +259,22 @@ front_ajax_valid_offer:
     path:       /offer/send-form
     controller: App\Controller\Home\IndexController::validOfferForm
 
-#ajax
+#Modules
+admin_module_list:
+    path:       /admin/modules/liste
+    controller: App\Controller\Bo\Admin\ModuleController::list
+    methods: GET
+admin_active_module:
+    path:       /admin/modules/activate
+    controller: App\Controller\Bo\Admin\ModuleController::activateModule
+    methods: POST
+#Modules Assets
+admin_assets_module_edit:
+    path:       /admin/modules/assets/{id}
+    controller: App\Controller\Bo\Admin\ModuleAssetController::editAssetModule
+    methods: GET|POST
 
+#ajax
 ajax_form:
     path:       /form/ajax/
     controller: App\Controller\Home\AjaxController::ajax

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yazidneghiche
- * Date: 23/03/2021
- * Time: 20:26.
- */
 
 namespace App\Controller\Home;
 
@@ -12,7 +6,6 @@ use App\Service\Mail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class AjaxController extends AbstractController
 {
@@ -20,21 +13,13 @@ class AjaxController extends AbstractController
         'contact' => [
             'form_type' => \App\Form\ContactType::class,
             'context' => 'contact',
-        ],
-        'gift' => [
-            'form_type' => \App\Form\GiftType::class,
-            'context' => 'gift',
-        ],
-        'newsletter' => [
-            'form_type' => \App\Form\NewsLetterType::class,
-            'context' => 'news_letter',
-        ],
+        ]
     ];
 
     /**
+     * @param Request $request
+     * @param Mail $mail
      * @return JsonResponse
-     *
-     * @throws \TypeError
      */
     public function ajax(Request $request, Mail $mail)
     {
@@ -48,12 +33,8 @@ class AjaxController extends AbstractController
         $formType = $context['form_type'];
 
         $model = 'App\\Entity\\'.ucfirst($_context);
-
         $model = new $model();
-
-        $form = $this->createForm($formType, $model);
-
-        $form->handleRequest($request);
+        $form = $this->createForm($formType, $model)->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($request->get('news_letter')) {
@@ -72,37 +53,15 @@ class AjaxController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($datas);
             $entityManager->flush();
-	   
-		//$mail->sendContactMail($datas);
-	    if(strtolower($_context) == 'gift'){
+
+            //$mail->sendContactMail($datas);
+            if (strtolower($_context) == 'gift') {
                 $mail->sendGiftMail($datas);
-            }else{
-                 $mail->sendContactMail($datas);
+            } else {
+                $mail->sendContactMail($datas);
             }
         }
 
-        return new JsonResponse(['success' => 'ok' ]);
-    }
-
-    /**
-     * @param $slug
-     * @param string $id
-     *
-     * @return Response
-     */
-    public function contact(Request $request)
-    {
-    }
-
-    public function room(Request $request)
-    {
-    }
-
-    public function restaurant(Request $request)
-    {
-    }
-
-    public function gift(Request $request)
-    {
+        return new JsonResponse(['success' => 'ok']);
     }
 }

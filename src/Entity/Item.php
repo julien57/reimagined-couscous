@@ -19,34 +19,29 @@ class Item
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $sqlType;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $htmlName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string", length=255) */
     private $htmlType;
 
+    /** @ORM\OneToMany(targetEntity="BlockItem", mappedBy="item") */
+    private $blockItems;
+
     /**
-     * @ORM\OneToMany(targetEntity="BlockItem", mappedBy="item")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $blockItem;
+    private $info;
 
     public function __construct()
     {
-        $this->blockItem = new ArrayCollection();
+        $this->blockItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,15 +100,15 @@ class Item
     /**
      * @return Collection|BlockItem[]
      */
-    public function getBlockItem(): Collection
+    public function getBlockItems(): Collection
     {
-        return $this->blockItem;
+        return $this->blockItems;
     }
 
     public function addBlockItem(BlockItem $blockItem): self
     {
-        if (!$this->blockItem->contains($blockItem)) {
-            $this->blockItem[] = $blockItem;
+        if (!$this->blockItems->contains($blockItem)) {
+            $this->blockItems[] = $blockItem;
             $blockItem->setItem($this);
         }
 
@@ -122,12 +117,24 @@ class Item
 
     public function removeBlockItem(BlockItem $blockItem): self
     {
-        if ($this->blockItem->removeElement($blockItem)) {
+        if ($this->blockItems->removeElement($blockItem)) {
             // set the owning side to null (unless already changed)
             if ($blockItem->getItem() === $this) {
                 $blockItem->setItem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInfo(): ?string
+    {
+        return $this->info;
+    }
+
+    public function setInfo(?string $info): self
+    {
+        $this->info = $info;
 
         return $this;
     }

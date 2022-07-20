@@ -1,23 +1,7 @@
-<footer>
-    <div class="left">
-        <h2>Contact</h2>
-        <p>1660 Luxembourg</p>
-        <p>Building Royale Hamilius Grand-Rue</p>
-        <p>Étage 6 et 7</p>
-        <p class="sepa"></p>
-        <p>+352 000 000</p>
-        <a href="mailto: sixseven@hello.lu" class="email">sixseven@hello.lu</a>
-        <p class="sepa"></p>
-        <a href="#" class="legal">Mentions Légales</a>
-    </div>
-    <div class="right">
-        <h2>Horaires</h2>
-        <p><span class="fcol">Lundi</span>12h - 16h | 18h - 22h</p>
-        <p><span class="fcol">Mardi</span>12h - 16h | 18h - 22h</p>
-        <p class="fcol closed"><span class="fcol">Mercredi</span>Fermé</p>
-        <p><span class="fcol">Jeudi</span>12h - 16h | 18h - 22h</p>
-        <p><span class="fcol">Vendredi</span>12h - 16h | 18h - 22h</p>
-        <p><span class="fcol">Samedi</span>18h - 22h</p>
-        <p class="fcol closed"><span class="fcol">Dimanche</span>Fermé</p>
-    </div>
+<footer style="height:100px;width:100%;background:#5c6065;color:#fff;display:flex;justify-content:center;align-items:center">
+    {% if footer is not empty %}
+        <h1>{{ footer.0.datas ? footer.0.datas.title : 'Caméléon' }}</h1>
+    {% else %}
+        Default footer
+    {% endif %}
 </footer>

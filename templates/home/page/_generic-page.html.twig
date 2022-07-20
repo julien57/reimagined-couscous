@@ -1,60 +1,27 @@
 {% extends 'index.html.twig' %}
 
-{#% block metas %}
-    {% if metas.meta_title is defined %}
-        <title>{{ metas.meta_title }}</title>
-    {% endif %}
-    {% if metas.meta_description is defined %}
-        <meta name="description" content="{{ metas.meta_description }}">
-    {% endif %}
-{% endblock %}
-
 {% block content %}
 
     {% set index = 0  %}
-
-   {%
-        set excluded_template = {
-            1:'cursor.html.twig',
-            2:'newsletter.html.twig',
-        }
-    %}
+    {% set excluded_template = {} %}
 
     {%  for key,block in blocks %}
-        {% if loop.first %}
-            <div class="six">
-        {% endif %}
-        {% if block.template == 'test2.html.twig' and loop.index != 1 %}
-            <div class="seven">
+
+        {% set include = null %}
+        {% if block.module and block.module.isActivated %}
+            {# Modules directory #}
+            {% set include = '/home/modules/' ~ block.module.templateFolder ~ '/' ~ block.template %}
+        {% elseif block.template %}
+            {% set include = '/home/blocks/' ~ block.template %}
         {% endif %}
 
-         {% set include = '/home/blocks/'~block.template %}
+        {% set no_margin_top = '' %}
+        {% set even = '' %}
 
-         {% set no_margin_top = '' %}
-         {% set even =' ' %}
-        {% if block.template not in excluded_template %}
-             {% include include  with { 'data' : block.data , 'even' : even, 'index' : index } %}
+        {% if include %}
+            {% include include with { 'data': block.data, 'even': even, 'index': index } %}
         {% endif %}
 
-        {% if block.template == 'header.html.twig' %}
-            </div>
-        {% endif %}
-        {% if loop.last %}
-            </div>
-        {% endif %}
     {%  endfor  %}
 
-    <div class="six">
-
-        {%  include "home/blocks/_tmp_about.html.twig"%}
-        {%  include "home/blocks/_tmp_menu.html.twig"%}
-        {%  include "home/blocks/_tmp_news.html.twig"%}
-    </div>
-
-    <div class="seven">
-        {%  include "home/blocks/_tmp_about.html.twig"%}
-        {%  include "home/blocks/_tmp_menu.html.twig"%}
-        {%  include "home/blocks/_tmp_news.html.twig"%}
-    </div>
-
-{% endblock %#}
+{% endblock %}

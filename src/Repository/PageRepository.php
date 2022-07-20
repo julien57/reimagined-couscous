@@ -19,6 +19,38 @@ class PageRepository extends ServiceEntityRepository
         parent::__construct($registry, Page::class);
     }
 
+    public function getPageBySlug(string $slug)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.slugs LIKE :slug')
+            ->setParameter('slug', '%"'.$slug.'"%')
+            ->andWhere('p.active = 1')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getlatestPosts(?int $limit, string $order, string $locale)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.slugs LIKE :slug')
+            ->setParameter('slug', '%"'.$locale.'"%')
+            ->andWhere('p.active = 1')
+            ->andWhere('p.type = :type')
+            ->setParameter('type', 'post');
+
+        if ($limit) {
+            $qb
+                ->setMaxResults($limit);
+        }
+
+        $qb = $qb
+            ->orderBy('p.id', $order)
+            ->getQuery()
+            ->getResult();
+
+        return $qb;
+    }
+
     /**
      * Get one page in array.
      *
@@ -47,11 +79,10 @@ class PageRepository extends ServiceEntityRepository
 
     public function getPages()
     {
-
         return $this->createQueryBuilder('p')
             ->addSelect('bp')//page
             ->addSelect('bl')//block
-            ->leftJoin('p.pageBlock', 'bp')
+            ->leftJoin('p.pageBlocks', 'bp')
             ->leftJoin('bp.block', 'bl')
             ->where('p.name != :name')
             ->setParameter('name', 'site')
@@ -66,7 +97,7 @@ class PageRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->addSelect('bp')//page
             ->addSelect('bl')//block
-            ->leftJoin('p.pageBlock', 'bp')
+            ->leftJoin('p.pageBlocks', 'bp')
             ->leftJoin('bp.block', 'bl')
             ->where('p.name != :name')
             ->setParameter('name', 'site')
@@ -80,16 +111,13 @@ class PageRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->addSelect('bp')//page
-            ->addSelect('content')
             ->addSelect('bl')//block
-            ->leftJoin('p.pageBlock', 'bp')
-            ->join('bp.contents', 'content')
+            ->leftJoin('p.pageBlocks', 'bp')
             ->leftJoin('bp.block', 'bl')
             ->where('p.name != :name')
             ->setParameter('name', 'site')
             ->andWhere('p.type = :type')
             ->setParameter('type', Page::PAGE_TYPE_POST)
-            //->andWhere('bp.jsonData IS NOT NULL')
             ->orderBy('p.id', 'DESC')
             ->getQuery()
             ->getResult()

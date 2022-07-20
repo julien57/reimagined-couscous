@@ -57,27 +57,22 @@ class PageBlockRepository extends ServiceEntityRepository
     }
 
     //for front
-    public function getbyNameByBlockType($slug, $type = null)
+    public function getbyNameByBlockType(string $slug, string $locale)
     {
-        $qb = $this->createQueryBuilder('bp')
+        return $this->createQueryBuilder('bp')
             ->addSelect('p')//page
             ->addSelect('bl')//block
             ->leftJoin('bp.page', 'p')
             ->leftJoin('bp.block', 'bl')
             ->where('p.slug = :slug')
-            ->setParameter('slug', $slug);
-
-        if ($type) {
-            $qb
-                ->andWhere('bl.type = :type')
-                ->setParameter('type', $type);
-        }
-
-        $qb
+            ->setParameter('slug', $slug)
+            ->andWhere('bp.block IS NOT NULL')
+            ->andWhere('p.type = :type')
+            ->setParameter('type', $slug)
+            ->andWhere('bp.jsonData LIKE :locale')
+            ->setParameter('locale', '%"lang_block":"'.$locale.'"%')
             ->orderBy('bp.itemOrder', 'ASC')
-        ;
-
-        return $qb->getQuery()
+            ->getQuery()
             ->getResult();
     }
 
@@ -98,22 +93,6 @@ class PageBlockRepository extends ServiceEntityRepository
                 ->andWhere('c.language = :lang')
                 ->setParameter('lang', $locale);
         }
-
-        return
-            $qb
-                ->getQuery()
-                ->getResult()
-            ;
-    }
-
-    public function getNews()
-    {
-       
-        $qb = $this->createQueryBuilder('bp')
-            ->select('bp')
-            ->leftJoin('bp.page', 'page')
-            ->where('page.type = :type')
-            ->setParameter('type', 'post');
 
         return
             $qb

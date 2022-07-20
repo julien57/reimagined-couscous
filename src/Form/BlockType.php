@@ -39,7 +39,7 @@ class BlockType extends AbstractType
                 'mapped' => false, 'required' => false,
             ])
             ->add('subBlock', CheckboxType::class, [
-                'label' => 'Sous blocs ?',
+                'label' => 'Block ouvert aux sous-blocks ?',
                 'required' => false,
             ])
         ;

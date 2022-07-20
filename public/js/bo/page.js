@@ -1,4 +1,103 @@
-$(function(){
+$(function() {
+
+    /**
+     * Activate Module
+     */
+    $(document).on("change",'.form-activate-module', function( e ){
+        e.preventDefault();
+
+        var data = $(this).closest('form').serialize();
+        var thisForm = $(this);
+
+        $.ajax({
+            url: `/admin/modules/activate`,
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            async: true,
+
+            success: function(data, status) {
+                if (data.isActivated) {
+                    thisForm.parent().find('.ribbon-wrapper').replaceWith(`<div class="ribbon-wrapper ribbon-lg">
+                                <div class="ribbon bg-success text-lg">
+                                    Activé
+                                </div>
+                            </div>`);
+                } else {
+                    thisForm.parent().find('.ribbon-wrapper').replaceWith(`<div class="ribbon-wrapper ribbon-lg">
+                                <div class="ribbon bg-danger text-lg">
+                                    Désactivé
+                                </div>
+                            </div>`);
+                }
+            },
+
+            error : function(xhr, textStatus, errorThrown) {
+                alert('ERROR')
+            }
+        });
+    });
+
+    /**
+     * Save Metas page
+     */
+    $(document).on("submit",'#saveMetasPage', function( e ){
+        e.preventDefault();
+
+        var data = $(this).closest('form').serialize();
+
+
+        $.ajax({
+            url: `/bo/page/metas/save`,
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            async: true,
+
+            success: function(data, status) {
+                $('#messageSeo').html(`<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-check"></i> Enregistré !</h5>
+                    </div>`);
+            },
+
+            error : function(xhr, textStatus, errorThrown) {
+                $('#messageSeo').html(`<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-check"></i> Ajax request failed.</h5>
+                    </div>`);
+            }
+        });
+    });
+
+    /**
+     * Save slug page
+     */
+    $(document).on("submit",'#formSaveSlug', function( e ){
+        e.preventDefault();
+        var data = $(this).closest('form').serialize();
+
+        $.ajax({
+            url: '/bo/slug/save',
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            async: true,
+
+            success: function(data, status) {
+                $('#btnSlug i').removeClass('fa-save').addClass('fa-check');
+                if (data.type === 'post') {
+                    $('#btnSeePage').attr('href', `${window.location.origin}/${localForMessage}/news/${data.slug}`);
+                } else {
+                    $('#btnSeePage').attr('href', `${window.location.origin}/${localForMessage}/${data.slug}`);
+                }
+            },
+
+            error : function(xhr, textStatus, errorThrown) {
+                console.error('Ajax request failed.');
+            }
+        });
+    });
 
     /**
      * add block to page
@@ -33,7 +132,8 @@ $(function(){
      * ajax block form
      *   Send form
      */
-    $(document).on('click', '#aj_bl-forms', function(){
+    $(document).on('click', '#aj_bl-forms', function(e){
+        e.preventDefault()
 
         var data = $(this).closest('form').serialize();
 
@@ -60,9 +160,9 @@ $(function(){
     $(document).on("click",'.btn-block-add', function( e ){
 
         e.preventDefault();
-
+        // Block ID
         var id = $(this).parent().prev().children().children().val();
-        console.log(id)
+
         var page_id = $('#page_id').val();
 
         if(id === 0 ){
@@ -84,7 +184,7 @@ $(function(){
             url:        '/admin/ajax/block/get',
             type:       'POST',
             dataType:   'html',
-            data: {'block_id': id , 'page_id' :page_id },
+            data: {'block_id': id , 'page_id' :page_id, 'locale': $('#locale').val() },
             async:      true,
             success: function(data, status) {
 
@@ -148,6 +248,7 @@ $(function(){
                                 const datas = JSON.parse(data);
 
                                 $('#formtmp').removeAttr('id');
+                                const urlDraft = document.getElementById('btnSeePage').href;
 
                                 if (btnSubmit.hasClass('draft')) {
 
