@@ -35,7 +35,7 @@
         "symfony/translation": "5.2.*",
         "symfony/twig-bundle": "5.2.*",
         "symfony/validator": "5.2.*",
-        "symfony/webpack-encore-bundle": "^1.13",
+        "symfony/webpack-encore-bundle": "^1.14",
         "symfony/yaml": "5.2.*",
         "symfonycasts/reset-password-bundle": "^1.9",
         "tinify/tinify": "^1.5",
